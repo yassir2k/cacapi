@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 use App\Models\Organization;
 use App\Models\Company;
+use App\Models\User;
 use App\Models\Affiliate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -34,6 +35,7 @@ class OrganizationController extends Controller
         $class = (int)request()->route('class_');
         $type = null;
         $role = "";
+        $username = request()->route('username_');
         
         // There are total of 4 different calls to be made: 
         //1 - basic company details, 
@@ -44,6 +46,8 @@ class OrganizationController extends Controller
         //1 - basic company details
         if($call_type == 1){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
+            $unit = User::where(['username' => $username])->pluck('units')->first();
+            $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
@@ -57,12 +61,18 @@ class OrganizationController extends Controller
                 ->where('company.classification_fk', '=', $class);
             })
             ->get();   
+            //Deduct Unit and update DB
+            $unit -= 1000;
+            $account->units = $unit;
+            $account->save();
             return $reply;
         }
 
         //2 - basic company details with directors
         if($call_type == 2){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
+            $unit = User::where(['username' => $username])->pluck('units')->first();
+            $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
@@ -97,7 +107,12 @@ class OrganizationController extends Controller
                     $join->on('affiliates.affiliate_type_fk', '=', 'affiliate_type.id')
                     ->Wherein('affiliate_type_fk', $type);
                 })
-                ->get();       
+                ->get();   
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();     
                 return $reply;
             }
             if($class == 2)
@@ -130,7 +145,12 @@ class OrganizationController extends Controller
                     $join->on('affiliates.affiliate_type_fk', '=', 'affiliate_type.id')
                     ->Where('affiliate_type_fk', '=', $type);
                 })
-                ->get();       
+                ->get();     
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();   
                 return $reply;
             }
             if($class == 3)
@@ -163,7 +183,12 @@ class OrganizationController extends Controller
                     $join->on('affiliates.affiliate_type_fk', '=', 'affiliate_type.id')
                     ->Where('affiliate_type_fk', '=', $type);
                 })
-                ->get();       
+                ->get(); 
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();    
                 return $reply;
             }
         }
@@ -171,13 +196,24 @@ class OrganizationController extends Controller
         //3 - basic company details with shareholders
         if($call_type == 3){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
+            $unit = User::where(['username' => $username])->pluck('units')->first();
+            $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();    
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
             }
             if($class == 1 || $class == 3)
             {
                 //Business Names
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save(); 
                 return "API call type 3 (Shareholders) doesn't apply for Business Names(1), or Incorporated Trustees(3) entities.";
             }
             if($class == 2)
@@ -214,7 +250,12 @@ class OrganizationController extends Controller
                     $join->on('affiliates.affiliate_type_fk', '=', 'affiliate_type.id')
                     ->Wherein('affiliate_type_fk', $type);
                 })
-                ->get();       
+                ->get();   
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();     
                 return $reply;
             }
         }
@@ -222,13 +263,24 @@ class OrganizationController extends Controller
         //4 - basic company details with secretary
         if($call_type == 4){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
+            $unit = User::where(['username' => $username])->pluck('units')->first();
+            $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save(); 
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
             }
             if($class == 1)
             {
                 //Business Names
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save(); 
                 return "API call type 4 (Shareholders) doesn't apply for Business Names(1) entities.";
             }
             if($class == 2 || $class == 3)
@@ -260,7 +312,12 @@ class OrganizationController extends Controller
                     $join->on('affiliates.affiliate_type_fk', '=', 'affiliate_type.id')
                     ->Wherein('affiliate_type_fk', $type);
                 })
-                ->get();       
+                ->get(); 
+
+                //Deduct Unit and update DB
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();       
                 return $reply;
             }
         }
