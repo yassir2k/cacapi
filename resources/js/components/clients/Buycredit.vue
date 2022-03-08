@@ -129,7 +129,7 @@
             <div class="row">
                 <div class="col-sm-12"><!--Button-->
                     <div class="form-group d-grid gap-2 col-3 mx-auto">
-                        <button :disabled="disableProceedButton" v-on:click="GenerateRRR" type="submit" value="Submit" class="btn btn-success btn-block btn-lg" name="btn_submit">
+                        <button :v-model="proceed" :disabled="disableProceedButton" v-on:click="GenerateRRR" type="submit" value="Submit" class="btn btn-success btn-block btn-lg" name="btn_submit">
                             <span>Proceed </span>
                             <span v-html="proceedBtnSpinner"></span>
                         </button> 
@@ -148,15 +148,6 @@
                         </div>
                         <div class="col-sm-6">
                             <h4><span v-html="rrrSpinner"></span></h4>
-                        </div>
-                    </div>
-                    <br />
-                    <div class="row">
-                        <div class="col-sm-6">
-                            <h4>Transaction ID: </h4>
-                        </div>
-                        <div class="col-sm-6">
-                            <h4><span v-html="transIdSpinner"></span></h4>
                         </div>
                     </div>
                     <br />
@@ -217,7 +208,6 @@
 </div>
 </template>
 <script>
-var TransId = "";
 import NavBar from './BuycreditNav.vue';
 import axios from 'axios';
 export default {
@@ -230,6 +220,7 @@ export default {
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             rotor: '&nbsp;<i class="fas fa-sign-in-alt"></i>',
             amount: 0,
+            proceed: null,
             disableProceedButton: true,
             disableRemitaBtn: true,
             showRemitaSection: false,
@@ -239,7 +230,6 @@ export default {
             rrrSpinner: '',
             feeSpinner: '',
             descSpinner: '',
-            transIdSpinner: '',
             proceedBtnSpinner: '',
             payerName: "Yassir Yahaya",
             payerEmail: "yassir63@yahoo.com",
@@ -288,18 +278,15 @@ export default {
                     var str = response.data.substr(7,80);
                     var RemitaResponse = JSON.parse(str);
                     if(RemitaResponse.statuscode == "025"){
-                        this.GetTransactionId();
                         this.showRemitaSection = true;
                         this.rrrSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
                         this.feeSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
                         this.descSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
-                        this.transIdSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
                         this.proceedBtnSpinner = '';
                         this.rrr = RemitaResponse.RRR;
                         this.disableradio = true;
                         this.disableProceedButton = true;
-                        this.rrrSpinner = '<h4>' + RemitaResponse.RRR +'</h4>';
-                        this.transIdSpinner = '<h4>' + this.Transaction_Id +'</h4>';
+                        this.rrrSpinner = '<h4>' + this.rrr +'</h4>';
                         this.feeSpinner = '<h4>' + Number(this.amount).toLocaleString() +'</h4>';
                         this.descSpinner = '<h4>' + description +'</h4>';
                         this.disableRemitaBtn = false;
@@ -325,7 +312,7 @@ export default {
             var paymentEngine = RmPaymentEngine.init({
 			key:"U09MRHw0MDgxOTUzOHw2ZDU4NGRhMmJhNzVlOTRiYmYyZjBlMmM1YzUyNzYwZTM0YzRjNGI4ZTgyNzJjY2NjYTBkMDM0ZDUyYjZhZWI2ODJlZTZjMjU0MDNiODBlMzI4YWNmZGY2OWQ2YjhiYzM2N2RhMmI1YWEwYTlmMTFiYWI2OWQxNTc5N2YyZDk4NA==",
 		    processRrr: true,
-			transactionId: "iYmYyZjBlMmM1",
+			transactionId: this.GetTransactionId(),
 			extendedData: { 
 				customFields: [ 
 					{ 
@@ -358,13 +345,10 @@ export default {
                 responseType: 'json'
                 })
                 .then(response =>{
-                    TransId = response.data;
+                    return response.data;
                 })
             }catch(err){    
                 console.log(err)
-            }
-            finally{
-                 alert(TransId);
             }
         }
     },
