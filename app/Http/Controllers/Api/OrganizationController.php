@@ -14,8 +14,10 @@ class OrganizationController extends Controller
 {
     //
     public function index(){
-        return Organization::all();
+        return Company::take(2)->get();
     }
+
+
     public function login(Request $request)
     {
         $username = request()->route('username_');
@@ -28,6 +30,8 @@ class OrganizationController extends Controller
         }
         return "Invalid Authentication";
     }
+
+
     public function call(Request $request)
     {
         $rc = request()->route('rc_number_');
@@ -273,19 +277,16 @@ class OrganizationController extends Controller
                 $account->save(); 
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
             }
-            if($class == 1)
+            if($class == 1) //Business Names
             {
-                //Business Names
-
                 //Deduct Unit and update DB
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save(); 
                 return "API call type 4 (Shareholders) doesn't apply for Business Names(1) entities.";
             }
-            if($class == 2 || $class == 3)
+            if($class == 2 || $class == 3) //Limited Liability Company
             {
-                //Limited Liability Company
                 $type = [7518, 7515];
                 
                 $reply["Company_Details"] = Company::select('approved_name as Company_Name',
@@ -321,5 +322,10 @@ class OrganizationController extends Controller
                 return $reply;
             }
         }
+    }
+
+    public function GenerateTransactionId(){
+        $id = substr(bin2hex(random_bytes(20)), 0, 20);//Generate Control Hash
+        return strtoupper($id);
     }
 }

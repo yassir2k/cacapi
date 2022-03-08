@@ -9,7 +9,7 @@
 @endif
 
 <div id="app">
-    <Client-Dashboard></Client-Dashboard>
+    <Dashboard></Dashboard>
 </div>
 
 

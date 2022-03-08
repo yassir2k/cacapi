@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <link rel="icon" href="{{ URL::asset('images/cac_icon.ico') }}" >
     <head>
@@ -9,43 +8,50 @@
         <title>{{ config('app.name', 'Laravel') }} - @yield('title')</title>
 
         <!-- Fonts -->
+        
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <!-- Scripts -->
+        <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('css/cacapi-css.css') }}">
+        <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"> -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
         <script src="{{asset('js/jquery.min.js')}}"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-        <script src="{{ asset('js/app.js') }}"></script>
-        <link href="{{ asset('css/cacapi-css.css') }}" rel="stylesheet">
-        <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-	    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+        <script type="text/javascript" src="https://remitademo.net/payment/v1/remita-pay-inline.bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
+        <script src="{{asset('js/app.js')}}"></script>
+        <script src="https://unpkg.com/v-tooltip@2.1.3/dist/v-tooltip.min.js"></script>
+        
 
         <style>
-            body {
+            .body{
                 font-family: 'Nunito', sans-serif;
             }
         </style>
     </head>
 
     <body>
-        <div class="container-fluid" aria-hidden="true">
+        <div class="container-fluid overflow-hidden" >
             <div class="container-bg">
                 <div class="fcta-header">
-                    <img src="images/cac-logo.png" class = "img-responsive" height="100%">
-                    <img src="images/coat-of-arms.png" align="right" class = "img-responsive" height="100%">
+                    <img src="{{ asset('images/cac-logo.png') }}" class = "img-responsive" height="100%" />
+                    <img src="{{ asset('images/coat-of-arms.png') }}" align="right" class = "img-responsive" height="100%" />
                 </div>
 
-                <div class="toptop" style="margin-top: 50px">
-                    <main >
+                <div style="margin-top: 0px">
+                    <main>
                         @yield('content')
                     </main>
                 </div>
 
                 <!-- Footer -->
-                <footer class="page-footer fixed-bottom font-small">
+                <footer class="page-footer font-small font-small" >
                     <!-- Copyright -->
                     <div class="footer-copyright text-center text-white py-4 font-pref14">
-                        © 2021 Copyright - Corporate Affairs Commission: ICT Department
+                        © 2022 Copyright - Corporate Affairs Commission: ICT Department
                     </div>
                     <!-- Copyright -->
                 </footer>
@@ -54,5 +60,4 @@
             </div>
         </div>
     </body>
-
 </html>

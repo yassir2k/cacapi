@@ -10,7 +10,19 @@ body, html {
 	background-size: cover;
 	background-attachment: fixed;
 }
-
+.remita{
+    color: white !important;
+    background-color:#f2711c !important;
+}
+.remita_logo{
+    background-image: url(../images/remita-payment-logo.png) !important;
+	width: 50px !important;
+	height: 52px !important;
+	z-index: 999 !important;
+}
+.form-group {
+	margin-bottom: 1rem;
+  }
 .vcenter-item{
 	display: flex;
 	align-items: center;
@@ -44,9 +56,10 @@ body, html {
 .login-form {
     width: 40%;
     margin: 150px auto;
+	padding:300px
 }
 .login-form {        
-    margin-bottom: 60px;
+    margin-bottom: 70px;
     background: #FFFFFF;
     -webkit-box-shadow: 9px 23px 18px -4px rgba(102,102,102,0.41);
 	-moz-box-shadow: 9px 23px 18px -4px rgba(102,102,102,0.41);
@@ -55,7 +68,7 @@ body, html {
     padding: 30px;
 }
 .login-form h2 {
-    margin: 0 0 15px;
+    margin: 0 0 1px;
 }
 .form-control, .btn {
     min-height: 38px;
@@ -133,11 +146,12 @@ body, html {
         margin: 0px 0px 0px 0px; 
     }
 	.table-wrapper {
-		width:99%;
+		width:90%;
         background-color: #fff;
         padding: 25px 5px;
 		border-radius: 3px;
         box-shadow: 0 1px 1px rgba(0,0,0,.05);
+		z-index: -10000;
     }
 
 	.toptitle {        
@@ -180,17 +194,20 @@ body, html {
 		padding: 12px 15px;
 		vertical-align: middle;
     }
-	table.table tr th:first-child { /*ID*/
+	table.table tr th:first-child { /*Name*/
+		width: 135px;
+	}
+	table.table tr th:nth-child(2) { /*Profession*/
+		width: 135px;
+	}
+	table.table tr th:nth-child(3) { /*Accreditation*/
+		width: 100px;
+	}
+	table.table tr th:nth-child(4) { /*Date*/
+		width: 180px;
+	}
+	table.table tr th:nth-child(5) { /*Action*/
 		width: 20px;
-	}
-	table.table tr th:nth-child(2) { /*RC Number*/
-		width: 150px;
-	}
-	table.table tr th:nth-child(3) { /*Company Name*/
-		width: 150px;
-	}
-	table.table tr th:nth-child(4) { /*Registration Date*/
-		width: 150px;
 	}
     table.table-striped tbody tr:nth-of-type(odd) {
     	background-color: #fcfcfc;
@@ -346,7 +363,7 @@ body, html {
   }
 	/* Modal styles */
 	.modal .modal-dialog {
-		max-width: 500px;
+		max-width: 600px;
 	}
 	.modal .modal-header, .modal .modal-body, .modal .modal-footer {
 		padding: 20px 30px;
@@ -416,7 +433,7 @@ body, html {
 	  box-shadow: 0 0 0 0.2rem rgba(40, 167, 69, 0.25) !important;
 	}
 /*--------------------------------------------------- CSS For Responsive Table ----------------------------------------------------------------*/
-.lo:hover, .lo:focus { text-decoration: none !important;}
+.lo, .lo:hover, .lo:focus { text-decoration: none !important;}
 
 /*Options display (Edit USer, Change Password*/
 a.option {color:#009900 !important;}
@@ -465,4 +482,53 @@ input::-webkit-inner-spin-button {
 
 ._textarea {
     resize: none !important;
+}
+
+/*Dropdown Menu Script*/
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu>.dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -9px;
+    margin-left: -1px;
+    /*-webkit-border-radius: 0 6px 6px 6px;
+    -moz-border-radius: 0 6px 6px;
+    border-radius: 0 6px 6px 6px;*/
+}
+
+.dropdown-submenu:hover>.dropdown-menu {
+    display: block;
+}
+
+.dropdown-submenu > a:after {
+    display: block;
+    content: "";
+    float: right;
+    width: 0;
+    height: 0;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 5px 0 5px 5px;
+    border-left-color: #333;
+    margin-top: 5px;
+    margin-right: -10px;
+}
+
+.dropdown-submenu:hover>a:after {
+    border-left-color: #D5D5D5;
+}
+
+.dropdown-submenu.pull-left {
+    float: none;
+}
+
+.dropdown-submenu.pull-left>.dropdown-menu {
+    left: -100%;
+    margin-left: 10px;
+    /*-webkit-border-radius: 6px 0 6px 6px;
+    -moz-border-radius: 6px 0 6px 6px;
+    border-radius: 6px 0 6px 6px;*/
 }

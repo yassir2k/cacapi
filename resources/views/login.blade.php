@@ -1,4 +1,4 @@
-@extends('layouts.template')
+@extends('layouts.logintemplate')
 @section('title', 'Login')
 @section('content')
 @if(session()->has('message'))
