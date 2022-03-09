@@ -337,7 +337,6 @@ export default {
                 url: 'https://remitademo.net/remita/ecomm/' + merchantId +'/' + rrr + '/'+ apiHash + '/status.reg',
                 headers: { 
                     'Content-type': 'application/json; charset=utf-8', 
-                    'Access-Control-Allow-Origin': '*',
                     'Authorization': 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash
                 },
                 responseType: 'json'
