@@ -233,7 +233,10 @@ export default {
             proceedBtnSpinner: '',
             payerName: "Yassir Yahaya",
             payerEmail: "yassir63@yahoo.com",
-            payerPhone: "080312345590"
+            payerPhone: "080312345590",
+            merchantId: "2547916",
+            apiKey: "1946",
+            serviceTypeId: "4430731"
         }
     }, 
     components:{
@@ -242,18 +245,15 @@ export default {
     methods:{
         GenerateRRR(){
             this.proceedBtnSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-white"></i>';
-            var merchantId = "2547916";
-            var apiKey = "1946";
-            var serviceTypeId = "4430731";
             var description = "CAC API e-Wallet Top up";
 
             var d = new Date();
             var orderId = d.getTime();
             var totalAmount = this.amount;
 
-            var apiHash = CryptoJS.SHA512(merchantId+ serviceTypeId+ orderId+ totalAmount+ apiKey);
+            var apiHash = CryptoJS.SHA512(this.merchantId+ this.serviceTypeId+ orderId+ totalAmount+ this.apiKey);
             var data = new TextEncoder().encode(JSON.stringify({
-                'serviceTypeId': serviceTypeId,
+                'serviceTypeId': this.serviceTypeId,
                 'amount': totalAmount,
                 'orderId': orderId,
                 'payerName': this.payerName,
@@ -270,7 +270,7 @@ export default {
                 data: data,
                 headers: { 
                     'Content-type': 'application/json; charset=utf-8', 
-                    'Authorization': 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash
+                    'Authorization': 'remitaConsumerKey=' + this.merchantId + ',remitaConsumerToken=' + apiHash
                 },
                 responseType: 'json'
                 })
@@ -308,7 +308,12 @@ export default {
                 }
             }
         },
+        //New Function
         MakePayment(){
+            var merchantId = this.merchantId;
+            var rrr = this.rrr;
+            var apiKey = this.apiKey;
+            var apiHash = CryptoJS.SHA512(rrr + apiKey + merchantId);
             var paymentEngine = RmPaymentEngine.init({
 			key:"U09MRHw0MDgxOTUzOHw2ZDU4NGRhMmJhNzVlOTRiYmYyZjBlMmM1YzUyNzYwZTM0YzRjNGI4ZTgyNzJjY2NjYTBkMDM0ZDUyYjZhZWI2ODJlZTZjMjU0MDNiODBlMzI4YWNmZGY2OWQ2YjhiYzM2N2RhMmI1YWEwYTlmMTFiYWI2OWQxNTc5N2YyZDk4NA==",
 		    processRrr: true,
@@ -322,18 +327,54 @@ export default {
 					} 
 				 ]
 			},
-            onSuccess: function (response) {
-                console.log('callback Successful Response', response);
+            onSuccess: function (msg) {
+                console.log(msg);
+                console.log('Now checking RRR Status');
+                //Get RRR Status Demo
+                try{
+                axios({
+                method: 'get',
+                url: 'https://remitademo.net/remita/ecomm/' + merchantId +'/' + rrr + '/'+ apiHash + '/status.reg',
+                headers: { 
+                    'Content-type': 'application/json; charset=utf-8', 
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': 'remitaConsumerKey=' + merchantId + ',remitaConsumerToken=' + apiHash
+                },
+                responseType: 'json'
+                })
+                .then(response=>{
+                    console.log(response);
+                    /*if(response.data.message == "Approved"){
+                        alert("Transaction is Successful");
+                    }
+                    else{
+                        alert("You got it wrong.");
+                    }*/
+                    this.$router.push({ path: '/client-dashboard', params: { user: response.data } });
+                });
+            }
+            catch(err){    
+                if (err.response) {
+                // client received an error response (5xx, 4xx)
+                console.log("Server Error:", err)
+                } else if (err.request) {
+                // client never received a response, or request never left
+                console.log("Network Error:", err)
+                } else {
+                console.log("Client Error:", err)
+                }
+            }
+
             },
             onError: function (response) {
                 console.log('callback Error Response', response);
             },
             onClose: function () {
-                GenerateRRR();
             }
         });
          paymentEngine.showPaymentWidget();
         },
+        //New Function
         GetTransactionId(){
             try{
                 axios({
