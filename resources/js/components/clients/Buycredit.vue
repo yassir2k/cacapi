@@ -1,8 +1,7 @@
 <template>
 <div>
     <div class="row">
-        <div class="col-sm-12">
-            <NavBar /> 
+        <div class="col-sm-12"> 
         </div>
     </div>
     <br />
@@ -310,6 +309,7 @@ export default {
         },
         //New Function
         MakePayment(){
+            const self = this;
             var merchantId = this.merchantId;
             var rrr = this.rrr;
             var apiKey = this.apiKey;
@@ -349,7 +349,7 @@ export default {
                     else{
                         alert("You got it wrong.");
                     }*/
-                    this.$router.push({ path: '/client-dashboard', params: { user: response.data } });
+                    self.$router.push({ path: '/client-dashboard', params: { user: response.data } });
                 });
             }
             catch(err){    

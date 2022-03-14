@@ -3,7 +3,7 @@
 
   	<div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fa fa-home"></i>
-            <router-link class="lo text-white" to="dashboard">dashboard</router-link>
+            <router-link class="lo text-white" to="Dashboard">dashboard</router-link>
 		</button>
     </div>
 
@@ -11,7 +11,7 @@
 
     <div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-money-check-alt"></i>
-            <router-link class="lo text-white" to="dashboard">Buy Credit</router-link>
+            <router-link class="lo text-white" to="Dashboard">Buy Credit</router-link>
 		</button>
     </div>
 

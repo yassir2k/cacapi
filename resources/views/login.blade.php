@@ -8,8 +8,8 @@
     </div>
 @endif
 
-<div id="app">
-    <Login></Login>
+<div id="App">
+    <App></App>
 </div>
 
 
