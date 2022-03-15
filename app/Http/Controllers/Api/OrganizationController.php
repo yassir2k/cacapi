@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 use App\Models\Organization;
 use App\Models\Company;
 use App\Models\User;
+use App\Models\Transactions;
 use App\Models\Affiliate;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -334,11 +335,18 @@ class OrganizationController extends Controller
         return strtoupper($id);
     }
 
-    public function process_transaction($request){
+    public function process_transaction(Request $request){
         $MDA_Units = User::where(['username' => 'firs'])->pluck('units')->first();
         $MDA_Units += (int)$request->input('units');
         $account = User::where(['username' => 'firs'])->first();
         $account->units = $MDA_Units;
         $account->save(); 
+    }
+
+    public function GetTransactionHistory(Request $request){
+        $userId  = $request->input('username');
+        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(transaction_datetime, '%W, %M %e %Y %r') as datetime"))
+        ->Where(['username' => $userId])->paginate(3);
+        return response()->json($temp);
     }
 }

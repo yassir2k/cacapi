@@ -194,19 +194,25 @@ body, html {
 		padding: 12px 15px;
 		vertical-align: middle;
     }
-	table.table tr th:first-child { /*Name*/
-		width: 135px;
+	table.table tr th:first-child { /*RRR*/
+		width: 25px;
 	}
-	table.table tr th:nth-child(2) { /*Profession*/
-		width: 135px;
+	table.table tr th:nth-child(2) { /*Amount*/
+		width: 25px;
 	}
-	table.table tr th:nth-child(3) { /*Accreditation*/
-		width: 100px;
+	table.table tr th:nth-child(3) { /*Transaction Datetime*/
+		width: 150px;
 	}
-	table.table tr th:nth-child(4) { /*Date*/
-		width: 180px;
+	table.table tr th:nth-child(4) { /*Description*/
+		width: 150px;
 	}
-	table.table tr th:nth-child(5) { /*Action*/
+	table.table tr th:nth-child(5) { /*Status*/
+		width: 50px;
+	}
+	table.table tr th:nth-child(6) { /*Update Status*/
+		width: 50px;
+	}
+	table.table tr th:last-child { /*View Details*/
 		width: 20px;
 	}
     table.table-striped tbody tr:nth-of-type(odd) {
