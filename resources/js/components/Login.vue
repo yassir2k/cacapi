@@ -1,90 +1,91 @@
 <template>
+<div>
+    <br />
+    <br />
+    <br />
     <div class="login-form">
-    <div class="row">
-        <div class="col-3 my-auto"><!--Logo-->
-            <img src="/images/caclogo_big.png" width="120" height="120" class="rounded" alt="Rounded Image" />
-        </div>
-        <div class="col-9">
-            <div class="row">
-            <div class="col-sm-12" align="left"><!--Sign In-->
-                <h3 class="text-center text-secondary"><strong>API Portal - Admin</strong></h3>
+        <div class="row">
+            <div class="col-3 my-auto"><!--Logo-->
+                <img src="/images/caclogo_big.png" width="120" height="120" class="rounded" alt="Rounded Image" />
             </div>
-            </div>
-            <div class="row"> 
-                <div class="col-sm-12"><!--Sign In-->
-                    <h5 class="text-center" style="color: #8FBC8F"><strong>Sign In</strong></h5>
+            <div class="col-9">
+                <div class="row">
+                <div class="col-sm-12" align="left"><!--Sign In-->
+                    <h3 class="text-center text-secondary"><strong>API Portal - Admin</strong></h3>
                 </div>
-            </div> 
-                <input type="hidden" name="_token" :value="csrf"> 
+                </div>
                 <div class="row"> 
-                    <div class="col-sm-12"><!--Username-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <span class="fa fa-user" style="color: #8FBC8F"></span>
-                                </span>                    
-                                <input type="text" class="form-control" placeholder="Username" name="username" v-model="username">
+                    <div class="col-sm-12"><!--Sign In-->
+                        <h5 class="text-center" style="color: #8FBC8F"><strong>Sign In</strong></h5>
+                    </div>
+                </div> 
+                    <input type="hidden" name="_token" :value="csrf"> 
+                    <div class="row"> 
+                        <div class="col-sm-12"><!--Username-->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <span class="fa fa-user" style="color: #8FBC8F"></span>
+                                    </span>                    
+                                    <input type="text" class="form-control" placeholder="Username" name="username" v-model="username">
+                                </div>
+                                <span v-if="username_" class="text-danger small">Username required</span>
                             </div>
-                            <span v-if="username_" class="text-danger small">Username required</span>
-                        </div>
-                    
-                    </div><!--End Username-->
-                </div>
-                
-                <div class="row">
-                    <div class="col-sm-12"><!--Password-->
-                        <div class="form-group">
-                            <div class="input-group">
-                                <span class="input-group-text">
-                                    <i class="fa fa-lock" style="color: #8FBC8F"></i>
-                                </span>                    
-                                <input type="password" class="form-control" placeholder="Password" name="password" v-model="password">
-                            </div>
-                            <span v-if="password_" class="text-danger small">Password required</span>
-                        </div>
-                    </div><!--End Password-->
-                </div>
-                
-                <div class="row">
-                    <div class="col-sm-12"><!--Button-->
-                        <div class="form-group d-grid gap-2">
-                            <button :disabled="freeze" v-on:click="Login" type="submit" value="Submit" class="btn btn-success btn-block" name="btn_submit">
-                                <span>Login</span>
-                                <span v-html="rotor"></span>
-                            </button> 
-                        </div>
-                    </div><!--End Button-->
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
-                        <span v-html="status"></span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-5"><!--Forgot Password-->
-                        <small class="text-center medium" ><a class="text-success" href="/forgot-password">Forgot Password?</a></small>
-                    </div>
-                    <div class="col-sm-7"><!--Sign Up-->
-                        <small class="text-center medium">New user Account? <a class="text-success" href="/signup">Sign up here</a></small>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-12">
                         
+                        </div><!--End Username-->
                     </div>
-                </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12"><!--Password-->
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="fa fa-lock" style="color: #8FBC8F"></i>
+                                    </span>                    
+                                    <input type="password" class="form-control" placeholder="Password" name="password" v-model="password">
+                                </div>
+                                <span v-if="password_" class="text-danger small">Password required</span>
+                            </div>
+                        </div><!--End Password-->
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-sm-12"><!--Button-->
+                            <div class="form-group d-grid gap-2">
+                                <button :disabled="freeze" v-on:click="Login" type="submit" value="Submit" class="btn btn-success btn-block" name="btn_submit">
+                                    <span>Login</span>
+                                    <span v-html="rotor"></span>
+                                </button> 
+                            </div>
+                        </div><!--End Button-->
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <span v-html="status"></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-5"><!--Forgot Password-->
+                            <small class="text-center medium" ><a class="text-success" href="/forgot-password">Forgot Password?</a></small>
+                        </div>
+                        <div class="col-sm-7"><!--Sign Up-->
+                            <small class="text-center medium">New user Account? <a class="text-success" href="/signup">Sign up here</a></small>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-12">
+                            
+                        </div>
+                    </div>
+            </div>
         </div>
     </div>
 </div>
 </template>
 
 <script>
-//import http from "./../http-common.js";
-//import router from './../router';
 import axios from 'axios'
-//import './../app.js';
     export default {
-    name: 'app',
         data() {
             return{
                 errors: [],
@@ -128,11 +129,16 @@ import axios from 'axios'
                     "password": this.password
                 }
                 try{
-                    axios.post("http://127.0.0.1:8000/api/login", postData)
+                    axios.post("http://127.0.0.1:8000/api/login", postData) 
                     .then(response =>{
-                        if(response.data == "Successful"){
+                        console.log(response.data);
+                        if(response.data["status"] == "success"){
                             this.status='<div class="alert alert-success text-justify"><center>Success!</center></label>';
-                            this.$router.push({ name: 'Dashboard' });
+                            this.$session.start()
+                            this.$session.set('user', response.data["token"]);
+                            //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
+                            this.$router.push({ name: 'Dashboard', params: { user: this.username } });
+                            //this.$router.push({ name: 'Dashboard' });
                         }
                         else{
                             this.status='<div class="alert alert-danger text-danger"><center>Login attempt failed.</center></label>';

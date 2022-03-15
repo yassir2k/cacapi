@@ -24,3 +24,11 @@ Route::get('/client-dashboard', function() {
 Route::get('/buy-credit', function() {
     return view('clients/buycredit');
 });
+
+Route::get('/transaction-history', function() {
+    return view('clients/transaction-history');
+});
+
+//Route::post('/client-process-transaction', [OrganizationController::class, 'process_transaction'], function(){
+ //   return view('clients/dashboard');
+//});

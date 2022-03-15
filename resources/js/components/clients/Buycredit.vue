@@ -276,7 +276,8 @@ export default {
                 .then(response=>{
                     var str = response.data.substr(7,80);
                     var RemitaResponse = JSON.parse(str);
-                    if(RemitaResponse.statuscode == "025"){
+                    if(RemitaResponse.statuscode == "025"){ 
+                        console.log(RemitaResponse);
                         this.showRemitaSection = true;
                         this.rrrSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
                         this.feeSpinner = '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>';
@@ -385,6 +386,7 @@ export default {
                 responseType: 'json'
                 })
                 .then(response =>{
+                    console.log(response.data);
                     return response.data;
                 })
             }catch(err){    

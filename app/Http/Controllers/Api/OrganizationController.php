@@ -18,19 +18,24 @@ class OrganizationController extends Controller
     }
 
 
-    public function login(Request $request)
-    {
-        $username = request()->route('username_');
-        $password = request()->route('password_');
-        $credentials = ['username' => $username,'password' => $password, 'is_active' => 1, 'is_registered' => 1];
+    public function Login(Request $request){
+        // create our user data for the authentication
+        $email   = $request->input('email');
+        $password  = $request->input('password');
+        $credentials = ['email' => $email, 'password' => $password, 'is_active' => 1, 'is_registered' => 1];
         // attempt to do the login
         if (Auth::attempt($credentials))
         {
-            return "authenticated";
+            // validation successful!
+            $success['status'] = "success";
+            $success['token'] =  substr(bin2hex(random_bytes(100)), 0, 100);
+            return $success;
+        } 
+        else {        
+            // validation not successful, send back to form 
+            return "Unsuccessful";
         }
-        return "Invalid Authentication";
     }
-
 
     public function call(Request $request)
     {
@@ -327,5 +332,13 @@ class OrganizationController extends Controller
     public function GenerateTransactionId(){
         $id = substr(bin2hex(random_bytes(20)), 0, 20);//Generate Control Hash
         return strtoupper($id);
+    }
+
+    public function process_transaction($request){
+        $MDA_Units = User::where(['username' => 'firs'])->pluck('units')->first();
+        $MDA_Units += (int)$request->input('units');
+        $account = User::where(['username' => 'firs'])->first();
+        $account->units = $MDA_Units;
+        $account->save(); 
     }
 }

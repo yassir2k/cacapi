@@ -9,6 +9,3 @@
         name: 'Login'
     }
 </script>
-
-<style>
-</style>
