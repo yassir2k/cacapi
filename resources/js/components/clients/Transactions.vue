@@ -2,7 +2,7 @@
     <div>
     <div class="row">
         <div class="col-sm-12">
-            <h1>Transactions</h1>
+            <h1></h1>
         </div>
     </div>
     <br />
@@ -36,7 +36,7 @@
                         <td>{{ user.datetime}}</td>
                         <td>{{ user.description }}</td>
                         <td>Status</td>
-                        <td><a href="#" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
+                        <td><a href="" @click="ShowTransactionDetails(user.rrr)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
                         <td>Update Status</td>
                     </tr>
                 </tbody>
@@ -49,7 +49,6 @@
             <pagination align="center" :data="users" @pagination-change-page="list"></pagination>
             <br />     
             <br />
-            <div id="ll" v-html="LoadView"></div>
         </div>
         <br />
     </center>
@@ -68,7 +67,6 @@ export default {
                     type: Object,
                     default: null,
                 },
-                LoadView: ''
             }
     },
     props: {
@@ -91,7 +89,6 @@ export default {
                 axios.post(`http://127.0.0.1:8000/api/transaction_history?page=${page}`, dat)
                 .then(({data}) =>{
                     this.users = data;
-                    console.log(this.users.data.length);
                 });
             }
             catch(err){    
@@ -105,6 +102,9 @@ export default {
                 console.log("Client Error:", err)
                 }
             }
+        },
+        ShowTransactionDetails(ref){
+            this.$router.push({ name: 'TransactionDetails', params: { rrr: ref } });
         }
     },
 }

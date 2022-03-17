@@ -136,6 +136,7 @@ import axios from 'axios'
                             this.status='<div class="alert alert-success text-justify"><center>Success!</center></label>';
                             this.$session.start()
                             this.$session.set('user', response.data["token"]);
+                            this.$session.set('email', response.data["email"]);
                             //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
                             this.$router.push({ name: 'Dashboard', params: { user: this.username } });
                             //this.$router.push({ name: 'Dashboard' });

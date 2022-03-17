@@ -29,6 +29,6 @@ Route::get('/transaction-history', function() {
     return view('clients/transaction-history');
 });
 
-//Route::post('/client-process-transaction', [OrganizationController::class, 'process_transaction'], function(){
- //   return view('clients/dashboard');
-//});
+Route::get('/transaction-history/transaction-details/{rrr}', function() {
+    return view('clients/transaction-details');
+});

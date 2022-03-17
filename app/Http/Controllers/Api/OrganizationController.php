@@ -29,6 +29,7 @@ class OrganizationController extends Controller
         {
             // validation successful!
             $success['status'] = "success";
+            $success['email'] = $email;
             $success['token'] =  substr(bin2hex(random_bytes(100)), 0, 100);
             return $success;
         } 
@@ -343,10 +344,23 @@ class OrganizationController extends Controller
         $account->save(); 
     }
 
+
     public function GetTransactionHistory(Request $request){
         $userId  = $request->input('username');
         $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(transaction_datetime, '%W, %M %e %Y %r') as datetime"))
-        ->Where(['username' => $userId])->paginate(3);
+        ->Where(['username' => $userId])->paginate(1);
+        return response()->json($temp);
+    }
+
+
+    public function GetTransactionDetails(Request $request){
+        $rrr  = $request->input('rrr');
+        if($rrr == null){
+            return "Empty";
+        }
+
+        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(transaction_datetime, '%W, %M %e %Y %r') as datetime"))
+        ->Where(['rrr' => $rrr])->get();
         return response()->json($temp);
     }
 }

@@ -11,7 +11,6 @@ class Transactions extends Model
     use HasFactory, Notifiable;
     protected $table = 'tbl_wallet_transactions';
     protected $primaryKey = 'id_';
-    //protected $primaryKey =['username', 'acronym', 'email', 'transaction_id'];
     public $timestamps  = false;
     protected $fillable = [
         'acronym',
