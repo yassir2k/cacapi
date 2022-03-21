@@ -32,3 +32,7 @@ Route::get('/transaction-history', function() {
 Route::get('/transaction-history/transaction-details/{rrr}', function() {
     return view('clients/transaction-details');
 });
+
+Route::get('/api-documentation', function() {
+    return view('clients/api-documentation');
+});

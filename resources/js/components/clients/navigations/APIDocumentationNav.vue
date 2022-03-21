@@ -10,7 +10,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="far fa-credit-card"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="far fa-credit-card"></i>
             <router-link class="lo text-white" :to="{ name: 'Buycredit'}">Buy Credit</router-link>
 		</button>
     </div>
@@ -18,7 +18,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-file-pdf"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-file-pdf"></i>
             <router-link class="lo text-white" :to="{ name: 'Documentation'}">API Documentation</router-link>
 		</button>
     </div>

@@ -10,7 +10,6 @@ use App\Models\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use hisorange\BrowserDetect\Parser as Browser;
 use \Auth;
 
 class OrganizationController extends Controller
@@ -20,6 +19,21 @@ class OrganizationController extends Controller
         return Company::take(2)->get();
     }
 
+    public function getIPAddress() {  
+		//whether ip is from the share internet  
+		 if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
+					$ip = $_SERVER['HTTP_CLIENT_IP'];  
+			}  
+		//whether ip is from the proxy  
+		elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {  
+					$ip = $_SERVER['HTTP_X_FORWARDED_FOR'];  
+		 }  
+	//whether ip is from the remote address  
+		else{  
+				 $ip = $_SERVER['REMOTE_ADDR'];  
+		 }  
+		 return $ip;  
+	}
 
     public function Login(Request $request){
         // create our user data for the authentication
@@ -128,17 +142,41 @@ class OrganizationController extends Controller
                 ->where('company.classification_fk', '=', $class);
             })
             ->get();   
-            //Deduct Unit and update DB
+
+
+            /*--------------------------------------------------------------
+                Deduct Unit and update DB
+            --------------------------------------------------------------*/
             $unit -= 1000;
             $account->units = $unit;
             $account->save();
+
             /*--------------------------------------------------------------
-                Saving IP, Broswer, OS and other sundry details
+                Saving IP, Broswer, OS and other sundry details to DB
             --------------------------------------------------------------*/
-            dd(Browser::isDesktop());
-            $browser = "";
-            $os = "";
-            $device = "";
+            $info = get_browser(null, true);
+            $browser = $info['browser'];
+            $user_OS = $info['platform'];
+            $device = $info['device_type'];
+            $ip = $this->getIPAddress();
+            $transactionId = substr(bin2hex(random_bytes(12)), 0, 12);
+            $details = "Basic Company Information Search";
+            $dateTime = date("Y-m-d H:i:s");
+            $responseCode = "Ok";
+            $cost = 1000;
+            $data = ['transaction_id' => $transactionId, 
+                'details' => $details,
+                'api_call_datetime' => $dateTime,
+                'ip_address' => $ip,
+                'device' => $device,
+                'browser' => $browser, 
+                'operating_system' => $user_OS,
+                'call_type' => $call_type,
+                'api_call_cost' => $cost,
+                'response_code' => $responseCode,
+                'username' => $username
+            ];
+            Log::create($data);
             return $reply;
         }
 
@@ -432,8 +470,8 @@ class OrganizationController extends Controller
     ----------------------------------------*/
     public function GetTotalAPICallsToday(Request $request){
         $username = $request->input('username');
-        $temp = Transactions::select('id')
-        ->where(\DB::raw("DATE_FORMAT(r_payment_date, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        $temp = Log::select('id')
+        ->where(\DB::raw("DATE_FORMAT(api_call_datetime, '%Y-%m-%d')"), '=', date('Y-m-d'))
         ->where(['username' => $username])->get();
         $total_today = count($temp);
         return $total_today;
@@ -457,7 +495,7 @@ class OrganizationController extends Controller
 
     public function GetTotalCummulativeAPICalls(Request $request){
         $username = $request->input('username');
-        $temp = Transactions::select('id')
+        $temp = Log::select('id')
         ->where(['username' => $username])->get();
         $total_today = count($temp);
         return $total_today;

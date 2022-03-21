@@ -19,7 +19,7 @@
 
     <div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-file-pdf"></i>
-            <router-link class="lo text-white" :to="{ name: 'Buycredit'}">API Documentation</router-link>
+            <router-link class="lo text-white" :to="{ name: 'Documentation'}">API Documentation</router-link>
 		</button>
     </div>
 

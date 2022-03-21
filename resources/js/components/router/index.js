@@ -4,6 +4,7 @@ import Dashboard from "../clients/Dashboard.vue";
 import Buycredit from "../clients/Buycredit.vue";
 import Transactions from "../clients/Transactions.vue";
 import TransactionDetails from "../clients/TransactionDetails.vue";
+import Documentation from "../clients/Documentation.vue";
 import Login from "../Login";
 Vue.use(VueRouter);
     const routes = [
@@ -31,6 +32,11 @@ Vue.use(VueRouter);
           path: "/transaction-history/transaction-details/:rrr",
           name: "TransactionDetails",
           component: TransactionDetails, 
+        },
+        {
+          path: "/api-documentation",
+          name: "Documentation",
+          component: Documentation, 
         }
     ];
     

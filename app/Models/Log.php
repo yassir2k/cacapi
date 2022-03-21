@@ -24,8 +24,6 @@ class Log extends Model
         'call_type',
         'api_call_cost',
         'response_code',
-        'acronym',
         'username',
-        'email'
     ];
 }
