@@ -19,12 +19,31 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-//Route::get('organizations','App\Http\Controllers\Api\OrganizationController@index');
 Route::get('/organizations', [OrganizationController::class, 'index']);
 Route::get('/get_transaction_id', [OrganizationController::class, 'GenerateTransactionId']);
 Route::post('/transaction_history', [OrganizationController::class, 'GetTransactionHistory']);
 Route::post('/get_transaction_details', [OrganizationController::class, 'GetTransactionDetails']);
+Route::post('/post_transaction', [OrganizationController::class, 'PostTransaction']);
 //Route::get('/organizations/{username_}/{password_}/{calltype_}', [OrganizationController::class, 'call'])
 //->middleware('is_user_authorized','is_unit_enough','is_call_type_valid');
 Route::get('/organizations/{username_}/{password_}/{calltype_}/{rc_number_}/{class_}', [OrganizationController::class, 'call'])
 ->middleware('is_user_authorized','is_unit_enough','is_call_type_valid');
+/*
+------------------------------------------------------------------------
+API Calls Statistics Routes  
+------------------------------------------------------------------------
+*/
+Route::post('/get_total_api_calls_today', [OrganizationController::class, 'GetTotalAPICallsToday']);
+Route::post('/get_total_units_expended_today', [OrganizationController::class, 'GetTotalUnitsExpendedToday']);
+Route::post('/get_total_units_purchased_today', [OrganizationController::class, 'GetTotalUnitsPurchasedToday']);
+
+Route::post('/get_total_cummulative_api_calls', [OrganizationController::class, 'GetTotalCummulativeAPICalls']);
+Route::post('/get_total_cummulative_units_expended', [OrganizationController::class, 'GetTotalCummulativeUnitsExpended']);
+Route::post('/get_total_cummulative_units_purchased', [OrganizationController::class, 'GetTotalCummulativeUnitsPurchased']);
+
+/*
+------------------------------------------------------------------------
+API Calls Realtime Units 
+------------------------------------------------------------------------
+*/
+Route::post('/get_realtime_units', [OrganizationController::class, 'GetRealtimeUnits']);

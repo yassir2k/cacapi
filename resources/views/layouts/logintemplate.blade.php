@@ -19,6 +19,8 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script type="text/javascript" src="https://remitademo.net/payment/v1/remita-pay-inline.bundle.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 
         <style>
             .body{
@@ -35,7 +37,7 @@
                     <img src="{{ asset('images/coat-of-arms.png') }}" align="right" class = "img-responsive" height="100%" />
                 </div>
 
-                <div style="margin-top: -50px">
+                <div style="margin-top: 0px">
                     <main>
                         @yield('content')
                     </main>
@@ -44,7 +46,7 @@
                 <!-- Footer -->
                 <footer class="page-footer font-small fixed-bottom font-small" >
                     <!-- Copyright -->
-                    <div class="footer-copyright text-center text-white py-4 font-pref14">
+                    <div class="footer-copyright text-center text-white py-5 font-pref14">
                         © 2022 Copyright - Corporate Affairs Commission: ICT Department
                     </div>
                     <!-- Copyright -->

@@ -48,9 +48,9 @@
                 </div>
 
                 <!-- Footer -->
-                <footer class="page-footer font-small font-small" >
+                <footer class="page-footer font-small font-small" > 
                     <!-- Copyright -->
-                    <div class="footer-copyright text-center text-white py-4 font-pref14">
+                    <div class="footer-copyright text-center text-white py-5 font-pref14">
                         © 2022 Copyright - Corporate Affairs Commission: ICT Department
                     </div>
                     <!-- Copyright -->

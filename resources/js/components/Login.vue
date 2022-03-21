@@ -52,7 +52,7 @@
                     <div class="row">
                         <div class="col-sm-12"><!--Button-->
                             <div class="form-group d-grid gap-2">
-                                <button :disabled="freeze" v-on:click="Login" type="submit" value="Submit" class="btn btn-success btn-block" name="btn_submit">
+                                <button :disabled="freeze" v-on:click="Login" type="submit" value="submit" class="btn btn-success btn-block" name="btn_submit">
                                     <span>Login</span>
                                     <span v-html="rotor"></span>
                                 </button> 
@@ -131,14 +131,19 @@ import axios from 'axios'
                 try{
                     axios.post("http://127.0.0.1:8000/api/login", postData) 
                     .then(response =>{
-                        console.log(response.data);
                         if(response.data["status"] == "success"){
                             this.status='<div class="alert alert-success text-justify"><center>Success!</center></label>';
                             this.$session.start()
-                            this.$session.set('user', response.data["token"]);
+                            this.$session.set('token', response.data["token"]);
                             this.$session.set('email', response.data["email"]);
+                            this.$session.set('username', response.data["username"]);
+                            this.$session.set('organization', response.data["organization"]);
+                            this.$session.set('address', response.data["address"]);
+                            this.$session.set('phone', response.data["phone"]);
+                            this.$session.set('role', response.data["role"]);
                             //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
-                            this.$router.push({ name: 'Dashboard', params: { user: this.username } });
+                            if(response.data["role"] == "Accessor")
+                                this.$router.push({ name: 'Dashboard', params: { user: this.username } });
                             //this.$router.push({ name: 'Dashboard' });
                         }
                         else{

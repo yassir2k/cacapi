@@ -6,9 +6,11 @@ use App\Models\Company;
 use App\Models\User;
 use App\Models\Transactions;
 use App\Models\Affiliate;
+use App\Models\Log;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use hisorange\BrowserDetect\Parser as Browser;
 use \Auth;
 
 class OrganizationController extends Controller
@@ -28,8 +30,14 @@ class OrganizationController extends Controller
         if (Auth::attempt($credentials))
         {
             // validation successful!
+            $details = User::Where(['email' => $email])->first();
             $success['status'] = "success";
             $success['email'] = $email;
+            $success['username'] = $details->username;
+            $success['organization'] = $details->organization_name;
+            $success['address'] = $details->address;
+            $success['phone'] = $details->contact_phone;
+            $success['role'] = $details->role;
             $success['token'] =  substr(bin2hex(random_bytes(100)), 0, 100);
             return $success;
         } 
@@ -39,10 +47,58 @@ class OrganizationController extends Controller
         }
     }
 
+    /*---------------------------------------- 
+    Post Transaction Data to DB
+    ----------------------------------------*/
+    public function PostTransaction(Request $request){
+        $return = "";
+        $username = $request->input('username');
+        $email = $request->input('email');
+        $amount = $request->input('amount');
+        $description = $request->input('description');
+        $r_message = $request->input('message');
+        $r_processor_id = $request->input('processorId');
+        $rrr = $request->input('rrr');
+        $r_status = $request->input('status');
+        $r_transaction_id = $request->input('transactionId');
+        $r_payment_date = $request->input('transaction_datetime');
+        $r_order_id = $request->input('orderId');
+        $data = ['username' => $username, 
+            'email' => $email,
+            'amount' => $amount,
+            'rrr' => $rrr,
+            'description' => $description,
+            'r_message' => $r_message, 
+            'r_order_id' => $r_order_id,
+            'r_payment_date' => date('Y-m-d H:i:s', strtotime($r_payment_date)),
+            'r_status' => $r_status,
+            'r_processor_id' => $r_processor_id,
+            'r_transaction_id' => $r_transaction_id
+        ];
+        Transactions::create($data);
+        $check = Transactions::where(['rrr' => $rrr])->first();
+        if($check != null)//it means data has been successfully saved
+        {
+            //Now get the unit from DB, update and save
+            $details = User::select('units')
+            ->where(['username' => $username])->first();
+            $details->units += $amount;
+
+            $account = User::where(['username' => $username])->first();
+            $account->units = $details->units;
+            $account->save();
+            $return = "saved";
+        }
+        else{ //something happened as data isnt available on bd (not saved)
+            $return = "not saved";
+        }
+        return $return;
+    }
+
     public function call(Request $request)
     {
         $rc = request()->route('rc_number_');
-        $call_type = (int)request()->route('calltype_');
+        $call_type = (int)request()->route('calltype_'); //Basic, Directors, Shareholders, or Secretary
         $class = (int)request()->route('class_');
         $type = null;
         $role = "";
@@ -76,6 +132,13 @@ class OrganizationController extends Controller
             $unit -= 1000;
             $account->units = $unit;
             $account->save();
+            /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details
+            --------------------------------------------------------------*/
+            dd(Browser::isDesktop());
+            $browser = "";
+            $os = "";
+            $device = "";
             return $reply;
         }
 
@@ -347,8 +410,8 @@ class OrganizationController extends Controller
 
     public function GetTransactionHistory(Request $request){
         $userId  = $request->input('username');
-        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(transaction_datetime, '%W, %M %e %Y %r') as datetime"))
-        ->Where(['username' => $userId])->paginate(1);
+        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(r_payment_date, '%W, %M %e %Y %r') as datetime"))
+        ->Where(['username' => $userId])->paginate(10);
         return response()->json($temp);
     }
 
@@ -359,8 +422,68 @@ class OrganizationController extends Controller
             return "Empty";
         }
 
-        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(transaction_datetime, '%W, %M %e %Y %r') as datetime"))
+        $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(r_payment_date, '%W, %M %e %Y %r') as datetime"))
         ->Where(['rrr' => $rrr])->get();
         return response()->json($temp);
+    }
+
+    /*---------------------------------------- 
+    This section handles dashboard statistics
+    ----------------------------------------*/
+    public function GetTotalAPICallsToday(Request $request){
+        $username = $request->input('username');
+        $temp = Transactions::select('id')
+        ->where(\DB::raw("DATE_FORMAT(r_payment_date, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->where(['username' => $username])->get();
+        $total_today = count($temp);
+        return $total_today;
+    }
+
+    public function GetTotalUnitsExpendedToday(Request $request){
+        $username = $request->input('username');
+        $temp = Log::select('api_call_cost')
+        ->where(\DB::raw("DATE_FORMAT(api_call_datetime, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->where(['username' => $username])->sum('api_call_cost');
+        return $temp;
+    }
+
+    public function GetTotalUnitsPurchasedToday(Request $request){
+        $username = $request->input('username');
+        $temp = Transactions::select('amount')
+        ->where(\DB::raw("DATE_FORMAT(r_payment_date, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->where(['username' => $username])->sum('amount');
+        return $temp;
+    }
+
+    public function GetTotalCummulativeAPICalls(Request $request){
+        $username = $request->input('username');
+        $temp = Transactions::select('id')
+        ->where(['username' => $username])->get();
+        $total_today = count($temp);
+        return $total_today;
+    }
+
+    public function GetTotalCummulativeUnitsExpended(Request $request){
+        $username = $request->input('username');
+        $temp = Log::select('api_call_cost')
+        ->where(['username' => $username])->sum('api_call_cost');
+        return $temp;
+    }
+
+    public function GetTotalCummulativeUnitsPurchased(Request $request){
+        $username = $request->input('username');
+        $temp = Transactions::select('amount')
+        ->where(['username' => $username])->sum('amount');
+        return $temp;
+    }
+
+    /*---------------------------------------- 
+    Get Realtime Units
+    ----------------------------------------*/
+    public function GetRealtimeUnits(Request $request){
+        $username = $request->input('username');
+        $temp = User::select('units')
+        ->where(['username' => $username])->first();
+        return $temp;
     }
 }

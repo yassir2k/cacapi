@@ -1,5 +1,5 @@
 <template>
-      <nav class="navbar  bg-success sizer justify-content-center">
+      <nav class="navbar  bg-success sizer d-flex justify-content-center">
 
   	<div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fa fa-home"></i>
@@ -31,29 +31,23 @@
         </button>
     </div>
 
-	<div class="v-divider"></div>
-	
-	<div class="btn-group d-flex">
-    	<button type="button" class="btn btn-sm btn-success btn-block dropdown-toggle" data-bs-toggle="dropdown">
-		<i class="fas fa-tools"></i>    Settings</button>
-      <div class="dropdown-menu" style="font-size:14px">
-      	<a class="dropdown-item text-success" href="edit_user_profile.php"><i class="fa fa-pencil-square-o"></i>	Edit User Details</a>
-		<div class="dropdown-divider"></div>
-      	<a class="dropdown-item text-success" href="change_password.php"><i class="fa fa-key"></i>	Change Password</a>
-      </div>
+    <div class="v-divider"></div>
+
+    <div class="btn-group d-flex">
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-eye"></i>	
+            <router-link class="lo text-white" :to="{ name: 'Transactions'}">View API Calls Log</router-link>
+        </button>
     </div>
 
-    <div class="v-divider"></div>
+	<div class="v-divider"></div>
 	
-    <form class="form-inline my-2 my-lg-0 ">
-           <div class="input-group">                    
-                    <input type="text" class="form-control" placeholder="Search" required>
-                    <div class="input-group-append">
-                        <button type="button" class="btn btn-outline-light btn-block"><i class="fa fa-search"></i></button>
-                    </div>
-           </div>
-    </form>
-    <div class="v-divider"></div>
+    <div class="btn-group d-flex">
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-user-cog"></i>	
+            <router-link class="lo text-white" :to="{ name: 'Transactions'}">User Settings</router-link>
+        </button>
+    </div>
+
+	<div class="v-divider"></div>
 
     <div class="btn-group d-flex">
     	<button type="button" class="btn btn-success btn-sm btn-block" v-on:click="Logout"><i class="fas fa-sign-out-alt"></i>

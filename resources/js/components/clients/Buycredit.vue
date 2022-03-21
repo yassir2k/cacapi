@@ -2,15 +2,15 @@
 <div>
     <div class="row">
         <div class="col-sm-12"> 
+            <NavBar /> 
         </div>
     </div>
-    <br />
     <br />
     <input type="hidden" name="_token" :value="csrf"> 
     <div class="row">
         <div class="col-sm-1">
         </div>
-        <div class="col-sm-10">
+        <div class="col-sm-8">
             <!-- Heading -->
             <div class="row">
                 <div class="col-sm-12">
@@ -21,31 +21,51 @@
 
             <!-- Radio Buttons -->
             <div class="row">
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="five" type="radio" required v-model="amount" name="amount" value="5000" :disabled="disableradio">
                         <label for="five">Five Thousand Naira (&#8358; 5,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="ten" type="radio" required v-model="amount" name="amount"  value="10000" :disabled="disableradio">
                         <label for="ten">Ten Thousand Naira (&#8358; 10,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="fifteen" type="radio" required v-model="amount" name="amount"  value="15000" :disabled="disableradio">
                         <label for="fifteen">Fifteen Thousand Naira (&#8358; 15,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+            </div>
+
+            <br /><br />
+
+            <!-- Radio Buttons -->
+            <div class="row">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="twenty" type="radio" required v-model="amount" name="amount"  value="20000" :disabled="disableradio">
                         <label for="twenty">Twenty Thousand Naira (&#8358; 20,000)</label>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="chiller_cb form-check-inline align-items-center"><br />
+                        <input id="fifty" type="radio" required v-model="amount" name="amount"  value="50000" :disabled="disableradio">
+                        <label for="fifty">Fifty Thousand Naira (&#8358; 50,000)</label>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="chiller_cb form-check-inline align-items-center"><br />
+                        <input id="hundred" type="radio" required v-model="amount"  name="amount" value="100000" :disabled="disableradio">
+                        <label for="hundred">Hundred Thousand Naira (&#8358; 100,000)</label>
                         <span></span>
                     </div>
                 </div>
@@ -55,31 +75,24 @@
 
             <!-- Radio Button -->
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="chiller_cb form-check-inline align-items-center"><br />
-                        <input id="fifty" type="radio" required v-model="amount" name="amount"  value="50000" :disabled="disableradio">
-                        <label for="fifty">Fifty Thousand Naira (&#8358; 50,000)</label>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="chiller_cb form-check-inline align-items-center"><br />
-                        <input id="hundred" type="radio" required v-model="amount"  name="amount" value="100000" :disabled="disableradio">
-                        <label for="hundred">Hundred Thousand Naira (&#8358; 100,000)</label>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="one_fifty" type="radio" required v-model="amount" name="amount" value="150000" :disabled="disableradio">
                         <label for="one_fifty">One Hundred Fifty Thousand Naira (&#8358; 150,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="two_hundred" type="radio" required v-model="amount" name="amount"  value="200000" :disabled="disableradio">
                         <label for="two_hundred">Two Hundred Thousand Naira (&#8358; 200,000)</label>
+                        <span></span>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="chiller_cb form-check-inline align-items-center"><br />
+                        <input id="two_hundred_fifty" type="radio" required v-model="amount" name="amount"  value="250000" :disabled="disableradio">
+                        <label for="two_hundred_fifty">Two Hundred Fifty Thousand Naira (&#8358; 250,000)</label>
                         <span></span>
                     </div>
                 </div>
@@ -91,31 +104,24 @@
 
             <!-- Radio Buttons -->
             <div class="row">
-                <div class="col-sm-3">
-                    <div class="chiller_cb form-check-inline align-items-center"><br />
-                        <input id="two_hundred_fifty" type="radio" required v-model="amount" name="amount"  value="250000" :disabled="disableradio">
-                        <label for="two_hundred_fifty">Two Hundred Fifty Thousand Naira (&#8358; 250,000)</label>
-                        <span></span>
-                    </div>
-                </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="three_hundred" type="radio" required v-model="amount" name="amount"  value="300000" :disabled="disableradio">
                         <label for="three_hundred">Three Hundred Thousand Naira (&#8358; 300,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
                         <input id="five_hundred" type="radio" required v-model="amount" name="amount"  value="500000" :disabled="disableradio">
                         <label for="five_hundred">Five Hundred Thousand Naira (&#8358; 500,000)</label>
                         <span></span>
                     </div>
                 </div>
-                <div class="col-sm-3">
+                <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
-                        <input id="million" type="radio" required v-model="amount"  name="amount" value="1000000" :disabled="disableradio">
-                        <label for="million">One Million Naira (&#8358; 1,000,000)</label>
+                        <input id="million" type="radio" required v-model="amount"  name="amount" value="1000000000" :disabled="disableradio">
+                        <label for="million">One Billion Naira (&#8358; 1,000,000,000)</label>
                         <span></span>
                     </div>
                 </div>
@@ -185,7 +191,7 @@
                             <center>
                                 <div class="form-group d-grid gap-2 col-3 mx-auto">
                                     <button :disabled="disableRemitaBtn" v-on:click="MakePayment()" type="submit" title="Proceed to Remita Payment Gateway" class="btn remita btn-sm" name="remitaBtn">
-                                        <img src="images/remita-payment-logo.png" width="40" height="41" style="display: inline; position: relative; left: -60px; v-align: middle;" />
+                                        <img src="images/remita-payment-logo.png" width="40" height="41" style="display: inline; position: relative; left: -30px; v-align: middle;" />
                                         <b style="font-size: 1.71428571rem; v-align: middle">Remita</b>
                                     </button> 
                                 </div>
@@ -201,13 +207,56 @@
             </div><!-- End of Remita Details Page -->
             <br />
         </div>
-        <div class="col-sm-1">
+        <div class="col-sm-3">
+            <div class="row align-bottom">
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <br />
+                            <i class="fas fa-user-circle fa-5x justify-content-center" style="color: #DDDDDD"></i>
+                            <br />
+                            <br />
+                        </div>
+                        <div align="left" class="col-sm-9" style="border-left: 1px ridge #EEEEEE">
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h4><b>Organization</b></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5 style="color: #778899"><b>{{this.$session.get('organization')}}</b></h5>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="row">
+                                <div class="col-sm-12 text-secondary">
+                                    <h4><b>Current <i class="fas fa-wallet"></i> Balance</b></h4>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <h5 class="text-danger"><b>&#8358; &nbsp; {{ Number(this.units).toLocaleString() }}</b></h5>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 </div>
 </template>
 <script>
-import NavBar from './BuycreditNav.vue';
+import NavBar from './navigations/BuycreditNav.vue';
 import axios from 'axios';
 export default {
     setup() {
@@ -224,18 +273,19 @@ export default {
             disableRemitaBtn: true,
             showRemitaSection: false,
             rrr: null,
-            Transaction_Id: null,
             disableradio: false,
             rrrSpinner: '',
             feeSpinner: '',
             descSpinner: '',
             proceedBtnSpinner: '',
-            payerName: "Yassir Yahaya",
-            payerEmail: "yassir63@yahoo.com",
-            payerPhone: "080312345590",
+            payerName: this.$session.get("organization"),
+            payerEmail: this.$session.get("email"),
+            payerPhone: this.$session.get("phone"),
             merchantId: "2547916",
             apiKey: "1946",
-            serviceTypeId: "4430731"
+            serviceTypeId: "4430731",
+            transId: "",
+            units: null
         }
     }, 
     components:{
@@ -329,7 +379,8 @@ export default {
 				 ]
 			},
             onSuccess: function (msg) {
-                console.log(msg);
+                this.transId = msg.transactionId;
+                //console.log(msg);
                 console.log('Now checking RRR Status');
                 //Get RRR Status Demo
                 try{
@@ -343,14 +394,33 @@ export default {
                 responseType: 'json'
                 })
                 .then(response=>{
-                    console.log(response);
-                    /*if(response.data.message == "Approved"){
-                        alert("Transaction is Successful");
+                    //console.log(response.data);
+                    //We Submit the Data and Response to the DB
+                    var postData = {
+                        "amount": self.amount,
+                        "message": response.data['message'],
+                        "rrr": self.rrr,
+                        "description": "CAC API e-Wallet Top up",
+                        "transaction_datetime": response.data['paymentDate'],
+                        "orderId": response.data['orderId'],
+                        "status": response.data['status'],
+                        "processorId": msg.processorId,
+                        "transactionId": msg.transactionId,
+                        "username": self.$session.get("username"),
+                        "email": self.$session.get("email")
                     }
-                    else{
-                        alert("You got it wrong.");
-                    }*/
-                    self.$router.push({ path: '/client-dashboard', params: { user: response.data } });
+                    console.log(postData);
+                    try{
+                        axios.post("http://127.0.0.1:8000/api/post_transaction", postData) 
+                        .then(response =>{
+                            self.disableRemitaBtn = true;
+                            self.$router.push({ name: 'TransactionDetails', params: { rrr: self.rrr } });
+                        })
+                    }
+                    catch{
+
+                    }
+                    //self.$router.push({ path: '/client-dashboard', params: { user: response.data } });
                 });
             }
             catch(err){    
@@ -386,7 +456,6 @@ export default {
                 responseType: 'json'
                 })
                 .then(response =>{
-                    console.log(response.data);
                     return response.data;
                 })
             }catch(err){    
@@ -399,6 +468,33 @@ export default {
       {
         this.disableProceedButton = false;
       }
+    },
+    beforeCreate: function () {
+        if (!this.$session.exists()) {
+        this.$router.push('/');
+        }
+        else{
+            if(this.$session.get("role") != "Accessor"){
+                alert("You do not have privilege to visit this page.");
+                this.$session.destroy();
+                this.$router.push('/');
+            }
+            else{
+                //Get Realtime Units
+                var postData = {
+                    "username": this.$session.get("username"),
+                }
+                try{
+                    axios.post("http://127.0.0.1:8000/api/get_realtime_units", postData) 
+                    .then(response =>{
+                        this.units = response.data["units"];
+                    })
+                }
+                catch{
+
+                }
+            }
+        }
     }
 }
 </script>
