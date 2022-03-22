@@ -36,3 +36,9 @@ Route::get('/transaction-history/transaction-details/{rrr}', function() {
 Route::get('/api-documentation', function() {
     return view('clients/api-documentation');
 });
+
+Route::get('/api-call-log', function() {
+    return view('clients/api-call-log');
+});
+
+Route::get('/admin/load-more-details/{transaction-id}', [FeedbackController::class, 'LoadFeedback']);

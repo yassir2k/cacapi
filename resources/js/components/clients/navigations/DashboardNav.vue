@@ -3,7 +3,7 @@
 
   	<div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fa fa-home"></i>
-            <router-link class="lo text-white" :to="{ name: 'Dashboard'}">dashboard</router-link>
+            <router-link class="lo text-white" :to="{ name: 'Dashboard'}">Dashboard</router-link>
 		</button>
     </div>
 
@@ -35,7 +35,7 @@
 
     <div class="btn-group d-flex">
     	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-eye"></i>	
-            <router-link class="lo text-white" :to="{ name: 'Transactions'}">View API Calls Log</router-link>
+            <router-link class="lo text-white" :to="{ name: 'APIHistory'}">View API Calls Log</router-link>
         </button>
     </div>
 

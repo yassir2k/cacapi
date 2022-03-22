@@ -24,8 +24,9 @@ Route::get('/get_transaction_id', [OrganizationController::class, 'GenerateTrans
 Route::post('/transaction_history', [OrganizationController::class, 'GetTransactionHistory']);
 Route::post('/get_transaction_details', [OrganizationController::class, 'GetTransactionDetails']);
 Route::post('/post_transaction', [OrganizationController::class, 'PostTransaction']);
-//Route::get('/organizations/{username_}/{password_}/{calltype_}', [OrganizationController::class, 'call'])
-//->middleware('is_user_authorized','is_unit_enough','is_call_type_valid');
+Route::post('/api_call_log', [OrganizationController::class, 'GetAPICallLog']);
+
+
 Route::get('/organizations/{username_}/{password_}/{calltype_}/{rc_number_}/{class_}', [OrganizationController::class, 'call'])
 ->middleware('is_user_authorized','is_unit_enough','is_call_type_valid');
 /*

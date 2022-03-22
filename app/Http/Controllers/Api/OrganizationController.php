@@ -19,6 +19,9 @@ class OrganizationController extends Controller
         return Company::take(2)->get();
     }
 
+    /*---------------------------------------- 
+    Function to fetch Client's IP Address
+    ----------------------------------------*/
     public function getIPAddress() {  
 		//whether ip is from the share internet  
 		 if(!empty($_SERVER['HTTP_CLIENT_IP'])) {  
@@ -35,6 +38,10 @@ class OrganizationController extends Controller
 		 return $ip;  
 	}
 
+
+    /*---------------------------------------- 
+    Login Function
+    ----------------------------------------*/
     public function Login(Request $request){
         // create our user data for the authentication
         $email   = $request->input('email');
@@ -60,6 +67,7 @@ class OrganizationController extends Controller
             return "Unsuccessful";
         }
     }
+
 
     /*---------------------------------------- 
     Post Transaction Data to DB
@@ -109,6 +117,11 @@ class OrganizationController extends Controller
         return $return;
     }
 
+
+
+    /*---------------------------------------- 
+    Main API Function Call 
+    ----------------------------------------*/
     public function call(Request $request)
     {
         $rc = request()->route('rc_number_');
@@ -159,8 +172,8 @@ class OrganizationController extends Controller
             $user_OS = $info['platform'];
             $device = $info['device_type'];
             $ip = $this->getIPAddress();
-            $transactionId = substr(bin2hex(random_bytes(12)), 0, 12);
-            $details = "Basic Company Information Search";
+            $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+            $details = $rc." (".$class.") - Basic Company Information Search";
             $dateTime = date("Y-m-d H:i:s");
             $responseCode = "Ok";
             $cost = 1000;
@@ -224,7 +237,35 @@ class OrganizationController extends Controller
                 //Deduct Unit and update DB
                 $unit -= 1000;
                 $account->units = $unit;
-                $account->save();     
+                $account->save();
+                
+                
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Proprietors.";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Ok";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return $reply;
             }
             if($class == 2)
@@ -263,6 +304,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save();   
+                
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Directors";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Ok";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return $reply;
             }
             if($class == 3)
@@ -301,6 +369,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save();    
+
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Trustees";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Ok";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return $reply;
             }
         }
@@ -316,6 +411,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save();    
+
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Not Found";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
             }
             if($class == 1 || $class == 3)
@@ -326,6 +448,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save(); 
+
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "API Call for Shareholders not applicable for BN or IT";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return "API call type 3 (Shareholders) doesn't apply for Business Names(1), or Incorporated Trustees(3) entities.";
             }
             if($class == 2)
@@ -367,7 +516,34 @@ class OrganizationController extends Controller
                 //Deduct Unit and update DB
                 $unit -= 1000;
                 $account->units = $unit;
-                $account->save();     
+                $account->save(); 
+                
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Ok";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return $reply;
             }
         }
@@ -383,6 +559,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save(); 
+
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Not Found";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return "No Company record exists in CAC's Database for the search term 'RC: " . $rc . ", Classification: " . $class . "'";
             }
             if($class == 1) //Business Names
@@ -391,6 +594,33 @@ class OrganizationController extends Controller
                 $unit -= 1000;
                 $account->units = $unit;
                 $account->save(); 
+
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "API call (for Secretary) not applicable for Business Names.";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return "API call type 4 (Shareholders) doesn't apply for Business Names(1) entities.";
             }
             if($class == 2 || $class == 3) //Limited Liability Company
@@ -426,11 +656,41 @@ class OrganizationController extends Controller
                 //Deduct Unit and update DB
                 $unit -= 1000;
                 $account->units = $unit;
-                $account->save();       
+                $account->save(); 
+                
+                /*--------------------------------------------------------------
+                Saving IP, Broswer, OS and other sundry details to DB
+                --------------------------------------------------------------*/
+                $info = get_browser(null, true);
+                $browser = $info['browser'];
+                $user_OS = $info['platform'];
+                $device = $info['device_type'];
+                $ip = $this->getIPAddress();
+                $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
+                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $dateTime = date("Y-m-d H:i:s");
+                $responseCode = "Ok";
+                $cost = 1000;
+                $data = ['transaction_id' => $transactionId, 
+                    'details' => $details,
+                    'api_call_datetime' => $dateTime,
+                    'ip_address' => $ip,
+                    'device' => $device,
+                    'browser' => $browser, 
+                    'operating_system' => $user_OS,
+                    'call_type' => $call_type,
+                    'api_call_cost' => $cost,
+                    'response_code' => $responseCode,
+                    'username' => $username
+                ];
+                Log::create($data);
                 return $reply;
             }
         }
     }
+    /*--------------------------------------------------------------
+        End of Main API Call
+    --------------------------------------------------------------*/
 
     public function GenerateTransactionId(){
         $id = substr(bin2hex(random_bytes(20)), 0, 20);//Generate Control Hash
@@ -449,6 +709,14 @@ class OrganizationController extends Controller
     public function GetTransactionHistory(Request $request){
         $userId  = $request->input('username');
         $temp = Transactions::select('*', \DB::raw("DATE_FORMAT(r_payment_date, '%W, %M %e %Y %r') as datetime"))
+        ->Where(['username' => $userId])->paginate(10);
+        return response()->json($temp);
+    }
+
+
+    public function GetAPICallLog(Request $request){
+        $userId  = $request->input('username');
+        $temp = Log::select('*', \DB::raw("DATE_FORMAT(api_call_datetime, '%W, %M %e %Y %r') as datetime"))
         ->Where(['username' => $userId])->paginate(10);
         return response()->json($temp);
     }
@@ -523,5 +791,21 @@ class OrganizationController extends Controller
         $temp = User::select('units')
         ->where(['username' => $username])->first();
         return $temp;
+    }
+
+
+    /*---------------------------------------- 
+    Load More Log Details
+    ----------------------------------------*/
+    public function LoadMoreDetails(Request $request)
+    {
+        $id = request()->route('transaction-id');
+        if(is_null($id))
+        {
+            return "Not Found";
+        }
+        $Feedback = Log::where(['transaction_id'=> $id])->first();
+        return view('/client/load-more-details')
+        ->with('_feedback',$Feedback);
     }
 }

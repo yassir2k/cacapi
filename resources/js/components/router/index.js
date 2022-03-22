@@ -5,6 +5,7 @@ import Buycredit from "../clients/Buycredit.vue";
 import Transactions from "../clients/Transactions.vue";
 import TransactionDetails from "../clients/TransactionDetails.vue";
 import Documentation from "../clients/Documentation.vue";
+import APIHistory from "../clients/APICallLog.vue";
 import Login from "../Login";
 Vue.use(VueRouter);
     const routes = [
@@ -37,6 +38,12 @@ Vue.use(VueRouter);
           path: "/api-documentation",
           name: "Documentation",
           component: Documentation, 
+        }
+        ,
+        {
+          path: "/api-call-log",
+          name: "APIHistory",
+          component: APIHistory, 
         }
     ];
     
