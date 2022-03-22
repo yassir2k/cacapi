@@ -41,7 +41,7 @@
                             <td>{{ user.datetime}}</td>
                             <td>{{ user.description }}</td>
                             <td>{{ user.r_message }}</td>
-                            <td><a href="" @click="ShowTransactionDetails(user.rrr)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
+                            <td><a href="" v-on:click.prevent="ShowTransactionDetails(user.rrr)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
                         </tr>
                     </tbody>
                     <tbody v-else>

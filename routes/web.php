@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Api\OrganizationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,4 +42,4 @@ Route::get('/api-call-log', function() {
     return view('clients/api-call-log');
 });
 
-Route::get('/admin/load-more-details/{transaction-id}', [FeedbackController::class, 'LoadFeedback']);
+Route::get('/clients/load-more-details/{transaction_id}', [OrganizationController::class, 'LoadMoreDetails']);

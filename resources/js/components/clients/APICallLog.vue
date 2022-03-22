@@ -37,7 +37,7 @@
                             <td>{{ user.transaction_id }}</td>
                             <td>{{ user.details }}</td>
                             <td>{{ user.datetime}}</td>
-                            <td><a href="" @click="getMoreDetails(user.transaction_id)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
+                            <td><a href="" v-on:click.prevent="getMoreDetails(user.transaction_id)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
                         </tr>
                     </tbody>
                     <tbody v-else>
@@ -102,9 +102,9 @@
 </template>
 
 <script>
-import pagination from 'laravel-vue-pagination'
+import pagination from 'laravel-vue-pagination';
 import NavBar from './navigations/APICallNav.vue';
-import axios from 'axios'
+import axios from 'axios';
 export default {
     data() {
         return {
@@ -181,13 +181,24 @@ export default {
         },
         getMoreDetails(ind){
             this.LoadView = '<center><i class="fa fa-spinner fa-spin fa-5x fa-fw text-secondary"></i></center>';
+
             try{
-                load.get('/load-more-details/'+ ind).then(response =>{
-                    this.LoadView = response.data
+                axios.get('http://127.0.0.1:8000/clients/load-more-details/' + ind)
+                .then(response =>{
+                        this.LoadView = response.data;
+                        console.log(response.data);
                 })
             }
-            catch(err){
-                    console.log(err)
+            catch(err){    
+                if (err.response) {
+                // client received an error response (5xx, 4xx)
+                console.log("Server Error:", err)
+                } else if (err.request) {
+                // client never received a response, or request never left
+                console.log("Network Error:", err)
+                } else {
+                console.log("Client Error:", err)
+                }
             }
         }
     },
