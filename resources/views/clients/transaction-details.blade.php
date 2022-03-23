@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@section('title', 'Transaction History Details')
+@section('title', 'Transaction Details')
 @section('content')
 @if(session()->has('message'))
     <div id="s_alert" class="alert alert-success alert-dismissible" style="position:absolute; height:auto; right:50px; top:50px; z-index:999">

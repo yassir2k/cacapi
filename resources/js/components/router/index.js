@@ -6,6 +6,8 @@ import Transactions from "../clients/Transactions.vue";
 import TransactionDetails from "../clients/TransactionDetails.vue";
 import Documentation from "../clients/Documentation.vue";
 import APIHistory from "../clients/APICallLog.vue";
+import EditUserProfile from "../clients/EditUserProfile.vue";
+import ChangeUserPassword from "../clients/ChangeUserPassword.vue";
 import Login from "../Login";
 Vue.use(VueRouter);
     const routes = [
@@ -44,11 +46,21 @@ Vue.use(VueRouter);
           path: "/api-call-log",
           name: "APIHistory",
           component: APIHistory, 
+        },
+        {
+          path: "/edit-user-profile",
+          name: "EditUserProfile",
+          component: EditUserProfile, 
+        },
+        {
+          path: "/change-user-password",
+          name: "ChangeUserPassword",
+          component: ChangeUserPassword, 
         }
     ];
     
-    export default new VueRouter({
-      routes,
-      mode: 'history'
-  })
+export default new VueRouter({
+  routes,
+  mode: 'history'
+})
   

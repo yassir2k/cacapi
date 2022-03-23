@@ -1,5 +1,5 @@
 <template>
-      <nav class="navbar  bg-success sizer d-flex justify-content-center">
+      <nav class="navbar  bg-success sizer justify-content-center">
 
   	<div class="btn-group ">
     	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fa fa-home"></i>
@@ -18,7 +18,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-file-pdf"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-file-pdf"></i>
             <router-link class="lo text-white" :to="{ name: 'Documentation'}">API Documentation</router-link>
 		</button>
     </div>
@@ -42,7 +42,7 @@
 	<div class="v-divider"></div>
 	
     <div class="btn-group d-flex">
-    	<button type="button" class="btn btn-sm btn-success btn-block dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-cog"></i>	
+    	<button type="button" class="btn btn-sm btn-success active btn-block dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-cog"></i>	
             User Settings
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="font-size:14px">

@@ -1,5 +1,5 @@
 @extends('layouts.template')
-@section('title', 'API Documentation/User Manual')
+@section('title', 'Edit User')
 @section('content')
 @if(session()->has('message'))
     <div id="s_alert" class="alert alert-success alert-dismissible" style="position:absolute; height:auto; right:50px; top:50px; z-index:999">
@@ -8,8 +8,8 @@
     </div>
 @endif
 
-<div id="app">
-    <Documentation></Documentation>
+<div id="App">
+    <EditUser></EditUser>
 </div>
 
 

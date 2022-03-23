@@ -42,4 +42,12 @@ Route::get('/api-call-log', function() {
     return view('clients/api-call-log');
 });
 
+Route::get('/edit-user-profile', function() {
+    return view('clients/edit-user-profile');
+});
+
+Route::get('/change-user-password', function() {
+    return view('clients/change-user-password');
+});
+
 Route::get('/clients/load-more-details/{transaction_id}', [OrganizationController::class, 'LoadMoreDetails']);
