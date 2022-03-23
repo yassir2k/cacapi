@@ -808,4 +808,41 @@ class OrganizationController extends Controller
         return view('/clients/load-more-details')
         ->with('_feedback',$Feedback);
     }
+
+    /*---------------------------------------- 
+    Fetch User Details
+    ----------------------------------------*/
+    public function FetchUserDetails(Request $request)
+    {
+        $username = $request->input('username');
+        if(is_null($username))
+        {
+            return "Not Found";
+        }
+        $Feedback = User::where(['username'=> $username])->first();
+        return $Feedback;
+    }
+
+    /*---------------------------------------- 
+    Update User Details
+    ----------------------------------------*/
+    public function UpdateUserDetails(Request $request)
+    {
+        $username = $request->input('username');
+        $address = $request->input('address');
+        $contactName = $request->input('contactName');
+        $contactMobile = $request->input('contactMobile');
+        $email = $request->input('email');
+        if(is_null($username) || is_null($address) || is_null($contactName) || is_null($contactMobile) || is_null($email))
+        {
+            return "Incomplete data posted";
+        }
+        $User = User::where(['username'=> $username])->first();
+        $User->address = $address;
+        $User->contact_name = $contactName;
+        $User->contact_phone = $contactMobile;
+        $User->email = $email;
+        $User->save();
+        return "Data updated successfully.";
+    }
 }

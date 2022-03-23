@@ -48,3 +48,5 @@ API Calls Realtime Units
 ------------------------------------------------------------------------
 */
 Route::post('/get_realtime_units', [OrganizationController::class, 'GetRealtimeUnits']);
+Route::post('/fetch_user_details', [OrganizationController::class, 'FetchUserDetails']);
+Route::post('/update_user_details', [OrganizationController::class, 'UpdateUserDetails']);
