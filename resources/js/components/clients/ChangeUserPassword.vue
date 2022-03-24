@@ -15,45 +15,132 @@
         <div class="col-sm-8">
             <h2 style="border-bottom: 1px solid #DDDDDD">{{header_1}}</h2>
             <br />
-                <div class="table-wrapper justify-content-center">
-                <div style="padding-bottom: 15px; background: #666666; color: #f5f5f5; padding: 20px 30px; margin: -25px -5px 10px; border-radius: 4px 4px 0 0;">
-                    <div class="row" style="font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif">
-                        <div class="col-xs-6">
-                            <center><h2 style="margin: 5px 0 0; font-size: 30px"><b>FIRS</b></h2></center>
+            <!-- -------------------------------------------------------------
+            Main Stuff Here
+            -------------------------------------------------------------- -->
+            <div class="row"> <!-- Top Row -->
+                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 align-middle">
+                            <strong>Current Password:</strong><b class="text-danger">*</b>
                         </div>
                     </div>
+                    <div class="row">
+                    <div class="col-sm-10 ">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-unlock-alt" style="color: #8FBC8F"></i>
+                                </span>                    
+                                <input v-bind:type="[showCurrentPassword ? 'text' : 'password']"  class="form-control" placeholder="Your current password here" v-model="c_password" required>
+                                <span class="input-group-text" style="background-color: white"  @click="showCurrentPassword = !showCurrentPassword">
+                                    <i class="fas" :class="[showCurrentPassword ? 'fa-eye' : 'fa-eye-slash']"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!--End Email Subject-->
+                    </div>
                 </div>
-                <table class="table table-bordered table-striped table-condensed">
-                    <thead style="background-color: #5F8575; color: #FFFFFF; font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif">
-                        <tr>
-                            <th>RRR</th>
-                            <th>Amount</th>
-                            <th>Transaction Datetime</th> 
-                            <th>Description</th>
-                            <th>Status</th>
-                            <th>View Details</th>
-                        </tr>  
-                    </thead> 
-                    <tbody v-if="(users) && (users.data.length > 0)">
-                        <tr v-for="(user,index) in users.data" :key="index" style="font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif; color: #34495E">
-                            <td>{{ user.rrr }}</td>
-                            <td>{{ Number(user.amount).toLocaleString()}}</td>
-                            <td>{{ user.datetime}}</td>
-                            <td>{{ user.description }}</td>
-                            <td>{{ user.r_message }}</td>
-                            <td><a href="" v-on:click.prevent="ShowTransactionDetails(user.rrr)" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
-                        </tr>
-                    </tbody>
-                    <tbody v-else>
-                        <tr>
-                            <td align="center" colspan="5">No record found.</td>
-                        </tr>
-                    </tbody>
-                </table>
-                <pagination align="center" :data="users" @pagination-change-page="list"></pagination>
-                <br />     
-                <br />
+
+                <div class="col-sm-3">
+                </div>
+            </div> <!-- Top Row -->
+
+            <br />
+
+            <div class="row"> <!-- Middle Row -->
+                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 align-middle">
+                            <strong>New Password:</strong><b class="text-danger">*</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-10 ">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-unlock" style="color: #8FBC8F"></i>
+                                </span>                    
+                                <input v-bind:type="[showNewPassword ? 'text' : 'password']"  class="form-control" placeholder="Your new password here" v-model="n_password" required>
+                                <span class="input-group-text" style="background-color: white"  @click="showNewPassword = !showNewPassword">
+                                    <i class="fas" :class="[showNewPassword ? 'fa-eye' : 'fa-eye-slash']"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!--End Email Subject-->
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                </div>
+            </div> <!-- Middle Row -->
+
+            <br />
+
+            <div class="row"> <!-- Bottom Row -->
+                <div class="col-sm-3">
+                </div>
+
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 align-middle">
+                            <strong>Confirm New Password:</strong><b class="text-danger">*</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-10 ">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fas fa-unlock" style="color: #8FBC8F"></i>
+                                </span>                    
+                                <input v-bind:type="[showConfirmPassword ? 'text' : 'password']"  class="form-control" placeholder="Retype new password here" v-model="cf_password" required>
+                                <span class="input-group-text" style="background-color: white"  @click="showConfirmPassword = !showConfirmPassword">
+                                    <i class="fas" :class="[showConfirmPassword ? 'fa-eye' : 'fa-eye-slash']"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!--End Email Subject-->
+                    </div>
+                </div>
+
+                <div class="col-sm-3">
+                </div>
+            </div> <!-- Bottom Row -->
+
+            <br />
+            <div class="row" style="font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif"><!-- Update Button -->
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group d-grid gap-2">
+                        <button :disabled="freeze" v-on:click.prevent="UpdatePassword" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
+                            <span>Update</span>
+                            <span v-html="rotor"></span>
+                        </button> 
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div><!--End Button-->
+
+            <br />
+            <div id="row">
+                <div id="col-sm-12">
+                    <div id="s_alert" class="alert alert-success alert-dismissible" style="position:absolute; height:auto; right:50px; top:50px; z-index:999">
+                    <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
+                    <strong><i class="fas fa-check-square-o"></i></strong> Some Message Here...!
+                    </div>
+                </div>
             </div>
+
         </div>
         <div class="col-sm-3">
             <div class="row align-bottom">
@@ -95,37 +182,47 @@
         </div>
     </div>
     <br />
-    <center>
-        
-        <br />
-    </center>
-    <!-- End of Center -->
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
 
 </div>
 </template>
 
 <script>
-import pagination from 'laravel-vue-pagination'
 import NavBar from './navigations/UserSettingsNav.vue';
-import axios from 'axios'
+import axios from 'axios';
 export default {
     data() {
         return {
-                users:{
-                    type: Object,
-                    default: null,
-                },
-                header_1: "Change User Password",
-                units: 0
-            }
-    },
-    props: {
-        records: Number,
-        perPage: Number,
-        length: Number
+
+            header_1: "Change User Password",
+            units: 0,
+            freeze: false,
+            rotor: '&nbsp;<i class="fas fa-save"></i>',
+            csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
+            username: "...",
+            email: "...",
+            organization: "...",
+            contactName: "...",
+            contactNumber: "...",
+            status: "...",
+            address: "...",
+            showCurrentPassword: false,
+            showNewPassword: false,
+            showConfirmPassword: false,
+            n_password: '',
+            c_password: '',
+            cf_password: ''
+        }
     },
     components:{
-         pagination,
          NavBar
     },
     beforeCreate: function () {
@@ -140,7 +237,7 @@ export default {
             }
             else{
                 //Get Realtime Units
-                var postData = {
+                const postData = {
                     "username": this.$session.get("username"),
                 }
                 try{
@@ -150,7 +247,15 @@ export default {
                     })
                 }
                 catch{
-
+                    if (err.response) {
+                    // client received an error response (5xx, 4xx)
+                    console.log("Server Error:", err)
+                    } else if (err.request) {
+                    // client never received a response, or request never left
+                    console.log("Network Error:", err)
+                    } else {
+                    console.log("Client Error:", err)
+                    }
                 }
             }
         }
@@ -181,8 +286,41 @@ export default {
                 }
             }
         },
-        ShowTransactionDetails(ref){
-            this.$router.push({ name: 'TransactionDetails', params: { rrr: ref } });
+        UpdatePassword(){
+            const user = this.$session.get('username');
+            this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
+            this.freeze = true;
+            var dat = {
+                "password": this.c_password,
+                "new_password": this.n_password,
+                "confirm_password": this.cf_password,
+                "username": user
+            }
+            /*---------------------------------------------
+                Update via API
+             ---------------------------------------------*/
+             try{
+                axios.post('http://127.0.0.1:8000/api/change_user_password', dat)
+                .then(({response}) =>{
+                    console.log(response);
+                    this.freeze = false;
+                    this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+                });
+            }
+            catch(err){    
+                if (err.response) {
+                // client received an error response (5xx, 4xx)
+                console.log("Server Error:", err)
+                } else if (err.request) {
+                // client never received a response, or request never left
+                console.log("Network Error:", err)
+                } else {
+                console.log("Client Error:", err)
+                }
+                this.freeze = false;
+                this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+            }
+            
         }
     },
 }

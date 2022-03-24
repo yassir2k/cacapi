@@ -845,4 +845,33 @@ class OrganizationController extends Controller
         $User->save();
         return "Data updated successfully.";
     }
+
+    /*---------------------------------------- 
+    Update User Details
+    ----------------------------------------*/
+    public function ChangeUserPassword(Request $request)
+    {
+        $Password = $request->input('password');
+        $nPassword = $request->input('new_password');
+        $cPassword = $request->input('confirm_password');
+        $username = $request->input('username'); 
+        if(is_null($Password) || is_null($nPassword) || is_null($cPassword)  || is_null($username))
+        {
+            return "Incomplete data posted";
+        }
+        $credentials = ['username' => $username, 'password' => $Password, 'is_active' => 1, 'is_registered' => 1];
+
+        // attempt to do the login
+        if (Auth::attempt($credentials))
+        {
+            return "Current Password is valid";
+        }
+        else
+        {
+            return "Invalide current password";
+        }
+
+        $User = User::where(['username'=> $username])->first();
+        return "Data updated successfully.";
+    }
 }

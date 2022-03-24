@@ -353,9 +353,9 @@ export default {
             }
         },
         UpdateUserInfo(){
-            this.freeze = true;
             const user = this.$session.get('username');
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
+            this.freeze = true;
             var dat = {
                 "username": user,
                 "email": this.email,
@@ -370,7 +370,8 @@ export default {
                 axios.post('http://127.0.0.1:8000/api/update_user_details', dat)
                 .then(({response}) =>{
                     console.log(response);
-                    
+                    this.freeze = false;
+                    this.rotor = '&nbsp;<i class="fas fa-save"></i>';
                 });
             }
             catch(err){    

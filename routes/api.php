@@ -44,9 +44,10 @@ Route::post('/get_total_cummulative_units_purchased', [OrganizationController::c
 
 /*
 ------------------------------------------------------------------------
-API Calls Realtime Units 
+API Calls Realtime Units  
 ------------------------------------------------------------------------
 */
 Route::post('/get_realtime_units', [OrganizationController::class, 'GetRealtimeUnits']);
 Route::post('/fetch_user_details', [OrganizationController::class, 'FetchUserDetails']);
 Route::post('/update_user_details', [OrganizationController::class, 'UpdateUserDetails']);
+Route::post('/change_user_password', [OrganizationController::class, 'ChangeUserPassword']);
