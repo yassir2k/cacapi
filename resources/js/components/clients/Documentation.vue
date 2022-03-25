@@ -22,7 +22,18 @@
                             </h2>
                             <div id="collapseOne" class="accordion-collapse collapse show">
                                 <div class="card-body">
-                                    <p>HTML stands for HyperText Markup Language. HTML is the standard markup language for describing the structure of web pages. <a href="https://www.tutorialrepublic.com/html-tutorial/" target="_blank">Learn more.</a></p>
+                                    <p>&nbsp; This API call is applicable to all Entity categories (Business Names [1], Company [2], and Incorporated Trustees [3]).</p>
+                                    <p>&nbsp; The API resource is invoked using the link syntax below:
+                                    <p class="text-primary"><strong>&nbsp; http://api.cac.gov.ng/api/organizations/[username]/[password]/[apiCallType]/[entityRegistrationNumber]/[entityClassification]</strong></p>
+                                    <p>&nbsp; where:</p>
+                                    <p><b>&nbsp; [username]:</b> Your given username issued by CAC (in your case, it is <b>{{this.$session.get('username')}}</b>)</p>
+                                    <p><b>&nbsp; [password]:</b> Your alphanumeric password configured during your registration.</p>
+                                    <p><b>&nbsp; [apiCallType]:</b> API Call type signals what exactly you're requesting from CAC. For instance, <b>1</b> means requesting Entity's basic info ONLY.</p>
+                                    <p><b>&nbsp; [entityRegistrationNumber]:</b> Registration number of the entity you would want to search, whether BN, IT, or RC Number (e.g. RC 1662939)</p>
+                                    <p><b>&nbsp; [entityClassification]:</b> The requesting Entity's category or classification. There are ONLY 3 possibilities here: </p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>1 </b>- For Business Names </p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>2 </b>- For Companies </p>
+                                    <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <b>3 </b>- For Incorporated Trustees </p>
                                 </div>
                             </div>
                         </div>

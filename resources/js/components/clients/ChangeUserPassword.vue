@@ -302,10 +302,11 @@ export default {
             if(this.cf_password != this.n_password)
             {
                 this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
-                '<strong><i class="fas fa-times-circle"></i></strong> New Password and Confirm New Password Mismatch'
+                '<strong><i class="fas fa-times-circle"></i></strong> New Password and Confirm New Password Mismatch' +
                 '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 this.freeze = false;
                 this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+                return;
             }
             else{
                 /*---------------------------------------------
@@ -346,6 +347,10 @@ export default {
             }
         }
     },
+    mounted(){
+        //$('.alert-success').fadeOut(10000);
+        //$('.alert-danger').fadeOut(10000);
+    }
 }
 </script>
 <style scoped>

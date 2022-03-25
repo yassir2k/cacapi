@@ -120,8 +120,8 @@
                 </div>
                 <div class="col-sm-4">
                     <div class="chiller_cb form-check-inline align-items-center"><br />
-                        <input id="million" type="radio" required v-model="amount"  name="amount" value="1000000000" :disabled="disableradio">
-                        <label for="million">One Billion Naira (&#8358; 1,000,000,000)</label>
+                        <input id="million" type="radio" required v-model="amount"  name="amount" value="1000000" :disabled="disableradio">
+                        <label for="million">One Million Naira (&#8358; 1,000,000)</label>
                         <span></span>
                     </div>
                 </div>
