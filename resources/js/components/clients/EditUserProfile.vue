@@ -18,6 +18,13 @@
             <!-- -------------------------------------------------------------
             Main Stuff Here
             -------------------------------------------------------------- -->
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <span v-html="AlertMsg"></span>
+                </div>
+            </div>
+
             <div class="row"> <!-- Top Row -->
                 <div class="col-sm-4">
                     <div class="row">
@@ -257,7 +264,8 @@ export default {
             contactName: "...",
             contactNumber: "...",
             status: "...",
-            address: "..."
+            address: "...",
+            AlertMsg:''
         }
     },
     components:{
@@ -353,6 +361,7 @@ export default {
             }
         },
         UpdateUserInfo(){
+            this.AlertMsg = '';
             const user = this.$session.get('username');
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
             this.freeze = true;
@@ -368,10 +377,20 @@ export default {
              ---------------------------------------------*/
              try{
                 axios.post('http://127.0.0.1:8000/api/update_user_details', dat)
-                .then(({response}) =>{
+                .then(response =>{
                     console.log(response);
                     this.freeze = false;
                     this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+                    if(response.data == "User data successfully updated"){
+                        this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
+                        '<strong><i class="fas fa-check-circle"></i></strong> User data successfully updated' +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                    }
+                    else{
+                        this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
+                        '<strong><i class="fas fa-times-circle"></i></strong> '+ response.data  +
+                        '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                    }
                 });
             }
             catch(err){    

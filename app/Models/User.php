@@ -23,6 +23,7 @@ class User extends Authenticatable
         'contact_name',
         'contact_phone',
         'password',
+        'viewed_by_admin',
         'is_active',
         'is_registered',
         'registered_on',

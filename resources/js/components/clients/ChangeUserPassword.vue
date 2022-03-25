@@ -18,6 +18,16 @@
             <!-- -------------------------------------------------------------
             Main Stuff Here
             -------------------------------------------------------------- -->
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-5">
+                    <span v-html="AlertMsg"></span>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+
             <div class="row"> <!-- Top Row -->
                 <div class="col-sm-3">
                 </div>
@@ -132,14 +142,6 @@
             </div><!--End Button-->
 
             <br />
-            <div id="row">
-                <div id="col-sm-12">
-                    <div id="s_alert" class="alert alert-success alert-dismissible" style="position:absolute; height:auto; right:50px; top:50px; z-index:999">
-                    <button type="button" class="close" data-bs-dismiss="alert">&times;</button>
-                    <strong><i class="fas fa-check-square-o"></i></strong> Some Message Here...!
-                    </div>
-                </div>
-            </div>
 
         </div>
         <div class="col-sm-3">
@@ -190,7 +192,6 @@
     <br />
     <br />
     <br />
-    <br />
 
 </div>
 </template>
@@ -219,7 +220,8 @@ export default {
             showConfirmPassword: false,
             n_password: '',
             c_password: '',
-            cf_password: ''
+            cf_password: '',
+            AlertMsg:''
         }
     },
     components:{
@@ -287,6 +289,7 @@ export default {
             }
         },
         UpdatePassword(){
+            this.AlertMsg = '';
             const user = this.$session.get('username');
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
             this.freeze = true;
@@ -296,31 +299,51 @@ export default {
                 "confirm_password": this.cf_password,
                 "username": user
             }
-            /*---------------------------------------------
-                Update via API
-             ---------------------------------------------*/
-             try{
-                axios.post('http://127.0.0.1:8000/api/change_user_password', dat)
-                .then(({response}) =>{
-                    console.log(response);
-                    this.freeze = false;
-                    this.rotor = '&nbsp;<i class="fas fa-save"></i>';
-                });
-            }
-            catch(err){    
-                if (err.response) {
-                // client received an error response (5xx, 4xx)
-                console.log("Server Error:", err)
-                } else if (err.request) {
-                // client never received a response, or request never left
-                console.log("Network Error:", err)
-                } else {
-                console.log("Client Error:", err)
-                }
+            if(this.cf_password != this.n_password)
+            {
+                this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
+                '<strong><i class="fas fa-times-circle"></i></strong> New Password and Confirm New Password Mismatch'
+                '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 this.freeze = false;
                 this.rotor = '&nbsp;<i class="fas fa-save"></i>';
             }
-            
+            else{
+                /*---------------------------------------------
+                Update via API
+                ---------------------------------------------*/
+                try{
+                    axios.post('http://127.0.0.1:8000/api/change_user_password', dat)
+                    .then(response =>{
+                        console.log(response);
+                        this.freeze = false;
+                        this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+                        if(response.data == "success"){
+                            this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-check-circle"></i></strong> Password successfully changed' +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                        }
+                        else{
+                            this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-times-circle"></i></strong> '+ response.data  +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                        }
+                    });
+                }
+                catch(err){    
+                    if (err.response) {
+                    // client received an error response (5xx, 4xx)
+                    console.log("Server Error:", err)
+                    } else if (err.request) {
+                    // client never received a response, or request never left
+                    console.log("Network Error:", err)
+                    } else {
+                    console.log("Client Error:", err)
+                    }
+                    this.freeze = false;
+                    this.rotor = '&nbsp;<i class="fas fa-save"></i>';
+                }
+
+            }
         }
     },
 }

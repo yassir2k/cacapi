@@ -843,7 +843,7 @@ class OrganizationController extends Controller
         $User->contact_phone = $contactMobile;
         $User->email = $email;
         $User->save();
-        return "Data updated successfully.";
+        return "User data successfully updated";
     }
 
     /*---------------------------------------- 
@@ -864,14 +864,16 @@ class OrganizationController extends Controller
         // attempt to do the login
         if (Auth::attempt($credentials))
         {
-            return "Current Password is valid";
+            //Meaning current password is valid. bcrypt('Qa1234@')
+            $User = User::where(['username'=> $username])->first();
+            $User->password = bcrypt($nPassword);
+            $User->save();
+            return "success";
+
         }
         else
         {
-            return "Invalide current password";
+            return "Invalid current password";
         }
-
-        $User = User::where(['username'=> $username])->first();
-        return "Data updated successfully.";
     }
 }
