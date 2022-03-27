@@ -8,7 +8,8 @@ import Documentation from "../clients/Documentation.vue";
 import APIHistory from "../clients/APICallLog.vue";
 import EditUserProfile from "../clients/EditUserProfile.vue";
 import ChangeUserPassword from "../clients/ChangeUserPassword.vue";
-import Login from "../Login";
+import Login from "../Login.vue";
+import Signup from "../Signup.vue";
 Vue.use(VueRouter);
     const routes = [
         {
@@ -56,6 +57,11 @@ Vue.use(VueRouter);
           path: "/change-user-password",
           name: "ChangeUserPassword",
           component: ChangeUserPassword, 
+        },
+        {
+          path: "/signup",
+          name: "Signup",
+          component: Signup, 
         }
     ];
     
