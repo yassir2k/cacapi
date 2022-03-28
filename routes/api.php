@@ -51,3 +51,10 @@ Route::post('/get_realtime_units', [OrganizationController::class, 'GetRealtimeU
 Route::post('/fetch_user_details', [OrganizationController::class, 'FetchUserDetails']);
 Route::post('/update_user_details', [OrganizationController::class, 'UpdateUserDetails']);
 Route::post('/change_user_password', [OrganizationController::class, 'ChangeUserPassword']);
+
+/*
+------------------------------------------------------------------------
+Sign Up
+------------------------------------------------------------------------
+*/
+Route::post('/sign_up', [OrganizationController::class, 'SignUp']);

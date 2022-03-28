@@ -11,7 +11,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\crypt;
-use \Auth;
+use App\Mail\NewRegistrationMail;
+use \Auth, Mail;
 
 class OrganizationController extends Controller
 {
@@ -876,5 +877,67 @@ class OrganizationController extends Controller
         {
             return "Invalid current password";
         }
+    }
+
+    /*---------------------------------------- 
+    Update User Details
+    ----------------------------------------*/
+    public function SignUp(Request $request)
+    {
+        $Organization = $request->input('Organization');
+        $ContactName = $request->input('ContactName');
+        $Email = $request->input('Email');
+        $PhoneNumber = $request->input('PhoneNumber'); 
+        $Address = $request->input('Address');
+        $Password = $request->input('Password');
+        $Username = $request->input('Username'); 
+        $User = User::where(['username'=> $Username])->first();
+        if($User != null)
+        {
+            //Meaning it exists or used before in registration
+            return "This username (".$username.") has already been used.";
+        }
+        //If username is not unique, let's cross the unique email module
+        $email = User::where(['email'=> $Email])->first();
+        if($email != null)
+        {
+            //Meaning it exists or used before in registration
+            return "This email (".$Email.") has already been used.";
+        }
+
+        $Token = substr(bin2hex(random_bytes(100)), 0, 100);
+        //At this stage, we're good to go
+        $data = [
+            'username' => $Username, 
+            'email' => $Email,
+            'organization_name' => $Organization,
+            'address' => $Address,
+            'contact_name' => $ContactName,
+            'contact_phone' => $PhoneNumber, 
+            'password' => bcrypt($Password),
+            'viewed_by_admin' => 0,
+            'is_active' => 0,
+            'is_registered' => 0,
+            'registered_on' => NULL,
+            'registration_hash' => $Token,
+            'password_reset_hash' => NULL,
+            'password_hash_control' => NULL,
+            'units' => 0,
+            'role' => "Accessor"
+        ];
+        User::create($data);
+
+        //To be sure data is saved, let's query the DB for confirmation.
+        $check = User::where(['email'=> $Email])->first();
+        if($check != null)
+        {
+            Mail::to($Email)
+            ->send(new NewRegistrationMail($Email, $Organization, $ContactName, $Token));
+            return "saved";
+        }
+        else{
+            return "not saved";
+        }
+
     }
 }
