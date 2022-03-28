@@ -334,32 +334,7 @@ export default {
             }
         }
     },
-    created(){
-        this.list()
-    },
     methods:{
-        list(page=0){
-            var dat = {
-                "username": "firs"
-                };
-            try{
-                axios.post(`http://127.0.0.1:8000/api/transaction_history?page=${page}`, dat)
-                .then(({data}) =>{
-                    this.users = data;
-                });
-            }
-            catch(err){    
-                if (err.response) {
-                // client received an error response (5xx, 4xx)
-                console.log("Server Error:", err)
-                } else if (err.request) {
-                // client never received a response, or request never left
-                console.log("Network Error:", err)
-                } else {
-                console.log("Client Error:", err)
-                }
-            }
-        },
         UpdateUserInfo(){
             this.AlertMsg = '';
             const user = this.$session.get('username');
@@ -410,8 +385,3 @@ export default {
     },
 }
 </script>
-<style scoped>
-    .pagination{
-        margin-bottom: 0;
-    }
-</style>

@@ -940,4 +940,26 @@ class OrganizationController extends Controller
         }
 
     }
+
+    /*---------------------------------------- 
+    Verify Registration
+    ----------------------------------------*/
+    public function ValidateRegistrationToken(Request $request)
+    {
+        $token = $request->input('token'); 
+        $User = User::where(['registration_hash'=> $token, 'is_registered' => 0])->first();
+        if(is_null($User))
+        {
+            return "The token is either invalid, or it has been used already/expired.";
+        }
+        else
+        {
+            $User->registered_on = date("Y-m-d H:i:s");
+            $User->is_active = 1;
+            $User->is_registered = 1;
+            $User->save();
+            return "Valid";
+        }
+        
+    }
 }

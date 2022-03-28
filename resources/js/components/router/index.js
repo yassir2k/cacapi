@@ -8,6 +8,7 @@ import Documentation from "../clients/Documentation.vue";
 import APIHistory from "../clients/APICallLog.vue";
 import EditUserProfile from "../clients/EditUserProfile.vue";
 import ChangeUserPassword from "../clients/ChangeUserPassword.vue";
+import VerifyRegistration from "../clients/VerifyRegistration.vue";
 import Login from "../Login.vue";
 import Signup from "../Signup.vue";
 Vue.use(VueRouter);
@@ -62,6 +63,12 @@ Vue.use(VueRouter);
           path: "/signup",
           name: "Signup",
           component: Signup, 
+        }
+        ,
+        {
+          path: "/registration/verify-registration/:token",
+          name: "VerifyRegistration",
+          component: VerifyRegistration, 
         }
     ];
     

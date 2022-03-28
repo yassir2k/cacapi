@@ -58,3 +58,10 @@ Sign Up
 ------------------------------------------------------------------------
 */
 Route::post('/sign_up', [OrganizationController::class, 'SignUp']);
+
+/*
+------------------------------------------------------------------------
+Validate Registration Token
+------------------------------------------------------------------------
+*/
+Route::post('/validate_registration_token', [OrganizationController::class, 'ValidateRegistrationToken'])->middleware('VerifyRegistrationToken');

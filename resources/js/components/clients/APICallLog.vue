@@ -159,7 +159,7 @@ export default {
     methods:{
         list(page=0){
             var dat = {
-                "username": "firs"
+                "username": this.$session.get("username")
                 };
             try{
                 axios.post(`http://127.0.0.1:8000/api/api_call_log?page=${page}`, dat)

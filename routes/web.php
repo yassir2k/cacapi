@@ -18,7 +18,11 @@ Route::get('/', function () {
     return view('login');
 });
 
-Route::get('verify-registration/{token}', [OrganizationController::class, 'VerifyRegistration'])->name('verify')->middleware('VerifyRegistrationToken');
+//Route::get('/registration/verify-registration/{token}', [OrganizationController::class, 'VerifyRegistration'])->name('verify')->middleware('VerifyRegistrationToken');
+
+Route::get('/registration/verify-registration/{token}', function () {
+    return view('verify-registration');
+});
 
 Route::get('/signup', function () {
     return view('signup');

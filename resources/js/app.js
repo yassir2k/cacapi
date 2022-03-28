@@ -15,6 +15,7 @@ Vue.component('Dashboard', require('./components/clients/Dashboard.vue').default
 Vue.component('Buycredit', require('./components/clients/Buycredit.vue').default);
 Vue.component('Transactions', require('./components/clients/Transactions.vue').default);
 Vue.component('Documentation', require('./components/clients/Documentation.vue').default);
+Vue.component('VerifyRegistration', require('./components/clients/VerifyRegistration.vue').default);
 
  const app = new Vue({
     el: '#app',

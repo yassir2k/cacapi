@@ -20,7 +20,7 @@
                         <div id="s_alert" class="alert alert-danger alert-dismissible fade show">
                             <strong><i class="fas fa-times-circle"></i></strong> <b>Please correct the following error(s):</b>
                                 <ul>
-                                    <li v-for="error in errors">{{ error }}</li>
+                                    <li v-for="error in errors" :key="error">{{ error }}</li>
                                 </ul>
                             <button type="button" class="btn-close" ></button>
                         </div>
@@ -327,7 +327,11 @@ export default {
                 this.errorCount++;
             }
             if(this.errorCount > 0)
+            {
+                this.freeze = false;
+                this.rotor = '&nbsp;<i class="fas fa-user-plus"></i>';
                 return false;
+            }
 
             /*-----------------------------------------------------------------------
                     Now is to focus on posting data vis API to the database

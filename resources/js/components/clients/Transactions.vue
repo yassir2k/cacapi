@@ -46,7 +46,7 @@
                     </tbody>
                     <tbody v-else>
                         <tr>
-                            <td align="center" colspan="5">No record found.</td>
+                            <td align="center" colspan="6">No record found.</td>
                         </tr>
                     </tbody>
                 </table>
@@ -161,7 +161,7 @@ export default {
     methods:{
         list(page=0){
             var dat = {
-                "username": "firs"
+                "username": this.$session.get("username")
                 };
             try{
                 axios.post(`http://127.0.0.1:8000/api/transaction_history?page=${page}`, dat)

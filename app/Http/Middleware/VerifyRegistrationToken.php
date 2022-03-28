@@ -17,12 +17,11 @@ class VerifyRegistrationToken
      */
     public function handle(Request $request, Closure $next)
     {
-        $token = request()->route('token');//Gets parameter from Route
+        $token = $request->input('token');//Gets parameter from Route
         $reg_hash_token = User::where(['registration_hash' => $token])->first();
-        if(!($reg_hash_token))
+        if($reg_hash_token == null)
         {
-            return redirect()->intended('/')
-            ->with('error','Invalid or expired link.');
+            return response("Invalid, or an expired token");
         }
         return $next($request);
     }
