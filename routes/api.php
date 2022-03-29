@@ -72,3 +72,11 @@ Process Password Recovery
 ------------------------------------------------------------------------
 */
 Route::post('/process_password_recovery', [OrganizationController::class, 'ProcessPasswordRecovery']);
+
+
+/*
+------------------------------------------------------------------------
+Validate Password Recovery Token
+------------------------------------------------------------------------
+*/
+Route::post('/validate_password_recovery_token', [OrganizationController::class, 'ValidatePasswordRecoveryToken']);

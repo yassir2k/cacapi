@@ -13,10 +13,10 @@
     <div style="background-color:#f5f5f5">
     <br />
         <p style="text-indent :5em;"> Dear <b>{{ $organization_ }}</b>,</p>
-        <p style="text-indent :5em;"> Attention: <b>{{ $contactName_ }}</b>,</p>
+        <p style="text-indent :5em;"> Attention: <b>{{ $contactName_ }}</b></p>
         <p style="text-indent :5em;">A request was received to reset your password on the Corporate Affairs Commission (CAC) API Portal.</p>
         <p style="text-indent :5em;"> Please, Enter this code below to complete the password reset process.</p>
-        <p style="text-indent :5em;"><b>$token_</b></p>
+        <p style="text-indent :5em;"><b>{{$token_}}</b></p>
         <br />
         <p style="text-indent :5em;">Regards,</p>
         <p style="text-indent :5em;"><b>Yassir Yahaya</b></p>

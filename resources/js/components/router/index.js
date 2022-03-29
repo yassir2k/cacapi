@@ -11,7 +11,8 @@ import ChangeUserPassword from "../clients/ChangeUserPassword.vue";
 import VerifyRegistration from "../clients/VerifyRegistration.vue";
 import Login from "../Login.vue";
 import Signup from "../Signup.vue";
-import PasswordRecovery from "../clients/PasswordRecovery.vue"
+import PasswordRecovery from "../clients/PasswordRecovery.vue";
+import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue"
 Vue.use(VueRouter);
     const routes = [
         {
@@ -71,10 +72,15 @@ Vue.use(VueRouter);
           component: VerifyRegistration, 
         },
         {
-          path: "/password-recovery/",
+          path: "/password-recovery",
           name: "PasswordRecovery",
           component: PasswordRecovery, 
-        }
+        },
+        {
+          path: "/validate-password-recovery-token",
+          name: "ValidatePasswordRecovery",
+          component: ValidatePasswordRecovery, 
+        },
     ];
     
 export default new VueRouter({

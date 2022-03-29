@@ -981,8 +981,36 @@ class OrganizationController extends Controller
             Mail::to($Email)
             ->send(new PasswordRecoveryMail($Email, $User->organization_name, $User->contact_name, $Token));
             $User->password_reset_hash = $Token;
+            $User->password_hash_control = $Token;
             $User->save();
-            return "Valid";
+            $reply["Message"] = "Valid";
+            $reply["Hash"] = substr(bin2hex(random_bytes(100)), 0, 100);
+            return $reply;
+        }
+    }
+
+
+    /*---------------------------------------- 
+        Validate Password Recovery Toekn
+    ----------------------------------------*/
+    public function ValidatePasswordRecoveryToken(Request $request)
+    {
+        $token = $request->input('passwordRecoveryToken'); 
+        $hash = $request->input('passwordRecoveryToken'); 
+        if(is_null($token) || is_null($hash))
+        {
+            return "Invalid or Unauthorized API call.";
+        }
+        else
+        {
+            $User = User::where(['password_reset_hash'=> $token, 'password_hash_control' => $hash])->first();
+            if(is_null($User))
+            {
+                return "Invalid token";
+            }
+            $User->password_reset_hash = NULL;
+            $User->password_hash_control = NULL;
+            return "Success";
         }
     }
 }

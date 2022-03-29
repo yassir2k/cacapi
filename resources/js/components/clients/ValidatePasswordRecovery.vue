@@ -14,8 +14,14 @@
             <!-- -------------------------------------------------------------
             Main Stuff Here
             -------------------------------------------------------------- -->
-            <br />
-            <br />
+            <div class="m-4">
+                <div class="alert alert-success alert-dismissible fade show">
+                    <h4 class="alert-heading"><i class="fas fa-check-circle"></i> A Password recovery token has been sent to your email.</h4>
+                    <p>Please enter the token in the text field below in order to reset your password successfully.</p>
+                    <hr>
+                    <p class="mb-0"><b>Attention: </b><i>Kindly ensure you do not refresh this page. For security reasons, you would have to re-initiate the password recovery process should you refresh, or navigate from this page.</i></p>
+                </div>
+            </div>
             <br />
             <br />
             <div class="row">
@@ -24,7 +30,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12 align-middle">
-                            <strong>Email:</strong><b class="text-danger">*</b>
+                            <strong>Token:</strong><b class="text-danger">*</b>
                         </div>
                     </div>
                     <div class="row">
@@ -32,9 +38,9 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="fa fa-user-check" style="color: #8FBC8F"></i>
+                                    <i class="fa fa-barcode" style="color: #8FBC8F"></i>
                                 </span>                    
-                                <input v-on:blur="ValidateEmail"  class="form-control" placeholder="Enter your account email" v-model="email" required>
+                                <input class="form-control" placeholder="Enter the token sent to your email" v-model="token" required>
                             </div>
                         </div>
                     </div><!--End Email Subject-->
@@ -51,8 +57,8 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group d-grid gap-2">
-                        <button :disabled="freeze" v-on:click.prevent="ProcessPasswordRecovery" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
-                            <span>Recover Password</span>
+                        <button :disabled="freeze" v-on:click.prevent="ValidatePasswordRecoveryToken" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
+                            <span>Validate Token</span>
                             <span v-html="rotor"></span>
                         </button> 
                     </div>
@@ -85,27 +91,37 @@ export default {
     data() {
         return {
 
-            header_1: "Password Recovery",
+            header_1: "Validate Password Recovery Token",
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             AlertMsg: '',
-            rotor: '<i class="fas fa-angle-right"></i>',
-            email: '',
-            freeze: false
+            rotor: '&nbsp;<i class="fas fa-check"></i>',
+            token: '',
+            freeze: false,
+            hash: ''
+        }
+    },
+    beforeCreate(){
+        this.hash = this.$session.flash.get("TokenKey");
+        console.log(this.hash);
+        if (this.hash == null) {
+            this.$session.flash.set('passwordRecoveryErrorMsg', "You are not allowed to access this request via direct url entry.");
+            this.$router.push('/');
         }
     },
     methods:{
-        ProcessPasswordRecovery(){
+        ValidatePasswordRecoveryToken(){
             this.AlertMsg = '';
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
             this.freeze = true;
             var dat = {
-                "email": this.email,
+                "passwordRecoveryToken": this.token,
+                "passwordRecoveryHash": this.hash
             }
             try{
                 axios({
                 method: 'post',
                 data: dat,
-                url: 'http://127.0.0.1:8000/api/process_password_recovery',
+                url: 'http://127.0.0.1:8000/api/validate_password_recovery_token',
                 headers: { 
                     'Content-type': 'application/json; charset=utf-8', 
                 },
@@ -113,10 +129,12 @@ export default {
                 })
                 .then(response =>{
                     console.log(response);
-                    if(response.data["Message"] == "Valid")
+                    if(response.data == "Success")
                     {
-                        this.$session.flash.set('TokenKey', response.data["Hash"]);
-                        this.$router.push({ name: 'ValidatePasswordRecovery' });
+                        this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-check-circle"></i></strong> Successfully verified password reset token.' +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                            //this.$router.push({ name: 'TransactionDetails', params: { rrr: ref } });
                     }
                     else
                     {
@@ -125,7 +143,7 @@ export default {
                             '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                     }
                     this.freeze = false;
-                    this.rotor = '<i class="fas fa-angle-right"></i>';
+                    this.rotor = '&nbsp;<i class="fas fa-badge-check"></i>';
                 })
             }
             catch(err){    
@@ -133,17 +151,7 @@ export default {
             }
         },
         ValidateEmail(){
-            var r = !/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.email);
-            if(r){
-                this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
-                            '<strong><i class="fas fa-times-circle"></i></strong> You\'ve entered an invalid email format. Please ensure you enter your email correctly' +
-                            ' in order to proceed.' +
-                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
-                this.freeze = true;
-            }
-            else{
-                this.freeze = false;
-            }
+
         }
     }
 }

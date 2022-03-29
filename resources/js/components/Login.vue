@@ -5,14 +5,19 @@
     <br />
     <div class="login-form">
         <div class="row">
+            <div class="col-sm-12">
+                <span v-html="AlertMsg"></span>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-3 my-auto"><!--Logo-->
                 <img src="/images/caclogo_big.png" width="120" height="120" class="rounded" alt="Rounded Image" />
             </div>
             <div class="col-9">
                 <div class="row">
-                <div class="col-sm-12" align="left"><!--Sign In-->
-                    <h3 class="text-center text-secondary"><strong>API Portal - Admin</strong></h3>
-                </div>
+                    <div class="col-sm-12" align="left"><!--Sign In-->
+                        <h3 class="text-center text-secondary"><strong>API Portal - Admin</strong></h3>
+                    </div>
                 </div>
                 <div class="row"> 
                     <div class="col-sm-12"><!--Sign In-->
@@ -97,10 +102,18 @@ import axios from 'axios'
                 status: null,
                 rotor: '&nbsp;<i class="fas fa-sign-in-alt"></i>',
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
-                user: {}
+                user: {},
+                msg: ''
             }
         },
-
+        beforeCreate(){
+            this.msg = this.$session.flash.get("passwordRecoveryErrorMsg");
+            if(this.msg != null){
+                this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-times-circle"></i></strong> '+ this.msg  +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            }
+        },
         methods:{
             checkForm(e){
                 this.status = "";

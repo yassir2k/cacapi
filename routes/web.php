@@ -32,6 +32,10 @@ Route::get('/password-recovery', function () {
     return view('clients/password-recovery');
 });
 
+Route::get('/validate-password-recovery-token', function () {
+    return view('clients/validate-password-recovery-token');
+});
+
 Route::get('/client-dashboard', function() {
     return view('clients/dashboard');
 });
