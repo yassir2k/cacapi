@@ -28,6 +28,10 @@ Route::get('/signup', function () {
     return view('signup');
 });
 
+Route::get('/password-recovery', function () {
+    return view('clients/password-recovery');
+});
+
 Route::get('/client-dashboard', function() {
     return view('clients/dashboard');
 });

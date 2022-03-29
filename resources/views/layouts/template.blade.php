@@ -33,7 +33,7 @@
         </style>
     </head>
 
-    <body>
+    <body style="height: 100%">
         <div class="container-fluid overflow-hidden" >
             <div class="container-bg">
                 <div class="fcta-header">
@@ -48,9 +48,9 @@
                 </div>
 
                 <!-- Footer -->
-                <footer class="page-footer font-small "> 
+                <footer class="page-footer font-small fixed-bottom" > 
                     <!-- Copyright -->
-                    <div class="footer-copyright text-center text-white py-5 font-pref14">
+                    <div class="footer-copyright text-center text-white py-5 font-pref14 ">
                         © 2022 Copyright - Corporate Affairs Commission: ICT Department
                     </div>
                     <!-- Copyright -->

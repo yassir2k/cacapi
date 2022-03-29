@@ -11,6 +11,7 @@ import ChangeUserPassword from "../clients/ChangeUserPassword.vue";
 import VerifyRegistration from "../clients/VerifyRegistration.vue";
 import Login from "../Login.vue";
 import Signup from "../Signup.vue";
+import PasswordRecovery from "../clients/PasswordRecovery.vue"
 Vue.use(VueRouter);
     const routes = [
         {
@@ -63,12 +64,16 @@ Vue.use(VueRouter);
           path: "/signup",
           name: "Signup",
           component: Signup, 
-        }
-        ,
+        },
         {
           path: "/registration/verify-registration/:token",
           name: "VerifyRegistration",
           component: VerifyRegistration, 
+        },
+        {
+          path: "/password-recovery/",
+          name: "PasswordRecovery",
+          component: PasswordRecovery, 
         }
     ];
     

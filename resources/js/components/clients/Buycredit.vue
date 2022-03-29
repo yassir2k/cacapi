@@ -205,7 +205,7 @@
                     </div>
                 </div>
             </div><!-- End of Remita Details Page -->
-            <br />
+            <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
         </div>
         <div class="col-sm-3">
             <div class="row align-bottom">
@@ -246,13 +246,7 @@
             </div>
         </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
+
 </div>
 </template>
 <script>

@@ -232,15 +232,6 @@
         <div class="col-sm-2">
         </div>
     </div>
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
-    <br />
 
 </div>
 </template>

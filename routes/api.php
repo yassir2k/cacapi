@@ -65,3 +65,10 @@ Validate Registration Token
 ------------------------------------------------------------------------
 */
 Route::post('/validate_registration_token', [OrganizationController::class, 'ValidateRegistrationToken'])->middleware('VerifyRegistrationToken');
+
+/*
+------------------------------------------------------------------------
+Process Password Recovery
+------------------------------------------------------------------------
+*/
+Route::post('/process_password_recovery', [OrganizationController::class, 'ProcessPasswordRecovery']);

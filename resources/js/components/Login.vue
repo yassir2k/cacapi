@@ -66,7 +66,7 @@
                     </div>
                     <div class="row">
                         <div class="col-sm-5"><!--Forgot Password-->
-                            <small class="text-center medium" ><a class="text-success" href="/forgot-password">Forgot Password?</a></small>
+                            <small class="text-center medium" ><a class="text-success" href="/password-recovery">Forgot Password?</a></small>
                         </div>
                         <div class="col-sm-7"><!--Sign Up-->
                             <small class="text-center medium">New user Account? <a class="text-success" href="/signup">Sign up here</a></small>

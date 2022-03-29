@@ -33,7 +33,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -53,7 +53,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-10 ">
+                    <div class="col-sm-12 ">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
@@ -73,7 +73,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-10 ">
+                    <div class="col-sm-12 ">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
@@ -97,7 +97,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-10">
+                        <div class="col-sm-12">
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-text">
@@ -117,7 +117,7 @@
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-10 ">
+                    <div class="col-sm-12 ">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
@@ -137,13 +137,13 @@
                         </div>
                     </div>
                     <div class="row">
-                    <div class="col-sm-10 ">
+                    <div class="col-sm-12 ">
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fa fa-user-check" style="color: #8FBC8F"></i>
                                 </span>                    
-                                <input  class="form-control" placeholder="Your CAC Email Address" v-model="status" required disabled>
+                                <input  class="form-control" placeholder="Your email address" v-model="status" required disabled>
                             </div>
                         </div>
                     </div><!--End Email Subject-->

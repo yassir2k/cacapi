@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\crypt;
 use App\Mail\NewRegistrationMail;
+use App\Mail\PasswordRecoveryMail;
 use \Auth, Mail;
 
 class OrganizationController extends Controller
@@ -849,7 +850,7 @@ class OrganizationController extends Controller
     }
 
     /*---------------------------------------- 
-    Update User Details
+        Update User Details
     ----------------------------------------*/
     public function ChangeUserPassword(Request $request)
     {
@@ -880,7 +881,7 @@ class OrganizationController extends Controller
     }
 
     /*---------------------------------------- 
-    Update User Details
+        Update User Details
     ----------------------------------------*/
     public function SignUp(Request $request)
     {
@@ -942,7 +943,7 @@ class OrganizationController extends Controller
     }
 
     /*---------------------------------------- 
-    Verify Registration
+        Verify Registration
     ----------------------------------------*/
     public function ValidateRegistrationToken(Request $request)
     {
@@ -960,6 +961,28 @@ class OrganizationController extends Controller
             $User->save();
             return "Valid";
         }
-        
+    }
+
+
+    /*---------------------------------------- 
+        Process Password Recovery
+    ----------------------------------------*/
+    public function ProcessPasswordRecovery(Request $request)
+    {
+        $Email = $request->input('email'); 
+        $User = User::where(['email'=> $Email])->first();
+        $Token = strtoupper(substr(bin2hex(random_bytes(8)), 0, 8));
+        if(is_null($User))
+        {
+            return "This email is not associated with any account.";
+        }
+        else
+        {
+            Mail::to($Email)
+            ->send(new PasswordRecoveryMail($Email, $User->organization_name, $User->contact_name, $Token));
+            $User->password_reset_hash = $Token;
+            $User->save();
+            return "Valid";
+        }
     }
 }

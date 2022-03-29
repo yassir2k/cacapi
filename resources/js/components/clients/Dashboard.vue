@@ -136,7 +136,6 @@
         </div>
     </div>
     <br />
-    <br />
 </div>
 </template>
 <script>

@@ -52,8 +52,11 @@
                 </table>
                 <pagination align="center" :data="users" @pagination-change-page="list"></pagination>
                 <br />     
-                <br />
             </div>
+            <br />     
+            <br />
+            <br />     
+            <br />
         </div>
         <div class="col-sm-3">
             <div class="row align-bottom">
