@@ -270,6 +270,7 @@ export default {
     },
     methods:{
         CreateNewAccount(){
+            this.errorCount = 0;
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
             this.freeze = true;
             this.errors = [];

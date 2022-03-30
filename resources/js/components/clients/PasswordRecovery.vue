@@ -112,10 +112,10 @@ export default {
                 responseType: 'json'
                 })
                 .then(response =>{
-                    console.log(response);
                     if(response.data["Message"] == "Valid")
                     {
-                        this.$session.flash.set('TokenKey', response.data["Hash"]);
+                        this.$session.start();
+                        this.$session.set('TokenKey', response.data["Hash"]);
                         this.$router.push({ name: 'ValidatePasswordRecovery' });
                     }
                     else

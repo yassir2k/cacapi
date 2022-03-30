@@ -19,7 +19,7 @@
                 <div style="padding-bottom: 15px; background: #666666; color: #f5f5f5; padding: 20px 30px; margin: -25px -5px 10px; border-radius: 4px 4px 0 0;">
                     <div class="row" style="font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif">
                         <div class="col-xs-6">
-                            <center><h2 style="margin: 5px 0 0; font-size: 30px"><b>FIRS</b></h2></center>
+                            <center><h2 style="margin: 5px 0 0; font-size: 30px"><b>{{this.$session.get("username")}}</b></h2></center>
                         </div>
                     </div>
                 </div>

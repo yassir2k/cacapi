@@ -103,16 +103,24 @@ import axios from 'axios'
                 rotor: '&nbsp;<i class="fas fa-sign-in-alt"></i>',
                 csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
                 user: {},
-                msg: ''
+                msg: null
+                
             }
         },
         beforeCreate(){
-            this.msg = this.$session.flash.get("passwordRecoveryErrorMsg");
+            this.msg = this.$session.get("passwordRecoveryErrorMsg");
             if(this.msg != null){
                 this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
                             '<strong><i class="fas fa-times-circle"></i></strong> '+ this.msg  +
                             '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
             }
+            this.msg = this.$session.get("passwordResetSuccessMsg");
+            if(this.msg != null){
+                this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-check-circle"></i></strong> '+ this.msg  +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            }
+            this.$session.destroy();
         },
         methods:{
             checkForm(e){

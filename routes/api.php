@@ -80,3 +80,10 @@ Validate Password Recovery Token
 ------------------------------------------------------------------------
 */
 Route::post('/validate_password_recovery_token', [OrganizationController::class, 'ValidatePasswordRecoveryToken']);
+
+/*
+------------------------------------------------------------------------
+Reset Password
+------------------------------------------------------------------------
+*/
+Route::post('/reset_password', [OrganizationController::class, 'ResetPassword']);

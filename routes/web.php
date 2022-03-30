@@ -22,7 +22,7 @@ Route::get('/', function () {
 
 Route::get('/registration/verify-registration/{token}', function () {
     return view('verify-registration');
-});
+})->name('verify');
 
 Route::get('/signup', function () {
     return view('signup');
@@ -30,6 +30,10 @@ Route::get('/signup', function () {
 
 Route::get('/password-recovery', function () {
     return view('clients/password-recovery');
+});
+
+Route::get('/reset-password', function () {
+    return view('clients/reset-password');
 });
 
 Route::get('/validate-password-recovery-token', function () {

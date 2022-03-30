@@ -16,8 +16,8 @@
             -------------------------------------------------------------- -->
             <div class="m-4">
                 <div class="alert alert-success alert-dismissible fade show">
-                    <h4 class="alert-heading"><i class="fas fa-check-circle"></i> A Password recovery token has been sent to your email.</h4>
-                    <p>Please enter the token in the text field below in order to reset your password successfully.</p>
+                    <h4 class="alert-heading"><i class="fas fa-check-circle"></i>You've successfully verified your password reset token.</h4>
+                    <p>Please kindly go ahead and reset your password.</p>
                     <hr>
                     <p class="mb-0"><b>Attention: </b><i>Kindly ensure you do not refresh this page. For security reasons, you would have to re-initiate the password recovery process should you refresh, or navigate from this page.</i></p>
                 </div>
@@ -30,7 +30,7 @@
                 <div class="col-sm-6">
                     <div class="row">
                         <div class="col-sm-12 align-middle">
-                            <strong>Token:</strong><b class="text-danger">*</b>
+                            <strong>New Password:</strong><b class="text-danger">*</b>
                         </div>
                     </div>
                     <div class="row">
@@ -40,7 +40,39 @@
                                 <span class="input-group-text">
                                     <i class="fa fa-barcode" style="color: #8FBC8F"></i>
                                 </span>                    
-                                <input class="form-control" placeholder="Enter the token sent to your email" v-model="token" required>
+                                <input v-bind:type="[showNewPassword ? 'text' : 'password']"  class="form-control" placeholder="Your new password here" v-model="NewPassword" required>
+                                <span class="input-group-text" style="background-color: white"  @click="showNewPassword = !showNewPassword">
+                                    <i class="fas" :class="[showNewPassword ? 'fa-eye' : 'fa-eye-slash']"></i>
+                                </span>
+                            </div>
+                        </div>
+                    </div><!--End Email Subject-->
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-6">
+                    <div class="row">
+                        <div class="col-sm-12 align-middle">
+                            <strong>Confirm New Password:</strong><b class="text-danger">*</b>
+                        </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-sm-12 ">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <i class="fa fa-barcode" style="color: #8FBC8F"></i>
+                                </span>                    
+                                <input v-bind:type="[showConfirmPassword ? 'text' : 'password']"  class="form-control" placeholder="Retype new password here" v-model="ConfirmNewPassword" required>
+                                <span class="input-group-text" style="background-color: white"  @click="showConfirmPassword = !showConfirmPassword">
+                                    <i class="fas" :class="[showConfirmPassword ? 'fa-eye' : 'fa-eye-slash']"></i>
+                                </span>
                             </div>
                         </div>
                     </div><!--End Email Subject-->
@@ -57,8 +89,8 @@
                 </div>
                 <div class="col-sm-2">
                     <div class="form-group d-grid gap-2">
-                        <button :disabled="freeze" v-on:click.prevent="ValidatePasswordRecoveryToken" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
-                            <span>Validate Token</span>
+                        <button :disabled="freeze" v-on:click.prevent="ResetPassword" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
+                            <span>Reset Password</span>
                             <span v-html="rotor"></span>
                         </button> 
                     </div>
@@ -91,37 +123,52 @@ export default {
     data() {
         return {
 
-            header_1: "Validate Password Recovery Token",
+            header_1: "Reset Password",
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             AlertMsg: '',
             rotor: '&nbsp;<i class="fas fa-check"></i>',
             token: '',
             freeze: false,
-            hash: ''
+            hash: '',
+            showNewPassword: false,
+            showConfirmPassword: false,
+            NewPassword: '',
+            ConfirmNewPassword: ''
         }
     },
     beforeCreate(){
-        this.hash = this.$session.get("TokenKey");
-        if (!this.$session.exists()) {
+        this.hash = this.$session.get("Hash");
+        console.log(this.hash);
+        if (this.hash == null) {
             this.$session.set('passwordRecoveryErrorMsg', "You are not allowed to access this request via direct url entry.");
             this.$router.push('/');
         }
     },
     methods:{
-        ValidatePasswordRecoveryToken(){
-            const key = this.$session.get("TokenKey");
+        ResetPassword(){
             this.AlertMsg = '';
             this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
             this.freeze = true;
+            if(this.NewPassword != this.ConfirmNewPassword)
+            {
+                this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
+                            '<strong><i class="fas fa-times-circle"></i></strong> The two passwords do not match.' +
+                            '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                this.freeze = false;
+                this.rotor = '&nbsp;<i class="fas fa-badge-check"></i>';
+                return false;
+            }
+            const key = this.$session.get("Hash");
             var dat = {
-                "passwordRecoveryToken": this.token,
-                "passwordRecoveryHash": key
+                "newPassword": this.NewPassword,
+                "confirmPassword": this.ConfirmNewPassword,
+                "hash": key
             }
             try{
                 axios({
                 method: 'post',
                 data: dat,
-                url: 'http://127.0.0.1:8000/api/validate_password_recovery_token',
+                url: 'http://127.0.0.1:8000/api/reset_password',
                 headers: { 
                     'Content-type': 'application/json; charset=utf-8', 
                 },
@@ -129,10 +176,10 @@ export default {
                 })
                 .then(response =>{
                     console.log(response);
-                    if(response.data["Message"] == "Success")
+                    if(response.data == "Success")
                     {
-                            this.$session.set('Hash', response.data["Hash"]);
-                            this.$router.push({ name: 'ResetPassword' });
+                        this.$session.set('passwordResetSuccessMsg', "You have successfully changed/reset your password.");
+                        this.$router.push({ name: 'Login' });
                     }
                     else
                     {

@@ -12,7 +12,8 @@ import VerifyRegistration from "../clients/VerifyRegistration.vue";
 import Login from "../Login.vue";
 import Signup from "../Signup.vue";
 import PasswordRecovery from "../clients/PasswordRecovery.vue";
-import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue"
+import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue";
+import ResetPassword from "../clients/ResetPassword.vue";
 Vue.use(VueRouter);
     const routes = [
         {
@@ -81,6 +82,11 @@ Vue.use(VueRouter);
           name: "ValidatePasswordRecovery",
           component: ValidatePasswordRecovery, 
         },
+        {
+          path: "/reset-password",
+          name: "ResetPassword",
+          component: ResetPassword, 
+        }
     ];
     
 export default new VueRouter({

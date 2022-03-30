@@ -607,7 +607,7 @@ class OrganizationController extends Controller
                 $device = $info['device_type'];
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
-                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "API call (for Secretary) not applicable for Business Names.";
                 $cost = 1000;
@@ -670,7 +670,7 @@ class OrganizationController extends Controller
                 $device = $info['device_type'];
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
-                $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
+                $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
                 $cost = 1000;
@@ -896,7 +896,7 @@ class OrganizationController extends Controller
         if($User != null)
         {
             //Meaning it exists or used before in registration
-            return "This username (".$username.") has already been used.";
+            return "This username (".$Username.") has already been used.";
         }
         //If username is not unique, let's cross the unique email module
         $email = User::where(['email'=> $Email])->first();
@@ -972,6 +972,7 @@ class OrganizationController extends Controller
         $Email = $request->input('email'); 
         $User = User::where(['email'=> $Email])->first();
         $Token = strtoupper(substr(bin2hex(random_bytes(8)), 0, 8));
+        $Hash = substr(bin2hex(random_bytes(100)), 0, 100);
         if(is_null($User))
         {
             return "This email is not associated with any account.";
@@ -981,22 +982,22 @@ class OrganizationController extends Controller
             Mail::to($Email)
             ->send(new PasswordRecoveryMail($Email, $User->organization_name, $User->contact_name, $Token));
             $User->password_reset_hash = $Token;
-            $User->password_hash_control = $Token;
+            $User->password_hash_control = $Hash;
             $User->save();
             $reply["Message"] = "Valid";
-            $reply["Hash"] = substr(bin2hex(random_bytes(100)), 0, 100);
+            $reply["Hash"] = $Hash;
             return $reply;
         }
     }
 
 
     /*---------------------------------------- 
-        Validate Password Recovery Toekn
+        Validate Password Recovery Token
     ----------------------------------------*/
     public function ValidatePasswordRecoveryToken(Request $request)
     {
         $token = $request->input('passwordRecoveryToken'); 
-        $hash = $request->input('passwordRecoveryToken'); 
+        $hash = $request->input('passwordRecoveryHash'); 
         if(is_null($token) || is_null($hash))
         {
             return "Invalid or Unauthorized API call.";
@@ -1009,7 +1010,36 @@ class OrganizationController extends Controller
                 return "Invalid token";
             }
             $User->password_reset_hash = NULL;
+            $User->save();
+            $reply["Message"] = "Success";
+            $reply["Hash"] = $hash;
+            return $reply;
+        }
+    }
+
+
+    /*---------------------------------------- 
+        Reset Password
+    ----------------------------------------*/
+    public function ResetPassword(Request $request)
+    {
+        $NewPassword = $request->input('newPassword'); 
+        $ConfirmPassword = $request->input('confirmPassword'); 
+        $hash = $request->input('hash'); 
+        if($NewPassword != $ConfirmPassword)
+        {
+            return "New and cofirm new passwords do not match.";
+        }
+        else
+        {
+            $User = User::where(['password_hash_control' => $hash])->first();
+            if(is_null($User))
+            {
+                return "Invalid token";
+            }
+            $User->password = bcrypt($NewPassword);
             $User->password_hash_control = NULL;
+            $User->save();
             return "Success";
         }
     }
