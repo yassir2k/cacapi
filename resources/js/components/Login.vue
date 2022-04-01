@@ -16,7 +16,7 @@
             <div class="col-9">
                 <div class="row">
                     <div class="col-sm-12" align="left"><!--Sign In-->
-                        <h3 class="text-center text-secondary"><strong>API Portal - Admin</strong></h3>
+                        <h2 class="text-center text-secondary"><strong>API Portal</strong></h2>
                     </div>
                 </div>
                 <div class="row"> 
@@ -32,7 +32,7 @@
                                     <span class="input-group-text">
                                         <span class="fa fa-user" style="color: #8FBC8F"></span>
                                     </span>                    
-                                    <input type="text" class="form-control" placeholder="Username" name="username" v-model="username">
+                                    <input type="text" class="form-control" placeholder="Email" name="username" v-model="username">
                                 </div>
                                 <span v-if="username_" class="text-danger small">Username required</span>
                             </div>
@@ -164,8 +164,9 @@ import axios from 'axios'
                             this.$session.set('role', response.data["role"]);
                             //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
                             if(response.data["role"] == "Accessor")
-                                this.$router.push({ name: 'Dashboard', params: { user: this.username } });
-                            //this.$router.push({ name: 'Dashboard' });
+                                this.$router.push({ name: 'Dashboard'});
+                            if(response.data["role"] == "Admin")
+                                this.$router.push({ name: 'AdminDashboard'});
                         }
                         else{
                             this.status='<div class="alert alert-danger text-danger"><center>Login attempt failed.</center></label>';

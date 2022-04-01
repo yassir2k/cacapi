@@ -38,7 +38,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="fa fa-barcode" style="color: #8FBC8F"></i>
+                                    <i class="fa fa-unlock" style="color: #8FBC8F"></i>
                                 </span>                    
                                 <input v-bind:type="[showNewPassword ? 'text' : 'password']"  class="form-control" placeholder="Your new password here" v-model="NewPassword" required>
                                 <span class="input-group-text" style="background-color: white"  @click="showNewPassword = !showNewPassword">
@@ -67,7 +67,7 @@
                         <div class="form-group">
                             <div class="input-group">
                                 <span class="input-group-text">
-                                    <i class="fa fa-barcode" style="color: #8FBC8F"></i>
+                                    <i class="fa fa-unlock" style="color: #8FBC8F"></i>
                                 </span>                    
                                 <input v-bind:type="[showConfirmPassword ? 'text' : 'password']"  class="form-control" placeholder="Retype new password here" v-model="ConfirmNewPassword" required>
                                 <span class="input-group-text" style="background-color: white"  @click="showConfirmPassword = !showConfirmPassword">
@@ -178,6 +178,7 @@ export default {
                     console.log(response);
                     if(response.data == "Success")
                     {
+                        this.$session.remove("Hash");
                         this.$session.set('passwordResetSuccessMsg', "You have successfully changed/reset your password.");
                         this.$router.push({ name: 'Login' });
                     }

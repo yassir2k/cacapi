@@ -14,6 +14,7 @@ import Signup from "../Signup.vue";
 import PasswordRecovery from "../clients/PasswordRecovery.vue";
 import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue";
 import ResetPassword from "../clients/ResetPassword.vue";
+import AdminDashboard from "../admin/ADashboard.vue";
 Vue.use(VueRouter);
     const routes = [
         {
@@ -86,6 +87,14 @@ Vue.use(VueRouter);
           path: "/reset-password",
           name: "ResetPassword",
           component: ResetPassword, 
+        },
+        /****************************************************************************************************************
+          * Admin Routes Definition Below
+        ****************************************************************************************************************/
+         {
+          path: "/admin-dashboard",
+          name: "AdminDashboard",
+          component: AdminDashboard, 
         }
     ];
     

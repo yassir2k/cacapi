@@ -164,7 +164,8 @@ export default {
                 type: Object,
                 default: null,
             },
-            success: false
+            success: false,
+            units: 0
         }
     },
     beforeCreate(){

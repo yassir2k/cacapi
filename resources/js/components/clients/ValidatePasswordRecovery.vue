@@ -131,6 +131,7 @@ export default {
                     console.log(response);
                     if(response.data["Message"] == "Success")
                     {
+                            this.$session.remove("TokenKey");
                             this.$session.set('Hash', response.data["Hash"]);
                             this.$router.push({ name: 'ResetPassword' });
                     }

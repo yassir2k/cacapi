@@ -700,13 +700,13 @@ class OrganizationController extends Controller
         return strtoupper($id);
     }
 
-    public function process_transaction(Request $request){
+    /*public function process_transaction(Request $request){
         $MDA_Units = User::where(['username' => 'firs'])->pluck('units')->first();
         $MDA_Units += (int)$request->input('units');
         $account = User::where(['username' => 'firs'])->first();
         $account->units = $MDA_Units;
         $account->save(); 
-    }
+    }*/
 
 
     public function GetTransactionHistory(Request $request){

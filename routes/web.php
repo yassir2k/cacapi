@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OrganizationController;
+use App\Http\Controllers\Api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -73,3 +74,11 @@ Route::get('/change-user-password', function() {
 });
 
 Route::get('/clients/load-more-details/{transaction_id}', [OrganizationController::class, 'LoadMoreDetails']);
+
+/****************************************************************************************************************
+ * Admin Routes Definition Below
+ ***************************************************************************************************************/
+
+Route::get('/admin-dashboard', function() {
+    return view('admin/dashboard');
+});
