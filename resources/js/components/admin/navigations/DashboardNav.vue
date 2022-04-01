@@ -10,33 +10,17 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="far fa-credit-card"></i>
-            <router-link class="lo text-white" :to="{ name: 'Buycredit'}">Buy Credit</router-link>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-users-cog"></i>
+            <router-link class="lo text-white" :to="{ name: 'Buycredit'}">Manage Registered Users</router-link>
 		</button>
     </div>
 	
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-file-pdf"></i>
-            <router-link class="lo text-white" :to="{ name: 'Documentation'}">API Documentation</router-link>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-chart-line"></i>
+            <router-link class="lo text-white" :to="{ name: 'Documentation'}">Statistics</router-link>
 		</button>
-    </div>
-
-    <div class="v-divider"></div>
-
-    <div class="btn-group d-flex">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-history"></i>	
-            <router-link class="lo text-white" :to="{ name: 'Transactions'}">Transaction History</router-link>
-        </button>
-    </div>
-
-    <div class="v-divider"></div>
-
-    <div class="btn-group d-flex">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-eye"></i>	
-            <router-link class="lo text-white" :to="{ name: 'APIHistory'}">View API Calls Log</router-link>
-        </button>
     </div>
 
 	<div class="v-divider"></div>

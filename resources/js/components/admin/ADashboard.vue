@@ -10,99 +10,195 @@
                                                         First Row
     *************************************************************************************************************-->
     <div class="row">
-        <div class="col-sm-3">
-            <h2 style="border-bottom: 1px solid #DDDDDD">Today's Statistics</h2>
+        <div class="col-sm-4">
         </div>
-        <div class="col-sm-3"> 
+        <div class="col-sm-1"> 
         </div>
-        <div class="col-sm-3"> <!-- Handles User Profile Details and current units -->
+        <div class="col-sm-2"> <!-- Handles User Profile Details and current units -->
+        <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Today's Statistics</h3>
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-4">
         </div>
     </div>
-
+    <br />
     <!-- *********************************************************************************************************** 
                                                         Second Row
     *************************************************************************************************************-->
     <div class="row">
-         <div class="col-xl-3 col-sm-6 col-12"> 
+        <div class="col-xl-1">
+        </div>
+         <div class="col-xl-5"> 
             <div class="card border border-white shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between" style="font-family: Montserrat">
+                    <div class="d-flex justify-content-between" >
                         <div class="align-self-center">
-                            <i class="fas fa-money-bill-alt fa-3x" style="color: #00B5B8"></i>
+                            <i class="fas fa-money-bill-alt fa-3x" style="color: #97D5B5"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #00B5B8">278,230</h3>
+                            <h3 style="color: #97D5B5">278,230</h3>
                             <span>Income (&#8358;)</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 col-12"> 
+        <div class="col-xl-5"> 
             <div class="card border border-white shadow-sm">
                 <div class="card-body">
-                    <div class="d-flex justify-content-between" style="font-family: Montserrat">
+                    <div class="d-flex justify-content-between" >
                         <div class="align-self-center">
-                            <i class="fas fa-file-code fa-3x" style="color: #00B5B8"></i>
+                            <i class="fas fa-file-code fa-3x" style="color: #87AAD0"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #00B5B8">278,230</h3>
-                            <span>Income (&#8358;)</span>
+                            <h3 style="color: #87AAD0">278,230</h3>
+                            <span>API Calls Made</span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-xl-3 col-sm-6 col-12"> 
-            <div class="card border border-white shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between" style="font-family: Montserrat">
-                        <div class="align-self-center">
-                            <i class="fas fa-users fa-3x" style="color: #00B5B8"></i>
-                        </div>
-                        <div align="right">
-                            <h3 style="color: #00B5B8">278,230</h3>
-                            <span>Income (&#8358;)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-xl-3 col-sm-6 col-12"> 
-            <div class="card border border-white shadow-sm">
-                <div class="card-body">
-                    <div class="d-flex justify-content-between" style="font-family: Montserrat">
-                        <div class="align-self-center">
-                            <i class="fas fa-building fa-3x" style="color: #00B5B8"></i>
-                        </div>
-                        <div align="right">
-                            <h3 style="color: #00B5B8">278,230</h3>
-                            <span>Income (&#8358;)</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xl-1">
         </div>
     </div>
-
+    <br /><br />
     <!-- *********************************************************************************************************** 
                                                         Third Row
     *************************************************************************************************************-->
     <div class="row">
-        <div class="col-sm-3">
-            
+        <div class="col-xl-1">
         </div>
-        <div class="col-sm-3"> 
+        <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" >
+                        <div class="align-self-center">
+                            <i class="fas fa-users fa-3x" style="color: #ECE3A1"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #ECE3A1">278,230</h3>
+                            <span>Registered Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-3"> <!-- Handles User Profile Details and current units -->
+        <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" >
+                        <div class="align-self-center">
+                            <i class="fas fa-chart-line fa-3x" style="color: #FF7F7F"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #FF7F7F">278,230</h3>
+                            <span>Most Searched Entity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="col-sm-3">
+        <div class="col-xl-1">
         </div>
     </div>
-
+    <br /><br /><br />
+    <!-- *********************************************************************************************************** 
+                                                        Fourth Row
+    *************************************************************************************************************-->
+    <div class="row">
+        <div class="col-sm-4">
+        </div>
+        <div class="col-sm-1"> 
+        </div>
+        <div class="col-sm-2"> <!-- Handles User Profile Details and current units -->
+        <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Cummulative Statistics</h3>
+        </div>
+        <div class="col-sm-1">
+        </div>
+        <div class="col-sm-4">
+        </div>
+    </div>
     <br />
+    <!-- *********************************************************************************************************** 
+                                                        Fifth Row
+    *************************************************************************************************************-->
+    <div class="row">
+        <div class="col-xl-1">
+        </div>
+         <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" >
+                        <div class="align-self-center">
+                            <i class="fas fa-money-bill-alt fa-3x" style="color: #79C27B"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #79C27B">278,230</h3>
+                            <span>Income (&#8358;)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" >
+                        <div class="align-self-center">
+                            <i class="fas fa-file-code fa-3x" style="color: #5D7DA3"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #5D7DA3">278,230</h3>
+                            <span>API Calls Made</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-1">
+        </div>
+    </div><br /><br />
+    <!-- *********************************************************************************************************** 
+                                                        Sixth Row
+    *************************************************************************************************************-->
+    <div class="row">
+        <div class="col-xl-1">
+        </div>
+        <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between" >
+                        <div class="align-self-center">
+                            <i class="fas fa-users fa-3x" style="color: #F5E051"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #F5E051">278,230</h3>
+                            <span>Registered Users</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-5 col-sm-6 col-12"> 
+            <div class="card border border-white shadow-sm">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between">
+                        <div class="align-self-center">
+                            <i class="fas fa-chart-line fa-3x" style="color: #FF0000"></i>
+                        </div>
+                        <div align="right">
+                            <h3 style="color: #FF0000">278,230</h3>
+                            <span>Most Searched Entity</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xl-1">
+        </div>
+    </div>
+    <br /><br />
 </div>
 </template>
 <script>
