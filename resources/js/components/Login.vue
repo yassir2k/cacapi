@@ -3,6 +3,7 @@
     <br />
     <br />
     <br />
+    <form>
     <div class="login-form">
         <div class="row">
             <div class="col-sm-12">
@@ -57,7 +58,7 @@
                     <div class="row">
                         <div class="col-sm-12"><!--Button-->
                             <div class="form-group d-grid gap-2">
-                                <button :disabled="freeze" v-on:click="Login" type="submit" value="submit" class="btn btn-success btn-block" name="btn_submit">
+                                <button :disabled="freeze" v-on:click.prevent="Login" type="submit"  class="btn btn-success btn-block">
                                     <span>Login</span>
                                     <span v-html="rotor"></span>
                                 </button> 
@@ -85,6 +86,7 @@
             </div>
         </div>
     </div>
+    </form>
 </div>
 </template>
 
