@@ -13,7 +13,7 @@
         <div class="col-sm-1">
         </div>
         <div class="col-sm-10">
-            <div class="row" style="position: absolute; right: 5%">
+            <div class="row" style="position: absolute; right: 8%">
                 <div class="col-sm-12">
                     <span v-html="AlertMsg"></span>
                 </div>
@@ -48,22 +48,22 @@
                             <td v-if="user.is_active == 1">
                                 <div class="switch">
                                     <label>
-                                        Inactive
+                                        <label>Inactive</label>
                                         <input type="checkbox" :value="user.is_active" checked="checked" @change="onChange($event, user.username)">
-                                        <span class="lever"></span> Active
+                                        <span class="lever"></span><label style="color: green">Active</label>
                                     </label>
                                 </div>
                             </td>
                             <td v-else>
                                 <div class="switch">
                                     <label>
-                                        Inactive
+                                        <label style="color: Red">Inactive</label>
                                         <input type="checkbox" :value="user.is_active"  @change="onChange($event, user.username)">
-                                        <span class="lever"></span> Active
+                                        <span class="lever"></span><label>Active</label>
                                     </label>
                                 </div>
                             </td>
-                            <td><a href="" data-bs-toggle="tooltip" title="View"><i class="fas fa-eye text-secondary"></i></a></td>
+                            <td><i class="fas fa-eye text-secondary"></i></td>
                         </tr>
                     </tbody>
                     <tbody v-else>
@@ -109,7 +109,8 @@ export default {
                 },
                 header_1: "Manage Registered Users",
                 count: 0,
-                AlertMsg:''
+                AlertMsg:'',
+                update: ''
             }
     },
     props: {
@@ -161,12 +162,17 @@ export default {
             }
         },
         onChange(event, tmp){
+            this.update = '';
             this.AlertMsg = '';
             var val = event.target.value;
-            if(val == 1)
+            if(val == 1){
                 val = 0;
-            else
+                this.update = 'The Username <b>' +tmp+ '</b> has been <i>deactivated</i> successfully.';
+            }
+            else{
                 val = 1;
+                this.update = 'The Username <b>' +tmp+ '</b> has been <i>activated</i> successfully.';
+            }
             var dat = {
                 "username": tmp,
                 "value": val
@@ -177,7 +183,7 @@ export default {
                     console.log(response.data);
                     if(response.data == "saved."){
                         this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
-                        '<strong><i class="fas fa-check-circle"></i></strong> User data successfully updated' +
+                        '<strong><i class="fas fa-check-circle"></i></strong> ' + this.update +
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                     }
                     else{
@@ -202,7 +208,7 @@ export default {
         }
     },
     mounted(){
-
+        
     }
 }
 </script>

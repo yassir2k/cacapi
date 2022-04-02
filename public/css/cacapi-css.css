@@ -549,7 +549,7 @@ SWITCH
 background-color:#a8e2b8
 }
 .switch label input[type="checkbox"]:checked+.lever:after{
-left:1.5rem;background-color:rgb(104, 158, 122)
+left:1.5rem;background-color:rgb(13, 161, 63)
 }
 .switch label input[type="checkbox"]:checked:not(:disabled) ~ .lever:active:after{
 -webkit-box-shadow:0 .0625rem .1875rem .0625rem rgba(0,0,0,0.4),0 0 0 .9375rem rgba(170,102,204,0.1);
@@ -576,7 +576,7 @@ margin-right:.625rem;
 vertical-align:middle;
 content:"";
 /*background-color:#818181;*/
-background-color:#FF7F7F;
+background-color:#FFBBBB;
 border-radius:.9375rem;
 width:2.5rem;
 height:.9375rem;
