@@ -127,6 +127,8 @@ import axios from 'axios'
         methods:{
             checkForm(e){
                 this.status = "";
+                this.username_=false;
+                this.password_=false;
                 if (this.username && this.password) {
                     return true;
                 }
