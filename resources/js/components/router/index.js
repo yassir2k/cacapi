@@ -15,6 +15,7 @@ import PasswordRecovery from "../clients/PasswordRecovery.vue";
 import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue";
 import ResetPassword from "../clients/ResetPassword.vue";
 import AdminDashboard from "../admin/ADashboard.vue";
+import ManageRegisteredUsers from "../admin/ManageRegisteredUsers.vue";
 Vue.use(VueRouter);
     const routes = [
         {
@@ -91,10 +92,15 @@ Vue.use(VueRouter);
         /****************************************************************************************************************
           * Admin Routes Definition Below
         ****************************************************************************************************************/
-         {
+        {
           path: "/admin-dashboard",
           name: "AdminDashboard",
           component: AdminDashboard, 
+        },
+        {
+          path: "/manage-registered-users",
+          name: "ManageRegisteredUsers",
+          component: ManageRegisteredUsers, 
         }
     ];
     

@@ -2,7 +2,7 @@
       <nav class="navbar  bg-success sizer d-flex justify-content-center">
 
   	<div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fa fa-home"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fa fa-home"></i>
             <router-link class="lo text-white" :to="{ name: 'AdminDashboard'}">Dashboard</router-link>
 		</button>
     </div>
@@ -10,7 +10,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-users-cog"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-users-cog"></i>
             <router-link class="lo text-white" :to="{ name: 'ManageRegisteredUsers'}">Manage Registered Users</router-link>
 		</button>
     </div>

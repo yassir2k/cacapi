@@ -82,3 +82,7 @@ Route::get('/clients/load-more-details/{transaction_id}', [OrganizationControlle
 Route::get('/admin-dashboard', function() {
     return view('admin/dashboard');
 });
+
+Route::get('/manage-registered-users', function() {
+    return view('admin/manage-registered-users');
+});

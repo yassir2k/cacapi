@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\OrganizationController;
+use App\Http\Controllers\Api\AdminController;
 
 /*
 |--------------------------------------------------------------------------
@@ -87,3 +88,18 @@ Reset Password
 ------------------------------------------------------------------------
 */
 Route::post('/reset_password', [OrganizationController::class, 'ResetPassword']);
+
+
+
+/*
+------------------------------------------------------------------------
+
+
+API Section for Admin
+
+
+------------------------------------------------------------------------
+*/
+
+Route::post('/get_users', [AdminController::class, 'GetUsers']);
+Route::post('/change_user_status', [AdminController::class, 'ChangeUserStatus']);

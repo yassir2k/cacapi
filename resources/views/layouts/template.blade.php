@@ -24,6 +24,7 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
         <script src="{{asset('js/app.js')}}"></script>
         <script src="https://unpkg.com/v-tooltip@2.1.3/dist/v-tooltip.min.js"></script>
+        <script src="js/popper.min.js+bootstrap.min.js+main.js.pagespeed.jc.CP7-dmYoB7.js"></script>
         
 
         <style>
