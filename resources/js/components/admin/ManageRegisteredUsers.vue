@@ -13,7 +13,7 @@
         <div class="col-sm-1">
         </div>
         <div class="col-sm-10">
-            <div class="row" style="position: absolute; right: 8%">
+            <div class="row" style="position: absolute; right: 8.5%; top: 15%">
                 <div class="col-sm-12">
                     <span v-html="AlertMsg"></span>
                 </div>
@@ -96,7 +96,6 @@
 <script>
 import pagination from 'laravel-vue-pagination'
 import NavBar from './navigations/ManageUsersNav.vue';
-import BootstrapToggle from 'vue-bootstrap-toggle';
 import JQuery from 'jquery';
 window.$ = JQuery;
 import axios from 'axios';
@@ -120,8 +119,7 @@ export default {
     },
     components:{
          pagination,
-         NavBar,
-         BootstrapToggle
+         NavBar
     },
     beforeCreate: function () {
         if (!this.$session.exists()) {
