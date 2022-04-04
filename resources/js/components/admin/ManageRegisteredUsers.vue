@@ -50,7 +50,7 @@
                                     <label>
                                         <label>Inactive</label>
                                         <input type="checkbox" :value="user.is_active" checked="checked" @change="onChange($event, user.username)">
-                                        <span class="lever"></span><label style="color: green">Active</label>
+                                        <span class="lever"></span><label style="color: #009900">Active</label>
                                     </label>
                                 </div>
                             </td>
