@@ -10,6 +10,8 @@ use App\Models\User;
 use App\Models\Transactions;
 use App\Models\Affiliate;
 use App\Models\Log;
+use App\Mail\DeactivateAccountMail;
+use App\Mail\ActivateAccountMail;
 use \Auth, Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -30,6 +32,17 @@ class AdminController extends Controller
         ->Where(['username' => $username])->first();
         $temp->is_active = $value;
         $temp->save();
+        //Send Email
+        $time = date("l d F, Y H:i:s ");
+        if($value == 0)//deactivate
+        {
+            Mail::to($temp->email)
+            ->send(new DeactivateAccountMail($temp->email, $temp->organization_name, $temp->contact_name, $time));
+        }
+        else{//activate
+            Mail::to($temp->email)
+            ->send(new ActivateAccountMail($temp->email, $temp->organization_name, $temp->contact_name, $time));
+        }
         return "saved.";
     }
 }

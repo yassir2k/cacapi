@@ -82,8 +82,9 @@
                             <div class="input-group">
                                 <span class="input-group-text">
                                     <i class="fas fa-envelope-open-text" style="color: #8FBC8F"></i>
-                                </span>                    
-                                <input v-on:blur="GenerateUsername"  class="form-control" placeholder="Email address" v-model="Email" required >
+                                </span>    
+                                <input  class="form-control" placeholder="Email address" v-model="Email" required >                
+                                <!-- <input v-on:blur="GenerateUsername"  class="form-control" placeholder="Email address" v-model="Email" required > -->
                             </div>
                         </div>
                     </div><!--End Email Subject-->
@@ -197,7 +198,7 @@
                                 <span class="input-group-text">
                                     <i class="fas fa-user-alt" style="color: #8FBC8F"></i>
                                 </span>                    
-                                <input type="text"  class="form-control" placeholder="Your username will be automatically generated" v-model="username" required disabled>
+                                <input type="text"  class="form-control" placeholder="Your username (alphanumeric input only)" v-model="username" required>
                             </div>
                         </div>
                     </div><!--End Email Subject-->

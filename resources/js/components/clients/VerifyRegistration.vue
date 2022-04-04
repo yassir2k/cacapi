@@ -53,7 +53,7 @@ export default {
             AlertMsg: ''
         }
     },
-    beforeCreate: function () {
+    beforeCreate() {
         const token = this.$route.params.token;
         var dat = {
                 "token": token,
@@ -69,7 +69,6 @@ export default {
             responseType: 'json'
             })
             .then(response =>{
-                console.log(response);
                 if(response.data == "Valid")
                 {
                     this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
@@ -84,9 +83,12 @@ export default {
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 }
             })
+            .catch(
+                console.log("Get Transaction Details Error: ")
+            );
         }
-        catch(err){    
-                console.log("Get Transaction Details Error: " + err);
+        finally{
+            return;
         }
     }
 }
