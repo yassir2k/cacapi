@@ -31,7 +31,10 @@ class User extends Authenticatable
         'password_reset_hash',
         'password_hash_control',
         'units',
-        'role'
+        'role',
+        'billable',
+        'client_type',
+        'ip_address'
     ];
     /**
      * The attributes that are mass assignable.

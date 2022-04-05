@@ -12,6 +12,7 @@ use App\Models\Affiliate;
 use App\Models\Log;
 use App\Mail\DeactivateAccountMail;
 use App\Mail\ActivateAccountMail;
+use App\Mail\NewMdaRegistrationMail;
 use \Auth, Mail;
 use Illuminate\Support\Facades\DB;
 
@@ -44,5 +45,91 @@ class AdminController extends Controller
             ->send(new ActivateAccountMail($temp->email, $temp->organization_name, $temp->contact_name, $time));
         }
         return "saved.";
+    }
+
+
+    public function SignUpMdaUser(Request $request)
+    {
+        $Organization = $request->input('Organization');
+        $ContactName = $request->input('ContactName');
+        $Email = $request->input('Email');
+        $PhoneNumber = $request->input('PhoneNumber'); 
+        $Address = $request->input('Address');
+        $IpAddress = $request->input('IpAddress');
+        $Username = $request->input('Username'); 
+        $User = User::where(['username'=> $Username])->first();
+        if($User != null)
+        {
+            //Meaning it exists or used before in registration
+            return "This username (".$Username.") has already been used.";
+        }
+        //If username is not unique, let's cross the unique email module
+        $email = User::where(['email'=> $Email])->first();
+        if($email != null)
+        {
+            //Meaning it exists or used before in registration
+            return "This email (".$Email.") has already been used.";
+        }
+
+        $Token = substr(bin2hex(random_bytes(100)), 0, 100);
+        //At this stage, we're good to go
+        $data = [
+            'username' => $Username, 
+            'email' => $Email,
+            'organization_name' => $Organization,
+            'address' => $Address,
+            'contact_name' => $ContactName,
+            'contact_phone' => $PhoneNumber, 
+            'password' => NULL,
+            'viewed_by_admin' => 0,
+            'is_active' => 0,
+            'is_registered' => 0,
+            'registered_on' => NULL,
+            'registration_hash' => $Token,
+            'password_reset_hash' => NULL,
+            'password_hash_control' => NULL,
+            'units' => 0,
+            'role' => "Accessor",
+            'billable' => 0,
+            'client_type' => "Government",
+            'ip_address' => $IpAddress
+        ];
+        User::create($data);
+
+        //To be sure data is saved, let's query the DB for confirmation.
+        $check = User::where(['email'=> $Email])->first();
+        if($check != null)
+        {
+            Mail::to($Email)
+            ->send(new NewMdaRegistrationMail($Email, $Organization, $ContactName, $Token));
+            return "saved";
+        }
+        else{
+            return "not saved";
+        }
+
+    }
+
+
+    /*---------------------------------------- 
+        Verify MDA Registration
+    ----------------------------------------*/
+    public function ValidateMdaRegistrationToken(Request $request)
+    {
+        $token = $request->input('token'); 
+        $User = User::where(['registration_hash'=> $token, 'is_registered' => 0, 'billable' => 0])->first();
+        if(is_null($User))
+        {
+            return "The token is either invalid, or it has been used already/expired.";
+        }
+        else
+        {
+            $User->registered_on = date("Y-m-d H:i:s");
+            $User->is_active = 1;
+            $User->is_registered = 1;
+            $User->save();
+            $reply["Message"] = "Valid";
+            $reply["Hash"] = $token;
+        }
     }
 }

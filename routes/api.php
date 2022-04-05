@@ -103,3 +103,11 @@ API Section for Admin
 
 Route::post('/get_users', [AdminController::class, 'GetUsers']);
 Route::post('/change_user_status', [AdminController::class, 'ChangeUserStatus']);
+/*
+------------------------------------------------------------------------
+Sign Up MDA User
+------------------------------------------------------------------------
+*/
+Route::post('/sign_up_mda_user', [AdminController::class, 'SignUpMdaUser']);
+
+Route::post('/validate_mda_registration_token', [AdminController::class, 'ValidateMdaRegistrationToken'])->middleware('VerifyRegistrationToken');

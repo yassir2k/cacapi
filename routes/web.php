@@ -86,3 +86,12 @@ Route::get('/admin-dashboard', function() {
 Route::get('/manage-registered-users', function() {
     return view('admin/manage-registered-users');
 });
+
+Route::get('/create-new-mda-user', function() {
+    return view('admin/create-new-mda-user');
+});
+
+
+Route::get('/registration/verify-mda-registration/{mdatoken}', function () {
+    return view('verify-mda-registration');
+})->name('verifyMda');

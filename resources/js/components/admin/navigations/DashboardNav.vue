@@ -14,6 +14,14 @@
             <router-link class="lo text-white" :to="{ name: 'ManageRegisteredUsers'}">Manage Registered Users</router-link>
 		</button>
     </div>
+
+    <span class="v-divider"></span>
+
+    <div class="btn-group ">
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-user-plus"></i>
+            <router-link class="lo text-white" :to="{ name: 'CreateMdaUser'}">Create New MDA User</router-link>
+		</button>
+    </div>
 	
     <span class="v-divider"></span>
 

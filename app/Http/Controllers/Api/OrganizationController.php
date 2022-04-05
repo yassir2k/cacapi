@@ -924,7 +924,9 @@ class OrganizationController extends Controller
             'password_reset_hash' => NULL,
             'password_hash_control' => NULL,
             'units' => 0,
-            'role' => "Accessor"
+            'role' => "Accessor",
+            'billable' => 1,
+            'client_type' => "Business"
         ];
         User::create($data);
 

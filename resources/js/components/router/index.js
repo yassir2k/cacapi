@@ -16,6 +16,9 @@ import ValidatePasswordRecovery from "../clients/ValidatePasswordRecovery.vue";
 import ResetPassword from "../clients/ResetPassword.vue";
 import AdminDashboard from "../admin/ADashboard.vue";
 import ManageRegisteredUsers from "../admin/ManageRegisteredUsers.vue";
+import CreateMdaUser from "../admin/CreateMdaUser.vue";
+import VerifyMdaRegistration from "../admin/VerifyMdaRegistration.vue";
+import NewMdaPassword from "../admin/NewMdaPassword.vue";
 Vue.use(VueRouter);
     const routes = [
         {
@@ -90,7 +93,7 @@ Vue.use(VueRouter);
           component: ResetPassword, 
         },
         /****************************************************************************************************************
-          * Admin Routes Definition Below
+          * Admin Routes Definition Below CreateMdaUser
         ****************************************************************************************************************/
         {
           path: "/admin-dashboard",
@@ -101,6 +104,23 @@ Vue.use(VueRouter);
           path: "/manage-registered-users",
           name: "ManageRegisteredUsers",
           component: ManageRegisteredUsers, 
+        },
+        {
+          path: "/create-new-mda-user",
+          name: "CreateMdaUser",
+          component: CreateMdaUser, 
+        }
+        ,
+        {
+          path: "/verify-mda-registration",
+          name: "VerifyMdaRegistration",
+          component: VerifyMdaRegistration, 
+        }
+        ,
+        {
+          path: "/new-mda-password",
+          name: "NewMdaPassword",
+          component: NewMdaPassword, 
         }
     ];
     
