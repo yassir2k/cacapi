@@ -110,4 +110,11 @@ Sign Up MDA User
 */
 Route::post('/sign_up_mda_user', [AdminController::class, 'SignUpMdaUser']);
 
-Route::post('/validate_mda_registration_token', [AdminController::class, 'ValidateMdaRegistrationToken'])->middleware('VerifyRegistrationToken');
+Route::post('/validate_mda_registration_token', [AdminController::class, 'ValidateMdaRegistrationToken'])->middleware('VerifyMdaRegistrationToken');
+
+/*
+------------------------------------------------------------------------
+Reset Password
+------------------------------------------------------------------------
+*/
+Route::post('/new_mda_password', [AdminController::class, 'NewMdaPassword']);

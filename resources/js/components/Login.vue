@@ -158,7 +158,7 @@ import axios from 'axios'
                     .then(response =>{
                         if(response.data["status"] == "success"){
                             this.status='<div class="alert alert-success text-justify"><center>Success!</center></label>';
-                            this.$session.start()
+                            this.$session.start();
                             this.$session.set('token', response.data["token"]);
                             this.$session.set('email', response.data["email"]);
                             this.$session.set('username', response.data["username"]);

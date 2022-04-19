@@ -47,33 +47,29 @@ import axios from 'axios';
 export default {
     data() {
         return {
-
             header_1: "Verify Registration",
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             AlertMsg: ''
         }
     },
     beforeCreate() {
-        const token = this.$route.params.token;
+        
+    },
+    mounted(){
+        var token = this.$route.params.token;
+        alert(token);
         var dat = {
                 "token": token,
             }
         try{
-            axios({
-            method: 'post',
-            data: dat,
-            url: 'http://127.0.0.1:8000/api/validate_registration_token',
-            headers: { 
-                'Content-type': 'application/json; charset=utf-8', 
-            },
-            responseType: 'json'
-            })
+            axios.post("http://127.0.0.1:8000/api/validate_registration_token", dat) 
             .then(response =>{
+                console.log(response.data);
                 if(response.data == "Valid")
                 {
                     this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +
                         '<strong><i class="fas fa-check-circle"></i></strong> You have successfully verified your email. Click <b><a class="text-success" href="/"> here </a></b>' +
-                        'and login with your credentials created earlier.'
+                        'and login with your credentials created earlier.' +
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 }
                 else
@@ -83,10 +79,18 @@ export default {
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 }
             })
-            .catch(
-                console.log("Get Transaction Details Error: ")
-            );
         }
+        catch(err){    
+                if (err.response) {
+                    // client received an error response (5xx, 4xx)
+                console.log("Server Error:", err)
+                } else if (err.request) {
+                    // client never received a response, or request never left
+                    console.log("Network Error:", err)
+                } else {
+                    console.log("Client Error:", err)
+                }
+            }
         finally{
             return;
         }

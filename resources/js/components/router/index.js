@@ -17,10 +17,15 @@ import ResetPassword from "../clients/ResetPassword.vue";
 import AdminDashboard from "../admin/ADashboard.vue";
 import ManageRegisteredUsers from "../admin/ManageRegisteredUsers.vue";
 import CreateMdaUser from "../admin/CreateMdaUser.vue";
-import VerifyMdaRegistration from "../admin/VerifyMdaRegistration.vue";
 import NewMdaPassword from "../admin/NewMdaPassword.vue";
+import MdaRegVerification from "../admin/MdaRegVerification.vue";
+import NotFound from "../NotFound.vue";
 Vue.use(VueRouter);
     const routes = [
+        {
+          path: '*',
+          component: NotFound,
+        },
         {
           path: "/client-dashboard",
           name: "Dashboard",
@@ -109,14 +114,12 @@ Vue.use(VueRouter);
           path: "/create-new-mda-user",
           name: "CreateMdaUser",
           component: CreateMdaUser, 
-        }
-        ,
+        },
         {
-          path: "/verify-mda-registration",
-          name: "VerifyMdaRegistration",
-          component: VerifyMdaRegistration, 
-        }
-        ,
+          path: "/registration/verify-mda-registration/:mdatoken",
+          name: "MdaRegVerification",
+          component: MdaRegVerification, 
+        },
         {
           path: "/new-mda-password",
           name: "NewMdaPassword",

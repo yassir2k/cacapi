@@ -15,7 +15,7 @@
         <p style="text-indent :5em;"> Dear <b>{{ $organization_ }}</b>,</p>
         <p style="text-indent :5em;">You initiated a user account registration process on the Corporate Affairs Commission (CAC) API Portal.</p>
         <p style="text-indent :5em;"> Click the link below to verify your email.</p>
-        <p style="text-indent :5em;"><a href="{{ route('verifyMda', ['mdatoken' => $token_ ]) }}"> Click here</a></p>
+        <p style="text-indent :5em;"><a href="{{ route('verifymda', ['mdatoken' => $token_ ]) }}"> Click here</a></p>
         <br />
         <p style="text-indent :5em;">Regards,</p>
         <p style="text-indent :5em;"><b>Yassir Yahaya</b></p>

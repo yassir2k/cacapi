@@ -11,7 +11,6 @@
         <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
         <!-- Scripts -->
         <link rel="stylesheet" type="text/css" href="{{asset('css/app.css')}}">
-        <script src="{{asset('js/app.js')}}"></script>
         <script src="{{asset('js/jquery.min.js')}}"></script>
         <link rel="stylesheet" type="text/css" href="{{ asset('css/cacapi-css.css') }}">
         <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">

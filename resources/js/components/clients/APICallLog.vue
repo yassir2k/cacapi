@@ -126,7 +126,7 @@ export default {
          pagination,
          NavBar
     },
-    beforeCreate: function () {
+    async beforeCreate() {
         if (!this.$session.exists()) {
         this.$router.push('/');
         }
@@ -142,7 +142,7 @@ export default {
                     "username": this.$session.get("username"),
                 }
                 try{
-                    axios.post("http://127.0.0.1:8000/api/get_realtime_units", postData) 
+                    await axios.post("http://127.0.0.1:8000/api/get_realtime_units", postData) 
                     .then(response =>{
                         this.units = response.data["units"];
                     })

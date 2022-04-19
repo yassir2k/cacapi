@@ -48,17 +48,16 @@ export default {
     data() {
         return {
 
-            header_1: "Verify Registration",
+            header_1: "Verify MDA Registration",
             csrf: document.querySelector('meta[name="csrf-token"]').getAttribute('content'),
             AlertMsg: ''
         }
     },
-    beforeCreate() {
+    mounted(){
         const token = this.$route.params.mdatoken;
         var dat = {
                 "token": token,
             }
-        try{
             axios({
             method: 'post',
             data: dat,
@@ -69,6 +68,7 @@ export default {
             responseType: 'json'
             })
             .then(response =>{
+                console.log(response.data);
                 if(response.data["Message"] == "Valid")
                 {
                     //Navigate to New Password Reset for MDAs
@@ -79,17 +79,13 @@ export default {
                 else
                 {
                     this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
-                        '<strong><i class="fas fa-times-circle"></i></strong> '+ response.data  +
+                        '<strong><i class="fas fa-times-circle"></i></strong> '+ response.data[""]  +
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
                 }
             })
             .catch(
                 console.log("Get Transaction Details Error: ")
             );
-        }
-        finally{
-            return;
-        }
     }
 }
 </script>

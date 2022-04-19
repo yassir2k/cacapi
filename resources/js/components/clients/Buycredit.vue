@@ -408,6 +408,7 @@ export default {
                         axios.post("http://127.0.0.1:8000/api/post_transaction", postData) 
                         .then(response =>{
                             self.disableRemitaBtn = true;
+                            this.disableRemitaBtn = true;
                             self.$router.push({ name: 'TransactionDetails', params: { rrr: self.rrr } });
                         })
                     }

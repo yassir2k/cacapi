@@ -80,7 +80,7 @@ class AdminController extends Controller
             'address' => $Address,
             'contact_name' => $ContactName,
             'contact_phone' => $PhoneNumber, 
-            'password' => NULL,
+            'password' => bcrypt("&*()12@"),
             'viewed_by_admin' => 0,
             'is_active' => 0,
             'is_registered' => 0,
@@ -130,6 +130,34 @@ class AdminController extends Controller
             $User->save();
             $reply["Message"] = "Valid";
             $reply["Hash"] = $token;
+            return $reply;
+        }
+    }
+
+
+    /*---------------------------------------- 
+        New MDA Password
+    ----------------------------------------*/
+    public function NewMdaPassword(Request $request)
+    {
+        $NewPassword = $request->input('newPassword'); 
+        $ConfirmPassword = $request->input('confirmPassword'); 
+        $hash = $request->input('hash'); 
+        if($NewPassword != $ConfirmPassword)
+        {
+            return "New and cofirm new passwords do not match.";
+        }
+        else
+        {
+            $User = User::where(['registration_hash' => $hash])->first();
+            if(is_null($User))
+            {
+                return "Invalid token";
+            }
+            $User->password = bcrypt($NewPassword);
+            $User->password_hash_control = NULL;
+            $User->save();
+            return "Success";
         }
     }
 }

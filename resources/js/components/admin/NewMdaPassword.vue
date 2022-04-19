@@ -12,6 +12,19 @@
             <h2 style="border-bottom: 1px solid #DDDDDD">{{header_1}}</h2>
             <br />
             <br />
+            <div class="row">
+                <div class="col-sm-3">
+                </div>
+                <div class="col-sm-6">
+                    <div class="alert alert-success alert-dismissible fade show">
+                        <h4 class="alert-heading"><i class="fas fa-check-circle"></i>&nbsp; You've successfully verified your Email.</h4>
+                        <hr>
+                        <p>Please kindly go ahead and create a new password.</p>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                </div>
+            </div>
             <br />
             <div class="row">
                 <div class="col-sm-3">
@@ -79,7 +92,7 @@
                 <div class="col-sm-2">
                     <div class="form-group d-grid gap-2">
                         <button :disabled="freeze" v-on:click.prevent="ResetPassword" type="submit" value="submit" class="btn btn-success btn-block" name="save_user_info">
-                            <span>Reset Password</span>
+                            <span>Create New Password</span>
                             <span v-html="rotor"></span>
                         </button> 
                     </div>
@@ -156,7 +169,7 @@ export default {
                 axios({
                 method: 'post',
                 data: dat,
-                url: 'http://127.0.0.1:8000/api/reset_password',
+                url: 'http://127.0.0.1:8000/api/new_mda_password',
                 headers: { 
                     'Content-type': 'application/json; charset=utf-8', 
                 },
@@ -167,7 +180,7 @@ export default {
                     if(response.data == "Success")
                     {
                         this.$session.remove("MDAToken");
-                        this.$session.set('passwordResetSuccessMsg', "You have successfully changed/reset your password.");
+                        this.$session.set('passwordResetSuccessMsg', "You have successfully created a new password.");
                         this.$router.push({ name: 'Login' });
                     }
                     else

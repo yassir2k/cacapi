@@ -953,7 +953,7 @@ class OrganizationController extends Controller
         $User = User::where(['registration_hash'=> $token, 'is_registered' => 0])->first();
         if(is_null($User))
         {
-            return "The token is either invalid, or it has been used already/expired.";
+            return "The token is either invalid, or it has been used already/expired..";
         }
         else
         {
