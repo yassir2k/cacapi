@@ -292,7 +292,7 @@ export default {
                         this.units = response.data["units"];
                     })
                 }
-                catch{
+                catch(err){
                     if (err.response) {
                     // client received an error response (5xx, 4xx)
                     console.log("Server Error:", err)
@@ -353,7 +353,6 @@ export default {
              try{
                 axios.post('http://127.0.0.1:8000/api/update_user_details', dat)
                 .then(response =>{
-                    console.log(response);
                     this.freeze = false;
                     this.rotor = '&nbsp;<i class="fas fa-save"></i>';
                     if(response.data == "User data successfully updated"){

@@ -175,7 +175,6 @@ export default {
                 responseType: 'json'
                 })
                 .then(response =>{
-                    console.log(response);
                     if(response.data == "Success")
                     {
                         this.$session.remove("Hash");

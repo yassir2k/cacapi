@@ -64,7 +64,6 @@ export default {
         try{
             axios.post("http://127.0.0.1:8000/api/validate_registration_token", dat) 
             .then(response =>{
-                console.log(response.data);
                 if(response.data == "Valid")
                 {
                     this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' +

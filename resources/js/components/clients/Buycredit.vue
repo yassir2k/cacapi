@@ -403,7 +403,6 @@ export default {
                         "username": self.$session.get("username"),
                         "email": self.$session.get("email")
                     }
-                    console.log(postData);
                     try{
                         axios.post("http://127.0.0.1:8000/api/post_transaction", postData) 
                         .then(response =>{
