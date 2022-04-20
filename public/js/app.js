@@ -2279,8 +2279,11 @@ __webpack_require__.r(__webpack_exports__);
 
             _this.$session.set('phone', response.data["phone"]);
 
-            _this.$session.set('role', response.data["role"]); //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
+            _this.$session.set('role', response.data["role"]);
 
+            _this.$session.set('clientType', response.data["clientType"]);
+
+            alert(_this.$session.get('clientType')); //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
 
             if (response.data["role"] == "Accessor") _this.$router.push({
               name: 'Dashboard'
@@ -2957,12 +2960,14 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      total_today: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-      total_units_expended_today: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-      total_units_purchased: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-      total_cummulative_api_calls: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-      total_cummulative_units_expended: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-      total_cummulative_units_purchased: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      today_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      today_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      today_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      today_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      cummulative_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      cummulative_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      cummulative_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+      cummulative_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
       units: null
     };
   },
@@ -2982,48 +2987,70 @@ __webpack_require__.r(__webpack_exports__);
 
     var postData = {
       "username": this.$session.get("username")
-    }; //Get total API calls today
+    };
+    var d = new Date();
+    var sessionId = d.getTime();
+    var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token")); //Get today's income
 
     try {
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_api_calls_today", postData).then(function (response) {
-        _this.total_today = '<b style="color: #50c878">' + Number(response.data).toLocaleString() + '</b>';
+      axios__WEBPACK_IMPORTED_MODULE_0___default()({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/api/get_todays_income',
+        data: postData,
+        headers: {
+          'Content-type': 'application/json; charset=utf-8',
+          'Authorization': 'remitaConsumerKey=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token")
+        },
+        responseType: 'json'
+      }).then(function (response) {
+        _this.today_income = '<b style="color: #97D5B5">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused) {} //Gets total amount spent today
+    } catch (err) {
+      if (err.response) {
+        // client received an error response (5xx, 4xx)
+        console.log("Server Error:", err);
+      } else if (err.request) {
+        // client never received a response, or request never left
+        console.log("Network Error:", err);
+      } else {
+        console.log("Client Error:", err);
+      }
+    } //Gets total amount spent today
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_units_expended_today", postData).then(function (response) {
         _this.total_units_expended_today = '<b style="color: #E4D00A">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused2) {} //Gets total units purchased today
+    } catch (_unused) {} //Gets total units purchased today
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_units_purchased_today", postData).then(function (response) {
         _this.total_units_purchased = '<b style="color: #DC143C">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused3) {} //Gets total cummulative API call
+    } catch (_unused2) {} //Gets total cummulative API call
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_cummulative_api_calls", postData).then(function (response) {
         _this.total_cummulative_api_calls = '<b style="color: #93C572">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused4) {} //Gets total cummulative units expended
+    } catch (_unused3) {} //Gets total cummulative units expended
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_cummulative_units_expended", postData).then(function (response) {
         _this.total_cummulative_units_expended = '<b style="color: #E39802">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused5) {} //Gets total cummulative units purchased
+    } catch (_unused4) {} //Gets total cummulative units purchased
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/get_total_cummulative_units_purchased", postData).then(function (response) {
         _this.total_cummulative_units_purchased = '<b style="color: #B60A1C">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused6) {}
+    } catch (_unused5) {}
   },
   methods: {
     logout: function logout() {
@@ -4323,6 +4350,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4886,7 +4916,6 @@ __webpack_require__.r(__webpack_exports__);
                 "username": self.$session.get("username"),
                 "email": self.$session.get("email")
               };
-              console.log(postData);
 
               try {
                 axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/post_transaction", postData).then(function (response) {
@@ -4951,7 +4980,7 @@ __webpack_require__.r(__webpack_exports__);
     if (!this.$session.exists()) {
       this.$router.push('/');
     } else {
-      if (this.$session.get("role") != "Accessor") {
+      if (this.$session.get("role") != "Accessor" || this.$session.get('clientType') == 'Government') {
         alert("You do not have privilege to visit this page.");
         this.$session.destroy();
         this.$router.push('/');
@@ -4987,6 +5016,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navigations_UserSettingsNav_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./navigations/UserSettingsNav.vue */ "./resources/js/components/clients/navigations/UserSettingsNav.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
+//
+//
+//
 //
 //
 //
@@ -5490,6 +5522,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -5604,6 +5652,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _navigations_APIDocumentationNav_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigations/APIDocumentationNav.vue */ "./resources/js/components/clients/navigations/APIDocumentationNav.vue");
+//
+//
+//
 //
 //
 //
@@ -6047,6 +6098,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -6090,7 +6144,7 @@ __webpack_require__.r(__webpack_exports__);
           axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_realtime_units", postData).then(function (response) {
             _this.units = response.data["units"];
           });
-        } catch (_unused) {
+        } catch (err) {
           if (err.response) {
             // client received an error response (5xx, 4xx)
             console.log("Server Error:", err);
@@ -6110,7 +6164,7 @@ __webpack_require__.r(__webpack_exports__);
           axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/fetch_user_details", postData).then(function (resp) {
             _this.username = resp.data['username'], _this.email = resp.data['email'], _this.organization = resp.data['organization_name'], _this.contactName = resp.data['contact_name'], _this.contactNumber = resp.data['contact_phone'], _this.status = resp.data['is_active'] == 1 ? "Active" : "Inactive", _this.address = resp.data['address'];
           });
-        } catch (_unused2) {
+        } catch (_unused) {
           if (err.response) {
             // client received an error response (5xx, 4xx)
             console.log("Server Error:", err);
@@ -6145,7 +6199,6 @@ __webpack_require__.r(__webpack_exports__);
 
       try {
         axios__WEBPACK_IMPORTED_MODULE_1___default().post('http://127.0.0.1:8000/api/update_user_details', dat).then(function (response) {
-          console.log(response);
           _this2.freeze = false;
           _this2.rotor = '&nbsp;<i class="fas fa-save"></i>';
 
@@ -6526,8 +6579,6 @@ __webpack_require__.r(__webpack_exports__);
           },
           responseType: 'json'
         }).then(function (response) {
-          console.log(response);
-
           if (response.data == "Success") {
             _this.$session.remove("Hash");
 
@@ -6802,6 +6853,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _navigations_TransactionNav_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./navigations/TransactionNav.vue */ "./resources/js/components/clients/navigations/TransactionNav.vue");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+//
+//
+//
 //
 //
 //
@@ -7248,8 +7302,6 @@ __webpack_require__.r(__webpack_exports__);
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("http://127.0.0.1:8000/api/validate_registration_token", dat).then(function (response) {
-        console.log(response.data);
-
         if (response.data == "Valid") {
           _this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' + '<strong><i class="fas fa-check-circle"></i></strong> You have successfully verified your email. Click <b><a class="text-success" href="/"> here </a></b>' + 'and login with your credentials created earlier.' + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
         } else {
@@ -7543,6 +7595,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+//
+//
 //
 //
 //
@@ -8170,7 +8224,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*.accordion-button.collapsed {\r\n  \r\n}*/\n.accordion-button.collapsed[data-v-1c8c2c18]::after {\r\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.accordion-button[data-v-1c8c2c18]::before {\r\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\r\n\r\n", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/*.accordion-button.collapsed {\r\n  \r\n}*/\n.accordion-button.collapsed[data-v-1c8c2c18]::after {\r\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\n.accordion-button[data-v-1c8c2c18]::before {\r\n  background-image: url(\"data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23fff'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e\");\n}\r\n\r\n", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25117,27 +25171,217 @@ var render = function() {
     _vm._v(" "),
     _c("br"),
     _vm._v(" "),
-    _vm._m(1),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-1" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#97D5B5" } }, [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(_vm.today_income) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Income (₦)")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#87AAD0" } }, [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(_vm.today_api_calls_made) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("API Calls Made")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-1" })
+    ]),
     _vm._v(" "),
     _c("br"),
     _c("br"),
     _vm._v(" "),
-    _vm._m(2),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-1" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#ECE3A1" } }, [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(_vm.today_registered_users) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Registered Users")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#FF7F7F" } }, [
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.today_most_searched_entity)
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Most Searched Entity")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-1" })
+    ]),
     _vm._v(" "),
     _c("br"),
-    _c("br"),
-    _c("br"),
-    _vm._v(" "),
-    _vm._m(3),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _vm._m(4),
     _c("br"),
     _c("br"),
     _vm._v(" "),
     _vm._m(5),
     _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-1" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(6),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#79C27B" } }, [
+                  _c("span", {
+                    domProps: { innerHTML: _vm._s(_vm.cummulative_income) }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Income (₦)")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(7),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#5D7DA3" } }, [
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.cummulative_api_calls_made)
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("API Calls Made")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-1" })
+    ]),
+    _c("br"),
+    _c("br"),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "col-xl-1" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(8),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#F5E051" } }, [
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.cummulative_registered_users)
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Registered Users")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
+        _c("div", { staticClass: "card border border-white shadow-sm" }, [
+          _c("div", { staticClass: "card-body" }, [
+            _c("div", { staticClass: "d-flex justify-content-between" }, [
+              _vm._m(9),
+              _vm._v(" "),
+              _c("div", { attrs: { align: "right" } }, [
+                _c("h3", { staticStyle: { color: "#FF0000" } }, [
+                  _c("span", {
+                    domProps: {
+                      innerHTML: _vm._s(_vm.cummulative_most_searched_entity)
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("span", [_vm._v("Most Searched Entity")])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-xl-1" })
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _c("br"),
+    _c("br"),
+    _c("br"),
+    _c("br"),
+    _c("br"),
     _c("br"),
     _c("br")
   ])
@@ -25152,7 +25396,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-1" }),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-2" }, [
+      _c("div", { staticClass: "col-sm-2", attrs: { align: "center" } }, [
         _c(
           "h3",
           {
@@ -25174,112 +25418,44 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-1" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-money-bill-alt fa-3x",
-                  staticStyle: { color: "#97D5B5" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#97D5B5" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Income (₦)")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-file-code fa-3x",
-                  staticStyle: { color: "#87AAD0" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#87AAD0" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("API Calls Made")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-1" })
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-money-bill-alt fa-3x",
+        staticStyle: { color: "#97D5B5" }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-1" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-users fa-3x",
-                  staticStyle: { color: "#ECE3A1" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#ECE3A1" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Registered Users")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-chart-line fa-3x",
-                  staticStyle: { color: "#FF7F7F" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#FF7F7F" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Most Searched Entity")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-1" })
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-file-code fa-3x",
+        staticStyle: { color: "#87AAD0" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-users fa-3x",
+        staticStyle: { color: "#ECE3A1" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-chart-line fa-3x",
+        staticStyle: { color: "#FF7F7F" }
+      })
     ])
   },
   function() {
@@ -25291,7 +25467,7 @@ var staticRenderFns = [
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-1" }),
       _vm._v(" "),
-      _c("div", { staticClass: "col-sm-2" }, [
+      _c("div", { staticClass: "col-sm-2", attrs: { align: "center" } }, [
         _c(
           "h3",
           {
@@ -25313,112 +25489,44 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-1" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-money-bill-alt fa-3x",
-                  staticStyle: { color: "#79C27B" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#79C27B" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Income (₦)")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-file-code fa-3x",
-                  staticStyle: { color: "#5D7DA3" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#5D7DA3" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("API Calls Made")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-1" })
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-money-bill-alt fa-3x",
+        staticStyle: { color: "#79C27B" }
+      })
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-xl-1" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-users fa-3x",
-                  staticStyle: { color: "#F5E051" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#F5E051" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Registered Users")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-5 col-sm-6 col-12" }, [
-        _c("div", { staticClass: "card border border-white shadow-sm" }, [
-          _c("div", { staticClass: "card-body" }, [
-            _c("div", { staticClass: "d-flex justify-content-between" }, [
-              _c("div", { staticClass: "align-self-center" }, [
-                _c("i", {
-                  staticClass: "fas fa-chart-line fa-3x",
-                  staticStyle: { color: "#FF0000" }
-                })
-              ]),
-              _vm._v(" "),
-              _c("div", { attrs: { align: "right" } }, [
-                _c("h3", { staticStyle: { color: "#FF0000" } }, [
-                  _vm._v("278,230")
-                ]),
-                _vm._v(" "),
-                _c("span", [_vm._v("Most Searched Entity")])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-xl-1" })
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-file-code fa-3x",
+        staticStyle: { color: "#5D7DA3" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-users fa-3x",
+        staticStyle: { color: "#F5E051" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "align-self-center" }, [
+      _c("i", {
+        staticClass: "fas fa-chart-line fa-3x",
+        staticStyle: { color: "#FF0000" }
+      })
     ])
   }
 ]
@@ -27524,16 +27632,18 @@ var render = function() {
                     _vm._m(4),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-sm-12" }, [
-                        _c("h5", { staticClass: "text-danger" }, [
-                          _c("b", [
-                            _vm._v(
-                              "₦   " +
-                                _vm._s(Number(this.units).toLocaleString())
-                            )
+                      this.$session.get("clientType") == "Government"
+                        ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(5)])
+                        : _c("div", { staticClass: "col-sm-12" }, [
+                            _c("h5", { staticClass: "text-danger" }, [
+                              _c("b", [
+                                _vm._v(
+                                  "₦   " +
+                                    _vm._s(Number(this.units).toLocaleString())
+                                )
+                              ])
+                            ])
                           ])
-                        ])
-                      ])
                     ])
                   ]
                 )
@@ -27561,7 +27671,8 @@ var staticRenderFns = [
         staticStyle: {
           "background-color": "#5F8575",
           color: "#FFFFFF",
-          "font-family": "'Trebuchet MS', Arial, Helvetica, sans-serif"
+          "font-family": "'Trebuchet MS', Arial, Helvetica, sans-serif",
+          border: "2px solid #5F8575"
         }
       },
       [
@@ -27623,16 +27734,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 text-secondary" }, [
-        _c("h4", [
-          _c("b", [
-            _vm._v("Current "),
-            _c("i", { staticClass: "fas fa-wallet" }),
-            _vm._v(" Balance")
-          ])
-        ])
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -28914,15 +29025,18 @@ var render = function() {
                   _vm._m(8),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-12" }, [
-                      _c("h5", { staticClass: "text-danger" }, [
-                        _c("b", [
-                          _vm._v(
-                            "₦   " + _vm._s(Number(this.units).toLocaleString())
-                          )
+                    this.$session.get("clientType") == "Government"
+                      ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(9)])
+                      : _c("div", { staticClass: "col-sm-12" }, [
+                          _c("h5", { staticClass: "text-danger" }, [
+                            _c("b", [
+                              _vm._v(
+                                "₦   " +
+                                  _vm._s(Number(this.units).toLocaleString())
+                              )
+                            ])
+                          ])
                         ])
-                      ])
-                    ])
                   ])
                 ]
               )
@@ -29050,16 +29164,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 text-secondary" }, [
-        _c("h4", [
-          _c("b", [
-            _vm._v("Current "),
-            _c("i", { staticClass: "fas fa-wallet" }),
-            _vm._v(" Balance")
-          ])
-        ])
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -29096,6 +29210,8 @@ var render = function() {
       _vm._v(" "),
       _c("div", { staticClass: "col-sm-8" }, [
         _vm._m(0),
+        _vm._v(" "),
+        _c("br"),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-sm-4", attrs: { align: "center" } }, [
@@ -29166,13 +29282,21 @@ var render = function() {
                     _c("div", { staticClass: "card-body" }, [
                       _c("br"),
                       _vm._v(" "),
-                      _c("h1", { staticClass: "card-title" }, [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.total_units_expended_today)
-                          }
-                        })
-                      ]),
+                      this.$session.get("clientType") == "Government"
+                        ? _c("h1", { staticClass: "card-title" }, [
+                            _c("b", { staticStyle: { color: "#E4D00A" } }, [
+                              _vm._v("∞")
+                            ])
+                          ])
+                        : _c("h1", { staticClass: "card-title" }, [
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.total_units_expended_today
+                                )
+                              }
+                            })
+                          ]),
                       _vm._v(" "),
                       _c("hr", { staticClass: "separator" }),
                       _vm._v(" "),
@@ -29210,13 +29334,19 @@ var render = function() {
                     _c("div", { staticClass: "card-body" }, [
                       _c("br"),
                       _vm._v(" "),
-                      _c("h1", { staticClass: "card-title" }, [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(_vm.total_units_purchased)
-                          }
-                        })
-                      ]),
+                      this.$session.get("clientType") == "Government"
+                        ? _c("h1", { staticClass: "card-title" }, [
+                            _c("b", { staticStyle: { color: "#DC143C" } }, [
+                              _vm._v("∞")
+                            ])
+                          ])
+                        : _c("h1", { staticClass: "card-title" }, [
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(_vm.total_units_purchased)
+                              }
+                            })
+                          ]),
                       _vm._v(" "),
                       _c("hr", { staticClass: "separator" }),
                       _vm._v(" "),
@@ -29234,6 +29364,8 @@ var render = function() {
         _c("br"),
         _vm._v(" "),
         _vm._m(4),
+        _vm._v(" "),
+        _c("br"),
         _vm._v(" "),
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-sm-4", attrs: { align: "center" } }, [
@@ -29306,15 +29438,21 @@ var render = function() {
                     _c("div", { staticClass: "card-body" }, [
                       _c("br"),
                       _vm._v(" "),
-                      _c("h1", { staticClass: "card-title" }, [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(
-                              _vm.total_cummulative_units_expended
-                            )
-                          }
-                        })
-                      ]),
+                      this.$session.get("clientType") == "Government"
+                        ? _c("h1", { staticClass: "card-title" }, [
+                            _c("b", { staticStyle: { color: "#E39802" } }, [
+                              _vm._v("∞")
+                            ])
+                          ])
+                        : _c("h1", { staticClass: "card-title" }, [
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.total_cummulative_units_expended
+                                )
+                              }
+                            })
+                          ]),
                       _vm._v(" "),
                       _c("hr", { staticClass: "separator" }),
                       _vm._v(" "),
@@ -29352,15 +29490,21 @@ var render = function() {
                     _c("div", { staticClass: "card-body" }, [
                       _c("br"),
                       _vm._v(" "),
-                      _c("h1", { staticClass: "card-title" }, [
-                        _c("span", {
-                          domProps: {
-                            innerHTML: _vm._s(
-                              _vm.total_cummulative_units_purchased
-                            )
-                          }
-                        })
-                      ]),
+                      this.$session.get("clientType") == "Government"
+                        ? _c("h1", { staticClass: "card-title" }, [
+                            _c("b", { staticStyle: { color: "#B60A1C" } }, [
+                              _vm._v("∞")
+                            ])
+                          ])
+                        : _c("h1", { staticClass: "card-title" }, [
+                            _c("span", {
+                              domProps: {
+                                innerHTML: _vm._s(
+                                  _vm.total_cummulative_units_purchased
+                                )
+                              }
+                            })
+                          ]),
                       _vm._v(" "),
                       _c("hr", { staticClass: "separator" }),
                       _vm._v(" "),
@@ -29407,15 +29551,18 @@ var render = function() {
                   _vm._m(10),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-12" }, [
-                      _c("h5", { staticClass: "text-danger" }, [
-                        _c("b", [
-                          _vm._v(
-                            "₦   " + _vm._s(Number(this.units).toLocaleString())
-                          )
+                    this.$session.get("clientType") == "Government"
+                      ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(11)])
+                      : _c("div", { staticClass: "col-sm-12" }, [
+                          _c("h5", { staticClass: "text-danger" }, [
+                            _c("b", [
+                              _vm._v(
+                                "₦   " +
+                                  _vm._s(Number(this.units).toLocaleString())
+                              )
+                            ])
+                          ])
                         ])
-                      ])
-                    ])
                   ])
                 ]
               )
@@ -29434,13 +29581,22 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "d-grid gap-2 col-12 mx-auto" }, [
-        _c("hr", { staticClass: "separator" }),
-        _c("h4", { staticClass: "text-success ", attrs: { align: "center" } }, [
-          _c("b", [_vm._v("Today's Statistics")])
-        ]),
-        _c("hr", { staticClass: "separator align-top" })
-      ])
+      _c("div", { staticClass: "col-sm-4" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4", attrs: { align: "center" } }, [
+        _c(
+          "h3",
+          {
+            staticStyle: {
+              "border-bottom": "1px solid #DDDDDD",
+              color: "#666666"
+            }
+          },
+          [_vm._v("Today's Statistics")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4" })
     ])
   },
   function() {
@@ -29472,13 +29628,22 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "d-grid gap-2 col-12 mx-auto" }, [
-        _c("hr", { staticClass: "separator" }),
-        _c("h4", { staticClass: "text-success ", attrs: { align: "center" } }, [
-          _c("b", [_vm._v("Cummulative Statistics")])
-        ]),
-        _c("hr", { staticClass: "separator" })
-      ])
+      _c("div", { staticClass: "col-sm-4" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4", attrs: { align: "center" } }, [
+        _c(
+          "h3",
+          {
+            staticStyle: {
+              "border-bottom": "1px solid #DDDDDD",
+              color: "#666666"
+            }
+          },
+          [_vm._v("Cummulative Statistics")]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-sm-4" })
     ])
   },
   function() {
@@ -29541,6 +29706,12 @@ var staticRenderFns = [
         _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -29692,15 +29863,18 @@ var render = function() {
                   _vm._m(14),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-12" }, [
-                      _c("h5", { staticClass: "text-danger" }, [
-                        _c("b", [
-                          _vm._v(
-                            "₦   " + _vm._s(Number(this.units).toLocaleString())
-                          )
+                    this.$session.get("clientType") == "Government"
+                      ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(15)])
+                      : _c("div", { staticClass: "col-sm-12" }, [
+                          _c("h5", { staticClass: "text-danger" }, [
+                            _c("b", [
+                              _vm._v(
+                                "₦   " +
+                                  _vm._s(Number(this.units).toLocaleString())
+                              )
+                            ])
+                          ])
                         ])
-                      ])
-                    ])
                   ])
                 ]
               )
@@ -30047,16 +30221,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 text-secondary" }, [
-        _c("h4", [
-          _c("b", [
-            _vm._v("Current "),
-            _c("i", { staticClass: "fas fa-wallet" }),
-            _vm._v(" Balance")
-          ])
-        ])
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -30468,15 +30642,18 @@ var render = function() {
                   _vm._m(16),
                   _vm._v(" "),
                   _c("div", { staticClass: "row" }, [
-                    _c("div", { staticClass: "col-sm-12" }, [
-                      _c("h5", { staticClass: "text-danger" }, [
-                        _c("b", [
-                          _vm._v(
-                            "₦   " + _vm._s(Number(this.units).toLocaleString())
-                          )
+                    this.$session.get("clientType") == "Government"
+                      ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(17)])
+                      : _c("div", { staticClass: "col-sm-12" }, [
+                          _c("h5", { staticClass: "text-danger" }, [
+                            _c("b", [
+                              _vm._v(
+                                "₦   " +
+                                  _vm._s(Number(this.units).toLocaleString())
+                              )
+                            ])
+                          ])
                         ])
-                      ])
-                    ])
                   ])
                 ]
               )
@@ -30691,16 +30868,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 text-secondary" }, [
-        _c("h4", [
-          _c("b", [
-            _vm._v("Current "),
-            _c("i", { staticClass: "fas fa-wallet" }),
-            _vm._v(" Balance")
-          ])
-        ])
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -31767,16 +31944,18 @@ var render = function() {
                     _vm._m(4),
                     _vm._v(" "),
                     _c("div", { staticClass: "row" }, [
-                      _c("div", { staticClass: "col-sm-12" }, [
-                        _c("h5", { staticClass: "text-danger" }, [
-                          _c("b", [
-                            _vm._v(
-                              "₦   " +
-                                _vm._s(Number(this.units).toLocaleString())
-                            )
+                      this.$session.get("clientType") == "Government"
+                        ? _c("div", { staticClass: "col-sm-12" }, [_vm._m(5)])
+                        : _c("div", { staticClass: "col-sm-12" }, [
+                            _c("h5", { staticClass: "text-danger" }, [
+                              _c("b", [
+                                _vm._v(
+                                  "₦   " +
+                                    _vm._s(Number(this.units).toLocaleString())
+                                )
+                              ])
+                            ])
                           ])
-                        ])
-                      ])
                     ])
                   ]
                 )
@@ -31804,7 +31983,8 @@ var staticRenderFns = [
         staticStyle: {
           "background-color": "#5F8575",
           color: "#FFFFFF",
-          "font-family": "'Trebuchet MS', Arial, Helvetica, sans-serif"
+          "font-family": "'Trebuchet MS', Arial, Helvetica, sans-serif",
+          border: "2px solid #5F8575"
         }
       },
       [
@@ -31866,16 +32046,16 @@ var staticRenderFns = [
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-sm-12 text-secondary" }, [
-        _c("h4", [
-          _c("b", [
-            _vm._v("Current "),
-            _c("i", { staticClass: "fas fa-wallet" }),
-            _vm._v(" Balance")
-          ])
-        ])
+      _c("div", { staticClass: "col-sm-12" }, [
+        _c("h4", [_c("b", [_vm._v("Current Unit Balance")])])
       ])
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h3", { staticClass: "text-danger" }, [_c("b", [_vm._v("∞")])])
   }
 ]
 render._withStripped = true
@@ -32221,30 +32401,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),
@@ -32450,30 +32634,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),
@@ -32679,30 +32867,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block active",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block active",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),
@@ -32908,30 +33100,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _c("span"),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _c("div"),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),
@@ -33137,30 +33333,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),
@@ -33366,30 +33566,34 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("span", { staticClass: "v-divider" }),
+      this.$session.get("clientType") != "Government"
+        ? _c("span", { staticClass: "v-divider" })
+        : _vm._e(),
       _vm._v(" "),
-      _c("div", { staticClass: "btn-group " }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-sm btn-success btn-block",
-            attrs: { type: "button" }
-          },
-          [
-            _c("i", { staticClass: "far fa-credit-card" }),
-            _vm._v(" "),
+      this.$session.get("clientType") != "Government"
+        ? _c("div", { staticClass: "btn-group" }, [
             _c(
-              "router-link",
+              "button",
               {
-                staticClass: "lo text-white",
-                attrs: { to: { name: "Buycredit" } }
+                staticClass: "btn btn-sm btn-success btn-block",
+                attrs: { type: "button" }
               },
-              [_vm._v("Buy Credit")]
+              [
+                _c("i", { staticClass: "far fa-credit-card" }),
+                _vm._v(" "),
+                _c(
+                  "router-link",
+                  {
+                    staticClass: "lo text-white",
+                    attrs: { to: { name: "Buycredit" } }
+                  },
+                  [_vm._v("Buy Credit")]
+                )
+              ],
+              1
             )
-          ],
-          1
-        )
-      ]),
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c("span", { staticClass: "v-divider" }),
       _vm._v(" "),

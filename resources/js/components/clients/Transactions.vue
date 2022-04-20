@@ -24,7 +24,7 @@
                     </div>
                 </div>
                 <table class="table table-bordered table-striped table-condensed">
-                    <thead style="background-color: #5F8575; color: #FFFFFF; font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif">
+                    <thead style="background-color: #5F8575; color: #FFFFFF; font-family: 'Trebuchet MS', Arial, Helvetica, sans-serif;  border: 2px solid #5F8575">
                         <tr>
                             <th>RRR</th>
                             <th>Amount</th>
@@ -58,7 +58,7 @@
             <br />     
             <br />
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3"> <!-- Handles User Profile Details and current units -->
             <div class="row align-bottom">
                 <div class="col-sm-12">
                     <div class="row">
@@ -82,12 +82,15 @@
                             </div>
                             <br />
                             <div class="row">
-                                <div class="col-sm-12 text-secondary">
-                                    <h4><b>Current <i class="fas fa-wallet"></i> Balance</b></h4>
+                                <div class="col-sm-12">
+                                    <h4><b>Current Unit Balance</b></h4>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" v-if="this.$session.get('clientType') == 'Government'">
+                                    <h3 class="text-danger"><b>&#8734;</b></h3>
+                                </div>
+                                <div class="col-sm-12" v-else>
                                     <h5 class="text-danger"><b>&#8358; &nbsp; {{ Number(this.units).toLocaleString() }}</b></h5>
                                 </div>
                             </div>

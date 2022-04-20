@@ -62,6 +62,7 @@ class OrganizationController extends Controller
             $success['address'] = $details->address;
             $success['phone'] = $details->contact_phone;
             $success['role'] = $details->role;
+            $success['clientType'] = $details->client_type;
             $success['token'] =  substr(bin2hex(random_bytes(100)), 0, 100);
             return $success;
         } 

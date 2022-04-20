@@ -118,3 +118,10 @@ Reset Password
 ------------------------------------------------------------------------
 */
 Route::post('/new_mda_password', [AdminController::class, 'NewMdaPassword']);
+
+/*
+------------------------------------------------------------------------
+Admin Dashboard APIs
+------------------------------------------------------------------------
+*/
+Route::post('/get_todays_income', [AdminController::class, 'GetTodaysIncome'])->middleware('is_API_call_Authentic');

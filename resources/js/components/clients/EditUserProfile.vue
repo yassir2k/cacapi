@@ -193,7 +193,7 @@
             </div><!--End Button-->
 
         </div>
-        <div class="col-sm-3">
+        <div class="col-sm-3"> <!-- Handles User Profile Details and current units -->
             <div class="row align-bottom">
                 <div class="col-sm-12">
                     <div class="row">
@@ -217,12 +217,15 @@
                             </div>
                             <br />
                             <div class="row">
-                                <div class="col-sm-12 text-secondary">
-                                    <h4><b>Current <i class="fas fa-wallet"></i> Balance</b></h4>
+                                <div class="col-sm-12">
+                                    <h4><b>Current Unit Balance</b></h4>
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" v-if="this.$session.get('clientType') == 'Government'">
+                                    <h3 class="text-danger"><b>&#8734;</b></h3>
+                                </div>
+                                <div class="col-sm-12" v-else>
                                     <h5 class="text-danger"><b>&#8358; &nbsp; {{ Number(this.units).toLocaleString() }}</b></h5>
                                 </div>
                             </div>

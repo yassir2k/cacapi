@@ -15,6 +15,7 @@ use App\Mail\ActivateAccountMail;
 use App\Mail\NewMdaRegistrationMail;
 use \Auth, Mail;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -159,5 +160,14 @@ class AdminController extends Controller
             $User->save();
             return "Success";
         }
+    }
+
+
+    /*---------------------------------------- 
+        Get Today's Income
+    ----------------------------------------*/
+    public function GetTodaysIncome(Request $request)
+    {
+        return "Yeap";
     }
 }

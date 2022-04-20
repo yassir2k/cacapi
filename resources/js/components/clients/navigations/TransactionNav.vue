@@ -7,9 +7,9 @@
 		</button>
     </div>
 
-    <span class="v-divider"></span>
+    <span class="v-divider" v-if="this.$session.get('clientType') != 'Government'"></span>
 
-    <div class="btn-group ">
+    <div class="btn-group" v-if="this.$session.get('clientType') != 'Government'">
     	<button type="button" class="btn btn-sm btn-success btn-block"><i class="far fa-credit-card"></i>
             <router-link class="lo text-white" :to="{ name: 'Buycredit'}">Buy Credit</router-link>
 		</button>

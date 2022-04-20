@@ -14,8 +14,8 @@
         </div>
         <div class="col-sm-1"> 
         </div>
-        <div class="col-sm-2"> <!-- Handles User Profile Details and current units -->
-        <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Today's Statistics</h3>
+        <div class="col-sm-2" align="center"> <!-- Handles User Profile Details and current units -->
+            <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Today's Statistics</h3>
         </div>
         <div class="col-sm-1">
         </div>
@@ -37,7 +37,7 @@
                             <i class="fas fa-money-bill-alt fa-3x" style="color: #97D5B5"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #97D5B5">278,230</h3>
+                            <h3 style="color: #97D5B5"><span v-html="today_income"></span></h3>
                             <span>Income (&#8358;)</span>
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                             <i class="fas fa-file-code fa-3x" style="color: #87AAD0"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #87AAD0">278,230</h3>
+                            <h3 style="color: #87AAD0"><span v-html="today_api_calls_made"></span></h3>
                             <span>API Calls Made</span>
                         </div>
                     </div>
@@ -77,7 +77,7 @@
                             <i class="fas fa-users fa-3x" style="color: #ECE3A1"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #ECE3A1">278,230</h3>
+                            <h3 style="color: #ECE3A1"><span v-html="today_registered_users"></span></h3>
                             <span>Registered Users</span>
                         </div>
                     </div>
@@ -92,7 +92,7 @@
                             <i class="fas fa-chart-line fa-3x" style="color: #FF7F7F"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #FF7F7F">278,230</h3>
+                            <h3 style="color: #FF7F7F"><span v-html="today_most_searched_entity"></span></h3>
                             <span>Most Searched Entity</span>
                         </div>
                     </div>
@@ -111,7 +111,7 @@
         </div>
         <div class="col-sm-1"> 
         </div>
-        <div class="col-sm-2"> <!-- Handles User Profile Details and current units -->
+        <div class="col-sm-2" align="center"> <!-- Handles User Profile Details and current units -->
         <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Cummulative Statistics</h3>
         </div>
         <div class="col-sm-1">
@@ -134,7 +134,7 @@
                             <i class="fas fa-money-bill-alt fa-3x" style="color: #79C27B"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #79C27B">278,230</h3>
+                            <h3 style="color: #79C27B"><span v-html="cummulative_income"></span></h3>
                             <span>Income (&#8358;)</span>
                         </div>
                     </div>
@@ -149,7 +149,7 @@
                             <i class="fas fa-file-code fa-3x" style="color: #5D7DA3"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #5D7DA3">278,230</h3>
+                            <h3 style="color: #5D7DA3"><span v-html="cummulative_api_calls_made"></span></h3>
                             <span>API Calls Made</span>
                         </div>
                     </div>
@@ -173,7 +173,7 @@
                             <i class="fas fa-users fa-3x" style="color: #F5E051"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #F5E051">278,230</h3>
+                            <h3 style="color: #F5E051"><span v-html="cummulative_registered_users"></span></h3>
                             <span>Registered Users</span>
                         </div>
                     </div>
@@ -188,7 +188,7 @@
                             <i class="fas fa-chart-line fa-3x" style="color: #FF0000"></i>
                         </div>
                         <div align="right">
-                            <h3 style="color: #FF0000">278,230</h3>
+                            <h3 style="color: #FF0000"><span v-html="cummulative_most_searched_entity"></span></h3>
                             <span>Most Searched Entity</span>
                         </div>
                     </div>
@@ -198,7 +198,7 @@
         <div class="col-xl-1">
         </div>
     </div>
-    <br /><br />
+    <br /><br /><br /><br /><br /><br /><br /><br />
 </div>
 </template>
 <script>
@@ -214,12 +214,14 @@ export default {
     },
     data(){
         return{
-            total_today: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            total_units_expended_today: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            total_units_purchased: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            total_cummulative_api_calls: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            total_cummulative_units_expended: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            total_cummulative_units_purchased: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            today_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            today_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            today_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            today_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            cummulative_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            cummulative_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            cummulative_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            cummulative_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             units: null
         }
     },
@@ -240,15 +242,36 @@ export default {
         var postData = {
             "username": this.$session.get("username"),
         }
-        //Get total API calls today
-        try{
-            axios.post("http://127.0.0.1:8000/api/get_total_api_calls_today", postData) 
-            .then(response =>{
-                this.total_today = '<b style="color: #50c878">'+ Number(response.data).toLocaleString() +'</b>';
-            })
-        }
-        catch{
+        var d = new Date();
+            var sessionId = d.getTime();
 
+            var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token") );
+        //Get today's income
+        try{
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_todays_income',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
+            })
+            .then(response=>{
+                this.today_income = '<b style="color: #97D5B5">'+ Number(response.data).toLocaleString() +'</b>';
+            });
+        }
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
         //Gets total amount spent today

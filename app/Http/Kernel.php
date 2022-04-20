@@ -67,7 +67,8 @@ class Kernel extends HttpKernel
         'is_user_authorized' => \App\Http\Middleware\CheckAuthorization::class,
         'is_call_type_valid' => \App\Http\Middleware\CheckCallValidity::class,
         'VerifyRegistrationToken' => \App\Http\Middleware\verifyRegistrationToken::class,
-        'VerifyMdaRegistrationToken' => \App\Http\Middleware\verifyRegistrationToken::class
+        'VerifyMdaRegistrationToken' => \App\Http\Middleware\verifyRegistrationToken::class,
+        'is_API_call_Authentic' =>  \App\Http\Middleware\CheckAPIAuthentication::class
         
     ];
 }

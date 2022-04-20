@@ -468,7 +468,7 @@ export default {
         this.$router.push('/');
         }
         else{
-            if(this.$session.get("role") != "Accessor"){
+            if(this.$session.get("role") != "Accessor" || this.$session.get('clientType') == 'Government'){
                 alert("You do not have privilege to visit this page.");
                 this.$session.destroy();
                 this.$router.push('/');

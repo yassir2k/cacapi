@@ -166,6 +166,8 @@ import axios from 'axios'
                             this.$session.set('address', response.data["address"]);
                             this.$session.set('phone', response.data["phone"]);
                             this.$session.set('role', response.data["role"]);
+                            this.$session.set('clientType', response.data["clientType"]);
+                            alert(this.$session.get('clientType'));
                             //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
                             if(response.data["role"] == "Accessor")
                                 this.$router.push({ name: 'Dashboard'});

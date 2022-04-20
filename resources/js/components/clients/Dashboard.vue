@@ -9,13 +9,17 @@
     <div class="row">
         <div class="col-sm-1">
         </div>
-        <div class="col-sm-8"> 
+        <div class="col-sm-8">   
             <div class="row">
-                <div class="d-grid gap-2 col-12 mx-auto">
-                    <hr class="separator"><h4 class="text-success " align="center"><b>Today's Statistics</b></h4><hr class="separator align-top">
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4" align="center"> <!-- Handles User Profile Details and current units -->
+                    <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Today's Statistics</h3>
+                </div>
+                <div class="col-sm-4">
                 </div>
             </div>
-
+            <br>
             <div class="row"><!--Beginning of today's data -->
                 <div class="col-sm-4" align="center">
                     <div class="card bg-white mb-4 shadow-sm" style="width: 17rem; height:100%; border-radius: 0.5em; border-bottom: 4px solid #50C878">
@@ -32,7 +36,8 @@
                     <div class="card bg-white mb-4 shadow-sm" style="width: 17rem; height:100%; border-radius: 0.5em; border-bottom: 4px solid #E4D00A">
                         <a href="/admin/todays-records" style="text-decoration: none; color:inherit">
                             <div class="card-body"><br />
-                                <h1 class="card-title"><span v-html="total_units_expended_today"></span></h1>
+                                <h1 class="card-title" v-if="this.$session.get('clientType') == 'Government'"><b style="color: #E4D00A">&#8734;</b></h1>
+                                <h1 class="card-title" v-else><span v-html="total_units_expended_today"></span></h1>
                                 <hr class="separator">
                                 <p class="card-text"><b class="font-pref14">TOTAL UNITS EXPENDED</b></p>
                             </div>
@@ -43,7 +48,8 @@
                     <div class="card bg-white mb-4 shadow-sm" style="width: 17rem; height:100%; border-radius: 0.5em; border-bottom: 4px solid #DC143C">
                         <a href="/admin/todays-records" style="text-decoration: none; color:inherit">
                             <div class="card-body"><br />
-                                <h1 class="card-title"><span v-html="total_units_purchased"></span></h1>
+                                <h1 class="card-title" v-if="this.$session.get('clientType') == 'Government'"><b style="color: #DC143C">&#8734;</b></h1>
+                                <h1 class="card-title" v-else><span v-html="total_units_purchased"></span></h1>
                                 <hr class="separator">
                                 <p class="card-text"><b class="font-pref14">TOTAL UNITS PURCHASED</b></p>
                             </div>
@@ -54,10 +60,15 @@
             <br />
             <br />
             <div class="row">
-                <div class="d-grid gap-2 col-12 mx-auto">
-                    <hr class="separator"><h4 class="text-success " align="center"><b>Cummulative Statistics</b></h4><hr class="separator">
+                <div class="col-sm-4">
+                </div>
+                <div class="col-sm-4" align="center"> <!-- Handles User Profile Details and current units -->
+                    <h3 style="border-bottom: 1px solid #DDDDDD; color: #666666">Cummulative Statistics</h3>
+                </div>
+                <div class="col-sm-4">
                 </div>
             </div>
+            <br>
 
             <div class="row"><!--Beginning of absolute data -->
                 <div class="col-sm-4" align="center">
@@ -75,7 +86,8 @@
                     <div class="card bg-white mb-4 shadow-sm" style="width: 17rem; height:100%; border-radius: 0.5em; border-bottom: 4px solid #E39802">
                         <a href="/admin/absolute-records-accredited-users" style="text-decoration: none; color:inherit">
                             <div class="card-body"><br />
-                                <h1 class="card-title"><span v-html="total_cummulative_units_expended"></span></h1>
+                                <h1 class="card-title" v-if="this.$session.get('clientType') == 'Government'"><b style="color: #E39802">&#8734;</b></h1>
+                                <h1 class="card-title" v-else><span v-html="total_cummulative_units_expended"></span></h1>
                                 <hr class="separator">
                                 <p class="card-text"><b class="font-pref14">TOTAL AMOUNT EXPENDED</b></p>
                             </div>
@@ -86,7 +98,8 @@
                     <div class="card bg-white mb-4 shadow-sm" style="width: 17rem; height:100%; border-radius: 0.5em; border-bottom: 4px solid #B60A1C">
                         <a href="/admin/absolute-records-accredited-users" style="text-decoration: none; color:inherit">
                             <div class="card-body"><br />
-                                <h1 class="card-title"><span v-html="total_cummulative_units_purchased"></span></h1>
+                                <h1 class="card-title" v-if="this.$session.get('clientType') == 'Government'"><b style="color: #B60A1C">&#8734;</b></h1>
+                                <h1 class="card-title" v-else><span v-html="total_cummulative_units_purchased"></span></h1>
                                 <hr class="separator">
                                 <p class="card-text"><b class="font-pref14">TOTAL UNITS PURCHASED</b></p>
                             </div>
@@ -125,7 +138,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-sm-12">
+                                <div class="col-sm-12" v-if="this.$session.get('clientType') == 'Government'">
+                                    <h3 class="text-danger"><b>&#8734;</b></h3>
+                                </div>
+                                <div class="col-sm-12" v-else>
                                     <h5 class="text-danger"><b>&#8358; &nbsp; {{ Number(this.units).toLocaleString() }}</b></h5>
                                 </div>
                             </div>
