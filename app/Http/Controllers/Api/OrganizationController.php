@@ -803,13 +803,13 @@ class OrganizationController extends Controller
     ----------------------------------------*/
     public function LoadMoreDetails(Request $request)
     {
-        $id = request()->route('transaction_id');
+        $id = $request->input('transaction_id');
         if(is_null($id))
         {
             return "Not Found";
         }
         $Feedback = Log::where(['transaction_id'=> $id])->first();
-        return view('/clients/load-more-details')
+        return view('/load-more-details')
         ->with('_feedback',$Feedback);
     }
 

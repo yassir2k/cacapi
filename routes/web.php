@@ -15,6 +15,12 @@ use App\Http\Controllers\Api\AdminController;
 |
 */
 
+Route::post('/clients/load-more-details/', [OrganizationController::class, 'LoadMoreDetails']);
+
+/*Route::get('/registration/verify-mda-registration/{mdatoken}', function () {
+    return view('verify-mda-registration');
+})->name('verifymda');*/
+
 Route::get('/{any}', function () {
     return view('login');
-})->where('any','.*');
+})->where('any','^(?!v).*$');

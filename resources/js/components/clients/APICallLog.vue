@@ -192,9 +192,11 @@ export default {
         },
         getMoreDetails(ind){
             this.LoadView = '<center><i class="fa fa-spinner fa-spin fa-5x fa-fw text-secondary"></i></center>';
-
+            var dat = {
+                "transaction_id": ind
+                };
             try{
-                axios.get('http://127.0.0.1:8000/clients/load-more-details/' + ind)
+                axios.post('http://127.0.0.1:8000/clients/load-more-details/', dat) 
                 .then(response =>{
                         this.LoadView = response.data;
                         console.log(response.data);
