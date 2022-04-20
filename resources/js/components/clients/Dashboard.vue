@@ -208,15 +208,36 @@ export default {
         var postData = {
             "username": this.$session.get("username"),
         }
+        console.log(this.$session.get("token"));
+        var d = new Date();
+        var sessionId = d.getTime();
+        var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token") );
         //Get total API calls today
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_api_calls_today", postData) 
-            .then(response =>{
-                this.total_today = '<b style="color: #50c878">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_total_api_calls_today',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.total_today = '<b style="color: #50c878">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
-
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
         //Gets total amount spent today

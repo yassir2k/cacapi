@@ -23,9 +23,9 @@ class CheckAPIAuthentication
         $token = substr($auth, 158, 100);
         $apiHash = $key.$username.$token; //What was used in making Hash from the front end
         //Compare APiHas with Hash
-        //dd($hash = hash('sha512', $apiHash)." | ".$Hash);
+        //dd($apiHash);
         if( strval($Hash) != strval(hash('sha512', $apiHash)) )  {
-            return "Unauthenticated API Call detected.";
+            return response()->json("Unauthenticated API Call detected.");
         }
         return $next($request);
     }

@@ -15,7 +15,7 @@ use App\Http\Controllers\Api\AdminController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::post('/login', [OrganizationController::class, 'Login']); 
+Route::post('/login', [OrganizationController::class, 'Login'])->middleware('is_API_call_Authentic');
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
@@ -35,7 +35,7 @@ Route::get('/organizations/{username_}/{password_}/{calltype_}/{rc_number_}/{cla
 API Calls Statistics Routes  
 ------------------------------------------------------------------------
 */
-Route::post('/get_total_api_calls_today', [OrganizationController::class, 'GetTotalAPICallsToday']);
+Route::post('/get_total_api_calls_today', [OrganizationController::class, 'GetTotalAPICallsToday'])->middleware('is_API_call_Authentic');
 Route::post('/get_total_units_expended_today', [OrganizationController::class, 'GetTotalUnitsExpendedToday']);
 Route::post('/get_total_units_purchased_today', [OrganizationController::class, 'GetTotalUnitsPurchasedToday']);
 

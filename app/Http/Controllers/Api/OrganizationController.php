@@ -47,7 +47,7 @@ class OrganizationController extends Controller
     ----------------------------------------*/
     public function Login(Request $request){
         // create our user data for the authentication
-        $email   = $request->input('email');
+        $email   = $request->input('username');
         $password  = $request->input('password');
         $credentials = ['email' => $email, 'password' => $password, 'is_active' => 1, 'is_registered' => 1];
         // attempt to do the login

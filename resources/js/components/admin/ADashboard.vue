@@ -243,8 +243,8 @@ export default {
             "username": this.$session.get("username"),
         }
         var d = new Date();
-            var sessionId = d.getTime();
-            var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token") );
+        var sessionId = d.getTime();
+        var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token") );
 
         //Get today's income
         try{

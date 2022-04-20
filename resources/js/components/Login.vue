@@ -150,11 +150,25 @@ import axios from 'axios'
                 this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
                 this.freeze = true;
                 var postData = {
-                    "email": this.username,
+                    "username": this.username,
                     "password": this.password
                 }
+                const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join(''); //Generates Random Hex
+                const token = genRanHex(100);
+                var d = new Date();
+                const sessionId = d.getTime();
+                var apiHash = CryptoJS.SHA512(sessionId + this.username + token );
                 try{
-                    axios.post("http://127.0.0.1:8000/api/login", postData) 
+                    axios({
+                    method: 'post',
+                    url: 'http://127.0.0.1:8000/api/login',
+                    data: postData,
+                    headers: { 
+                        'Content-type': 'application/json; charset=utf-8', 
+                        'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + token,
+                    },
+                    responseType: 'json'
+                    })
                     .then(response =>{
                         if(response.data["status"] == "success"){
                             this.status='<div class="alert alert-success text-justify"><center>Success!</center></label>';
@@ -180,8 +194,17 @@ import axios from 'axios'
                              this.freeze = false;
                         }
                     })
-                }catch(err){    
-                    console.log(err)
+                }
+                catch(err){    
+                    if (err.response) {
+                    // client received an error response (5xx, 4xx)
+                    console.log("Server Error:", err)
+                    } else if (err.request) {
+                    // client never received a response, or request never left
+                    console.log("Network Error:", err)
+                    } else {
+                    console.log("Client Error:", err)
+                    }
                 }
             }
         },
