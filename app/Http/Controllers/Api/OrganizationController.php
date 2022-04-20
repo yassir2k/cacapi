@@ -145,6 +145,7 @@ class OrganizationController extends Controller
         if($call_type == 1){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
             $unit = User::where(['username' => $username])->pluck('units')->first();
+            $clientType = User::where(['username' => $username])->pluck('client_type')->first();
             $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
@@ -164,9 +165,12 @@ class OrganizationController extends Controller
             /*--------------------------------------------------------------
                 Deduct Unit and update DB
             --------------------------------------------------------------*/
-            $unit -= 1000;
-            $account->units = $unit;
-            $account->save();
+            if($clientType != "Government")
+            {
+                $unit -= 1000;
+                $account->units = $unit;
+                $account->save();
+            }
 
             /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -180,7 +184,9 @@ class OrganizationController extends Controller
             $details = $rc." (".$class.") - Basic Company Information Search";
             $dateTime = date("Y-m-d H:i:s");
             $responseCode = "Ok";
-            $cost = 1000;
+            $cost = 0;
+            if($clientType != "Government")
+                $cost = 1000;  
             $data = ['transaction_id' => $transactionId, 
                 'details' => $details,
                 'api_call_datetime' => $dateTime,
@@ -201,6 +207,7 @@ class OrganizationController extends Controller
         if($call_type == 2){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
             $unit = User::where(['username' => $username])->pluck('units')->first();
+            $clientType = User::where(['username' => $username])->pluck('client_type')->first();
             $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
@@ -238,10 +245,15 @@ class OrganizationController extends Controller
                 })
                 ->get();   
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save();
+                 /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                 --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }
                 
                 
                 /*--------------------------------------------------------------
@@ -256,7 +268,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Proprietors.";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -304,10 +318,15 @@ class OrganizationController extends Controller
                 })
                 ->get();     
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save();   
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }   
                 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -321,7 +340,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Directors";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -369,10 +390,15 @@ class OrganizationController extends Controller
                 })
                 ->get(); 
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save();    
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }    
 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -386,7 +412,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Trustees";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -408,13 +436,19 @@ class OrganizationController extends Controller
         if($call_type == 3){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
             $unit = User::where(['username' => $username])->pluck('units')->first();
+            $clientType = User::where(['username' => $username])->pluck('client_type')->first();
             $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save();    
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }    
 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -428,7 +462,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Not Found";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -448,10 +484,15 @@ class OrganizationController extends Controller
             {
                 //Business Names
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save(); 
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                } 
 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -465,7 +506,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "API Call for Shareholders not applicable for BN or IT";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -517,10 +560,15 @@ class OrganizationController extends Controller
                 })
                 ->get();   
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save(); 
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                } 
                 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -534,7 +582,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -556,13 +606,19 @@ class OrganizationController extends Controller
         if($call_type == 4){
             $company = Company::where(['rc_number' => $rc, 'classification_fk' => $class])->pluck('rc_number')->first();
             $unit = User::where(['username' => $username])->pluck('units')->first();
+            $clientType = User::where(['username' => $username])->pluck('client_type')->first();
             $account = User::where(['username' => $username])->first();
             if(is_null($company))
             {
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save(); 
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                } 
 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -576,7 +632,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Not Found";
-                $cost = 1000;
+                $cost = 0; 
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -594,10 +652,15 @@ class OrganizationController extends Controller
             }
             if($class == 1) //Business Names
             {
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save(); 
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }; 
 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -611,7 +674,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "API call (for Secretary) not applicable for Business Names.";
-                $cost = 1000;
+                $cost = 0;
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
@@ -657,10 +722,15 @@ class OrganizationController extends Controller
                 })
                 ->get(); 
 
-                //Deduct Unit and update DB
-                $unit -= 1000;
-                $account->units = $unit;
-                $account->save(); 
+                /*--------------------------------------------------------------
+                    Deduct Unit and update DB
+                --------------------------------------------------------------*/
+                if($clientType != "Government")
+                {
+                    $unit -= 1000;
+                    $account->units = $unit;
+                    $account->save();
+                }
                 
                 /*--------------------------------------------------------------
                 Saving IP, Broswer, OS and other sundry details to DB
@@ -674,7 +744,9 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $cost = 1000;
+                $$cost = 0;
+                if($clientType != "Government")
+                    $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
                     'details' => $details,
                     'api_call_datetime' => $dateTime,
