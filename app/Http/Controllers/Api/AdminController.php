@@ -168,6 +168,96 @@ class AdminController extends Controller
     ----------------------------------------*/
     public function GetTodaysIncome(Request $request)
     {
-        return "Yeap";
+        $temp = Transactions::select('amount')
+        ->where(\DB::raw("DATE_FORMAT(r_payment_date, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->sum('amount');
+        return $temp;
+    }
+
+
+    /*---------------------------------------- 
+        Get Today's API Calls
+    ----------------------------------------*/
+    public function GetTodaysAPICalls(Request $request)
+    {
+        $temp = Log::select('*')
+        ->where(\DB::raw("DATE_FORMAT(api_call_datetime, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->get();
+        $count = count($temp);
+        return $count;
+    }
+
+    /*-------------------------------------------- 
+        Get Today's Registered Users (Business)
+    --------------------------------------------*/
+    public function GetTodaysRegisteredUsersBusiness(Request $request)
+    {
+        $temp = User::select('*')
+        ->where(\DB::raw("DATE_FORMAT(registered_on, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->where(['client_type' => "Business"])
+        ->get();
+        $count = count($temp);
+        return $count;
+    }
+
+    /*-------------------------------------------- 
+        Get Today's Registered Users (Business)
+    --------------------------------------------*/
+    public function GetTodaysRegisteredUsersGovernment(Request $request)
+    {
+        $temp = User::select('*')
+        ->where(\DB::raw("DATE_FORMAT(registered_on, '%Y-%m-%d')"), '=', date('Y-m-d'))
+        ->where(['client_type' => "Government"])
+        ->get();
+        $count = count($temp);
+        return $count;
+    }
+
+    /******************************************************************************************************************************************************** */
+
+    /*---------------------------------------- 
+        Get Cummulative Income
+    ----------------------------------------*/
+    public function GetCummulativeIncome(Request $request)
+    {
+        $temp = Transactions::select('amount')
+        ->sum('amount');
+        return $temp;
+    }
+
+
+    /*---------------------------------------- 
+        Get Cummulative API Calls
+    ----------------------------------------*/
+    public function GetCummulativeAPICalls(Request $request)
+    {
+        $temp = Log::select('*')
+        ->get();
+        $count = count($temp);
+        return $count;
+    }
+
+    /*-------------------------------------------- 
+        Get Cummulative Registered Users (Business)
+    --------------------------------------------*/
+    public function GetCummulativeRegisteredUsersBusiness(Request $request)
+    {
+        $temp = User::select('*')
+        ->where(['client_type' => "Business"])
+        ->get();
+        $count = count($temp);
+        return $count;
+    }
+
+    /*-------------------------------------------- 
+        Get Cummulative Registered Users (Business)
+    --------------------------------------------*/
+    public function GetCummulativeRegisteredUsersGovernment(Request $request)
+    {
+        $temp = User::select('*')
+        ->where(['client_type' => "Government"])
+        ->get();
+        $count = count($temp);
+        return $count;
     }
 }

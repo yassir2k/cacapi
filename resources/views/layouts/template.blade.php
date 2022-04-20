@@ -41,6 +41,9 @@
                 </div>
 
                 <div style="margin-top: 0px">
+                <noscript>
+                    <strong>We're sorry but this application doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+                </noscript>
                     <main>
                         @yield('content')
                     </main>

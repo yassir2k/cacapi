@@ -21,7 +21,7 @@ class CheckAPIAuthentication
         $key = substr($auth, 4, 13); //SessionId
         $Hash = substr($auth, 23, 128);
         $token = substr($auth, 158, 100);
-        $apiHash = $key.$username.$token;
+        $apiHash = $key.$username.$token; //What was used in making Hash from the front end
         //Compare APiHas with Hash
         //dd($hash = hash('sha512', $apiHash)." | ".$Hash);
         if( strval($Hash) != strval(hash('sha512', $apiHash)) )  {

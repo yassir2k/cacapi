@@ -117,7 +117,7 @@ Route::post('/validate_mda_registration_token', [AdminController::class, 'Valida
 Reset Password
 ------------------------------------------------------------------------
 */
-Route::post('/new_mda_password', [AdminController::class, 'NewMdaPassword']);
+Route::post('/new_mda_password', [AdminController::class, 'NewMdaPassword']); 
 
 /*
 ------------------------------------------------------------------------
@@ -125,3 +125,12 @@ Admin Dashboard APIs
 ------------------------------------------------------------------------
 */
 Route::post('/get_todays_income', [AdminController::class, 'GetTodaysIncome'])->middleware('is_API_call_Authentic');
+Route::post('/get_todays_api_calls_made', [AdminController::class, 'GetTodaysAPICalls'])->middleware('is_API_call_Authentic');
+Route::post('/get_todays_registered_users_business', [AdminController::class, 'GetTodaysRegisteredUsersBusiness'])->middleware('is_API_call_Authentic');
+Route::post('/get_todays_registered_users_government', [AdminController::class, 'GetTodaysRegisteredUsersGovernment'])->middleware('is_API_call_Authentic');
+
+Route::post('/get_cummulative_income', [AdminController::class, 'GetCummulativeIncome'])->middleware('is_API_call_Authentic');
+Route::post('/get_cummulative_api_calls_made', [AdminController::class, 'GetCummulativeAPICalls'])->middleware('is_API_call_Authentic');
+Route::post('/get_cummulative_registered_users_business', [AdminController::class, 'GetCummulativeRegisteredUsersBusiness'])->middleware('is_API_call_Authentic');
+Route::post('/get_cummulative_registered_users_government', [AdminController::class, 'GetCummulativeRegisteredUsersGovernment'])->middleware('is_API_call_Authentic');
+

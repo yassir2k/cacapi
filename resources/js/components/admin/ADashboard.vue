@@ -78,7 +78,7 @@
                         </div>
                         <div align="right">
                             <h3 style="color: #ECE3A1"><span v-html="today_registered_users"></span></h3>
-                            <span>Registered Users</span>
+                            <span>Registered Users (Business)</span>
                         </div>
                     </div>
                 </div>
@@ -89,11 +89,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between" >
                         <div class="align-self-center">
-                            <i class="fas fa-chart-line fa-3x" style="color: #FF7F7F"></i>
+                            <font-awesome-icon icon="fa-solid fa-people-group" size="3x" style="color: #FF7F7F" />
                         </div>
                         <div align="right">
-                            <h3 style="color: #FF7F7F"><span v-html="today_most_searched_entity"></span></h3>
-                            <span>Most Searched Entity</span>
+                            <h3 style="color: #FF7F7F"><span v-html="today_registered_users_govt"></span></h3>
+                            <span>Registered Users (Government)</span>
                         </div>
                     </div>
                 </div>
@@ -174,7 +174,7 @@
                         </div>
                         <div align="right">
                             <h3 style="color: #F5E051"><span v-html="cummulative_registered_users"></span></h3>
-                            <span>Registered Users</span>
+                            <span>Registered Users (Business)</span>
                         </div>
                     </div>
                 </div>
@@ -185,11 +185,11 @@
                 <div class="card-body">
                     <div class="d-flex justify-content-between">
                         <div class="align-self-center">
-                            <i class="fas fa-chart-line fa-3x" style="color: #FF0000"></i>
+                            <font-awesome-icon icon="fa-solid fa-people-group" size="3x" style="color: #FF0000" />
                         </div>
                         <div align="right">
-                            <h3 style="color: #FF0000"><span v-html="cummulative_most_searched_entity"></span></h3>
-                            <span>Most Searched Entity</span>
+                            <h3 style="color: #FF0000"><span v-html="cummulative_registered_users_govt"></span></h3>
+                            <span>Registered Users (Government)</span>
                         </div>
                     </div>
                 </div>
@@ -217,11 +217,11 @@ export default {
             today_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             today_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             today_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            today_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            today_registered_users_govt: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             cummulative_income: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             cummulative_api_calls_made: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             cummulative_registered_users: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
-            cummulative_most_searched_entity: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
+            cummulative_registered_users_govt: '<i class="fa fa-spinner fa-spin fa-1x fa-fw text-secondary"></i>',
             units: null
         }
     },
@@ -244,8 +244,8 @@ export default {
         }
         var d = new Date();
             var sessionId = d.getTime();
-
             var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token") );
+
         //Get today's income
         try{
             axios({
@@ -274,60 +274,202 @@ export default {
             }
         }
 
-        //Gets total amount spent today
+        //Get today's total API calls made
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_units_expended_today", postData) 
-            .then(response =>{
-                this.total_units_expended_today = '<b style="color: #E4D00A">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_todays_api_calls_made',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.today_api_calls_made = '<b style="color: #87AAD0">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
-
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
-        //Gets total units purchased today
+        //Gets today's registered users business
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_units_purchased_today", postData) 
-            .then(response =>{
-                this.total_units_purchased = '<b style="color: #DC143C">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_todays_registered_users_business',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.today_registered_users = '<b style="color: #ECE3A1">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
-
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
-        //Gets total cummulative API call
+        //Gets today's registered users government
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_cummulative_api_calls", postData) 
-            .then(response =>{
-                this.total_cummulative_api_calls = '<b style="color: #93C572">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_todays_registered_users_government',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.today_registered_users_govt = '<b style="color: #FF7F7F">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
-
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
-        //Gets total cummulative units expended
+
+        /*-------------------------------------------------- Fetching Cummulative Stats-------------------------------------------------------------------- */
+        //Get cummulative income
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_cummulative_units_expended", postData) 
-            .then(response =>{
-                this.total_cummulative_units_expended = '<b style="color: #E39802">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_cummulative_income',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.cummulative_income = '<b style="color: #79C27B">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
-
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
 
-
-        //Gets total cummulative units purchased
+        //Get today's total API calls made
         try{
-            axios.post("http://127.0.0.1:8000/api/get_total_cummulative_units_purchased", postData) 
-            .then(response =>{
-                this.total_cummulative_units_purchased = '<b style="color: #B60A1C">'+ Number(response.data).toLocaleString() +'</b>';
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_cummulative_api_calls_made',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
             })
+            .then(response=>{
+                this.cummulative_api_calls_made = '<b style="color: #5D7DA3">'+ Number(response.data).toLocaleString() +'</b>';
+            });
         }
-        catch{
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
+        }
 
+        //Gets today's registered users business
+        try{
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_cummulative_registered_users_business',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
+            })
+            .then(response=>{
+                this.cummulative_registered_users = '<b style="color: #F5E051">'+ Number(response.data).toLocaleString() +'</b>';
+            });
+        }
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
+        }
+
+        //Gets today's registered users government
+        try{
+            axios({
+            method: 'post',
+            url: 'http://127.0.0.1:8000/api/get_cummulative_registered_users_government',
+            data: postData,
+            headers: { 
+                'Content-type': 'application/json; charset=utf-8', 
+                'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token"),
+            },
+            responseType: 'json'
+            })
+            .then(response=>{
+                this.cummulative_registered_users_govt = '<b style="color: #FF0000">'+ Number(response.data).toLocaleString() +'</b>';
+            });
+        }
+        catch(err){    
+            if (err.response) {
+            // client received an error response (5xx, 4xx)
+            console.log("Server Error:", err)
+            } else if (err.request) {
+            // client never received a response, or request never left
+            console.log("Network Error:", err)
+            } else {
+            console.log("Client Error:", err)
+            }
         }
         
   },
