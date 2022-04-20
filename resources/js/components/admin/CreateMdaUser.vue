@@ -327,6 +327,13 @@ export default {
                         '<strong><i class="fas fa-check-circle"></i></strong> MDA User Successfully Created. An email verification link has been sent to <b>' + this.Email +
                         '</b> for verification.'
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                        this.Organization = '';
+                        this.contactName = '';
+                        this.Email = '';
+                        this.phoneNumber = '';
+                        this.Address = '';
+                        this.ipAddress = '';
+                        this.username = '';
                     }
                     else{
                         this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +

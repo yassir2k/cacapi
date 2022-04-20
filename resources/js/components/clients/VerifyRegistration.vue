@@ -57,7 +57,6 @@ export default {
     },
     mounted(){
         var token = this.$route.params.token;
-        alert(token);
         var dat = {
                 "token": token,
             }

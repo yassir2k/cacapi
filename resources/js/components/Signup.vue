@@ -356,6 +356,14 @@ export default {
                         '<strong><i class="fas fa-check-circle"></i></strong> Data successfully saved. An email verification link has been sent to <b>' + this.Email +
                         '</b>. Kindly click on the link in the email to complete your user account registration.'
                         '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+                        this.Organization = '';
+                        this.contactName = '';
+                        this.Email = '';
+                        this.phoneNumber = '';
+                        this.Address = '';
+                        this.Password = '';
+                        this.retypePassword = '';
+                        this.username = '';
                     }
                     else{
                         this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' +
