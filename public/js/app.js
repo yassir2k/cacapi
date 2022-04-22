@@ -18513,6 +18513,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
+
+function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && iter[Symbol.iterator] != null || iter["@@iterator"] != null) return Array.from(iter); }
+
+function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //
 //
 //
@@ -18668,12 +18680,21 @@ __webpack_require__.r(__webpack_exports__);
       this.rotor = '&nbsp;<i class="fa fa-spinner fa-spin fa-1x fa-fw"></i>';
       this.freeze = true;
       var postData = {
-        "email": this.username,
+        "username": this.username,
         "password": this.password
       };
+
+      var genRanHex = function genRanHex(size) {
+        return _toConsumableArray(Array(size)).map(function () {
+          return Math.floor(Math.random() * 16).toString(16);
+        }).join('');
+      }; //Generates Random Hex
+
+
+      var token = genRanHex(100);
       var d = new Date();
       var sessionId = d.getTime();
-      var apiHash = CryptoJS.SHA512(sessionId + this.username + "ab317815c736460487b1ba77ea2419f8eb317e90fe90459bb4c42319f63b302c09805b4b970d445b95e4c5ed968cfa58fd01");
+      var apiHash = CryptoJS.SHA512(sessionId + this.username + token);
 
       try {
         axios__WEBPACK_IMPORTED_MODULE_0___default()({
@@ -18682,7 +18703,7 @@ __webpack_require__.r(__webpack_exports__);
           data: postData,
           headers: {
             'Content-type': 'application/json; charset=utf-8',
-            'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + "ab317815c736460487b1ba77ea2419f8eb317e90fe90459bb4c42319f63b302c09805b4b970d445b95e4c5ed968cfa58fd01"
+            'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + token
           },
           responseType: 'json'
         }).then(function (response) {
@@ -19128,6 +19149,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (response.data == "saved") {
             _this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' + '<strong><i class="fas fa-check-circle"></i></strong> Data successfully saved. An email verification link has been sent to <b>' + _this.Email + '</b>. Kindly click on the link in the email to complete your user account registration.';
             '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            _this.Organization = '';
+            _this.contactName = '';
+            _this.Email = '';
+            _this.phoneNumber = '';
+            _this.Address = '';
+            _this.Password = '';
+            _this.retypePassword = '';
+            _this.username = '';
           } else {
             _this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' + '<strong><i class="fas fa-times-circle"></i></strong> ' + response.data + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
           }
@@ -19984,6 +20013,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
           if (response.data == "saved") {
             _this.AlertMsg = '<div id="s_alert" class="alert alert-success alert-dismissible fade show">' + '<strong><i class="fas fa-check-circle"></i></strong> MDA User Successfully Created. An email verification link has been sent to <b>' + _this.Email + '</b> for verification.';
             '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
+            _this.Organization = '';
+            _this.contactName = '';
+            _this.Email = '';
+            _this.phoneNumber = '';
+            _this.Address = '';
+            _this.ipAddress = '';
+            _this.username = '';
           } else {
             _this.AlertMsg = '<div id="s_alert" class="alert alert-danger alert-dismissible fade show">' + '<strong><i class="fas fa-times-circle"></i></strong> ' + response.data + '<button type="button" class="btn-close" data-bs-dismiss="alert"></button>';
           }
@@ -21062,9 +21098,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _this3 = this;
 
       this.LoadView = '<center><i class="fa fa-spinner fa-spin fa-5x fa-fw text-secondary"></i></center>';
+      var dat = {
+        "transaction_id": ind
+      };
 
       try {
-        axios__WEBPACK_IMPORTED_MODULE_3___default().get('http://127.0.0.1:8000/clients/load-more-details/' + ind).then(function (response) {
+        axios__WEBPACK_IMPORTED_MODULE_3___default().post('http://127.0.0.1:8000/clients/load-more-details/', dat).then(function (response) {
           _this3.LoadView = response.data;
           console.log(response.data);
         });
@@ -22166,48 +22205,71 @@ __webpack_require__.r(__webpack_exports__);
 
     var postData = {
       "username": this.$session.get("username")
-    }; //Get total API calls today
+    };
+    console.log(this.$session.get("token"));
+    var d = new Date();
+    var sessionId = d.getTime();
+    var apiHash = CryptoJS.SHA512(sessionId + this.$session.get("username") + this.$session.get("token")); //Get total API calls today
 
     try {
-      axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_api_calls_today", postData).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_1___default()({
+        method: 'post',
+        url: 'http://127.0.0.1:8000/api/get_total_api_calls_today',
+        data: postData,
+        headers: {
+          'Content-type': 'application/json; charset=utf-8',
+          'Authorization': 'Key=' + sessionId + ',Hash=' + apiHash + ',Token=' + this.$session.get("token")
+        },
+        responseType: 'json'
+      }).then(function (response) {
         _this2.total_today = '<b style="color: #50c878">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused2) {} //Gets total amount spent today
+    } catch (err) {
+      if (err.response) {
+        // client received an error response (5xx, 4xx)
+        console.log("Server Error:", err);
+      } else if (err.request) {
+        // client never received a response, or request never left
+        console.log("Network Error:", err);
+      } else {
+        console.log("Client Error:", err);
+      }
+    } //Gets total amount spent today
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_units_expended_today", postData).then(function (response) {
         _this2.total_units_expended_today = '<b style="color: #E4D00A">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused3) {} //Gets total units purchased today
+    } catch (_unused2) {} //Gets total units purchased today
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_units_purchased_today", postData).then(function (response) {
         _this2.total_units_purchased = '<b style="color: #DC143C">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused4) {} //Gets total cummulative API call
+    } catch (_unused3) {} //Gets total cummulative API call
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_cummulative_api_calls", postData).then(function (response) {
         _this2.total_cummulative_api_calls = '<b style="color: #93C572">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused5) {} //Gets total cummulative units expended
+    } catch (_unused4) {} //Gets total cummulative units expended
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_cummulative_units_expended", postData).then(function (response) {
         _this2.total_cummulative_units_expended = '<b style="color: #E39802">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused6) {} //Gets total cummulative units purchased
+    } catch (_unused5) {} //Gets total cummulative units purchased
 
 
     try {
       axios__WEBPACK_IMPORTED_MODULE_1___default().post("http://127.0.0.1:8000/api/get_total_cummulative_units_purchased", postData).then(function (response) {
         _this2.total_cummulative_units_purchased = '<b style="color: #B60A1C">' + Number(response.data).toLocaleString() + '</b>';
       });
-    } catch (_unused7) {}
+    } catch (_unused6) {}
   },
   methods: {
     logout: function logout() {
@@ -23876,7 +23938,6 @@ __webpack_require__.r(__webpack_exports__);
     var _this = this;
 
     var token = this.$route.params.token;
-    alert(token);
     var dat = {
       "token": token
     };

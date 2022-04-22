@@ -744,7 +744,7 @@ class OrganizationController extends Controller
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
                 $dateTime = date("Y-m-d H:i:s");
                 $responseCode = "Ok";
-                $$cost = 0;
+                $cost = 0;
                 if($clientType != "Government")
                     $cost = 1000;
                 $data = ['transaction_id' => $transactionId, 
