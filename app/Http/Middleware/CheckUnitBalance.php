@@ -42,7 +42,7 @@ class CheckUnitBalance
         $user = User::where(['username' => $username])->first();
         //Check if call cost is greater than Units on the DB
         if( ($cost > $user->units) && ($user->billable == 1)){
-            return response('Insufficient unitsb to make API call.');
+            return response('Insufficient units to make API call.');
         }
         return $next($request);
     }

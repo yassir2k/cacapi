@@ -126,6 +126,20 @@ class OrganizationController extends Controller
     /*---------------------------------------- 
     Main API Function Call 
     ----------------------------------------*/
+    public function WhatDevice ()
+    {
+        $device = "";
+        $agent = new \Jenssegers\Agent\Agent;
+        if($agent->isDesktop())
+            $device = "Desktop";
+        if($agent->isMobile())
+            $device = "Mobile";
+        if($agent->isTablet())
+            $device = "Tablet";
+
+        return $device;
+    }
+
     public function call(Request $request)
     {
         $rc = request()->route('rc_number_');
@@ -178,7 +192,7 @@ class OrganizationController extends Controller
             $info = get_browser(null, true);
             $browser = $info['browser'];
             $user_OS = $info['platform'];
-            $device = $info['device_type'];
+            $device = $this->WhatDevice();
             $ip = $this->getIPAddress();
             $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
             $details = $rc." (".$class.") - Basic Company Information Search";
@@ -262,7 +276,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Proprietors.";
@@ -334,7 +348,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Directors";
@@ -406,7 +420,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Trustees";
@@ -456,7 +470,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
@@ -500,7 +514,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
@@ -576,7 +590,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Shareholders";
@@ -626,7 +640,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
@@ -668,7 +682,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";
@@ -738,7 +752,7 @@ class OrganizationController extends Controller
                 $info = get_browser(null, true);
                 $browser = $info['browser'];
                 $user_OS = $info['platform'];
-                $device = $info['device_type'];
+                $device = $this->WhatDevice();
                 $ip = $this->getIPAddress();
                 $transactionId = strtoupper(substr(bin2hex(random_bytes(12)), 0, 12));
                 $details = $rc." (".$class.") - Basic Company Information Search with Secretary";

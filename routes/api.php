@@ -120,7 +120,7 @@ Reset Password
 Route::post('/new_mda_password', [AdminController::class, 'NewMdaPassword']); 
 
 /*
-------------------------------------------------------------------------
+------------------------------------------------------------------------ 
 Admin Dashboard APIs
 ------------------------------------------------------------------------
 */
@@ -132,5 +132,5 @@ Route::post('/get_todays_registered_users_government', [AdminController::class, 
 Route::post('/get_cummulative_income', [AdminController::class, 'GetCummulativeIncome'])->middleware('is_API_call_Authentic');
 Route::post('/get_cummulative_api_calls_made', [AdminController::class, 'GetCummulativeAPICalls'])->middleware('is_API_call_Authentic');
 Route::post('/get_cummulative_registered_users_business', [AdminController::class, 'GetCummulativeRegisteredUsersBusiness'])->middleware('is_API_call_Authentic');
-Route::post('/get_cummulative_registered_users_government', [AdminController::class, 'GetCummulativeRegisteredUsersGovernment'])->middleware('is_API_call_Authentic');
+Route::post('/get_cummulative_registered_users_government', [AdminController::class, 'GetCummulativeRegisteredUsersGovernment'])->middleware('is_API_call_Authentic'); 
 

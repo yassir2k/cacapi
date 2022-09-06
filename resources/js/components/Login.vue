@@ -11,10 +11,10 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-3 my-auto"><!--Logo-->
+            <div class="col-sm-3 my-auto"><!--Logo-->
                 <img src="/images/caclogo_big.png" width="120" height="120" class="rounded" alt="Rounded Image" />
             </div>
-            <div class="col-9">
+            <div class="col-sm-9">
                 <div class="row">
                     <div class="col-sm-12" align="left"><!--Sign In-->
                         <h2 class="text-center text-secondary"><strong>API Portal</strong></h2>
@@ -153,7 +153,8 @@ import axios from 'axios'
                     "username": this.username,
                     "password": this.password
                 }
-                const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join(''); //Generates Random Hex
+                const genRanHex = size => [...Array(size)].map(() => Math.floor(Math.random() * 16)
+                .toString(16)).join(''); //Generates Random Hex
                 const token = genRanHex(100);
                 var d = new Date();
                 const sessionId = d.getTime();
@@ -181,7 +182,6 @@ import axios from 'axios'
                             this.$session.set('phone', response.data["phone"]);
                             this.$session.set('role', response.data["role"]);
                             this.$session.set('clientType', response.data["clientType"]);
-                            alert(this.$session.get('clientType'));
                             //window.axios.defaults.headers.common['X-CSRF-TOKEN'] ;
                             if(response.data["role"] == "Accessor")
                                 this.$router.push({ name: 'Dashboard'});

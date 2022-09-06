@@ -10,7 +10,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-users-cog"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-users-cog"></i>
             <router-link class="lo text-white" :to="{ name: 'ManageRegisteredUsers'}">Manage Registered Users</router-link>
 		</button>
     </div>
@@ -34,7 +34,7 @@
 	<div class="v-divider"></div>
 	
     <div class="btn-group d-flex">
-    	<button type="button" class="btn btn-sm btn-success btn-block dropdown-toggle" data-bs-toggle="dropdown"><i class="fas fa-user-cog"></i>	
+    	<button type="button" class="btn btn-sm btn-success btn-block dropdown-toggle  active" data-bs-toggle="dropdown"><i class="fas fa-user-cog"></i>	
             User Settings
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="font-size:14px">

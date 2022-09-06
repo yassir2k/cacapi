@@ -19,6 +19,9 @@ import ManageRegisteredUsers from "../admin/ManageRegisteredUsers.vue";
 import CreateMdaUser from "../admin/CreateMdaUser.vue";
 import NewMdaPassword from "../admin/NewMdaPassword.vue";
 import MdaRegVerification from "../admin/MdaRegVerification.vue";
+import Statistics from "../admin/Statistics.vue";
+import EditAdminProfile from "../admin/EditAdminProfile.vue";
+import ChangeAdminPassword from "../admin/ChangeAdminPassword.vue";
 import NotFound from "../NotFound.vue";
 Vue.use(VueRouter);
     const routes = [
@@ -124,6 +127,21 @@ Vue.use(VueRouter);
           path: "/new-mda-password",
           name: "NewMdaPassword",
           component: NewMdaPassword, 
+        },
+        {
+          path: "/statistics",
+          name: "Statistics",
+          component: Statistics, 
+        },
+        {
+          path: "/edit-admin-profile",
+          name: "EditAdminProfile",
+          component: EditAdminProfile, 
+        },
+        {
+          path: "/change-admin-password",
+          name: "ChangeAdminPassword",
+          component: ChangeAdminPassword, 
         }
     ];
     

@@ -182,7 +182,7 @@ export default {
                 if (err.response) {
                 // client received an error response (5xx, 4xx)
                 console.log("Server Error:", err)
-                } else if (err.request) {
+                } else if (err.request) { 
                 // client never received a response, or request never left
                 console.log("Network Error:", err)
                 } else {

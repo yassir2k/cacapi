@@ -133,14 +133,8 @@ export default {
             }
         }
     },
-    created(){
-        this.list()
-    },
     methods:{
         list(){
-            var dat = {
-                "username": this.$session.get("username")
-                };
             try{
                 axios.post('http://127.0.0.1:8000/api/get_users')
                 .then(({data}) =>{
@@ -206,7 +200,7 @@ export default {
         }
     },
     mounted(){
-        
+        this.list();
     }
 }
 </script>

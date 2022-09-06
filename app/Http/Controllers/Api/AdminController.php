@@ -49,7 +49,7 @@ class AdminController extends Controller
     }
 
 
-    public function SignUpMdaUser(Request $request)
+    public function SignUpMdaUser(Request $request) 
     {
         $Organization = $request->input('Organization');
         $ContactName = $request->input('ContactName');

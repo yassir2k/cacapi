@@ -10,7 +10,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-users-cog"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-users-cog"></i>
             <router-link class="lo text-white" :to="{ name: 'ManageRegisteredUsers'}">Manage Registered Users</router-link>
 		</button>
     </div>
@@ -26,7 +26,7 @@
     <span class="v-divider"></span>
 
     <div class="btn-group ">
-    	<button type="button" class="btn btn-sm btn-success btn-block"><i class="fas fa-chart-line"></i>
+    	<button type="button" class="btn btn-sm btn-success btn-block active"><i class="fas fa-chart-line"></i>
             <router-link class="lo text-white" :to="{ name: 'Statistics'}">Statistics</router-link>
 		</button>
     </div>
@@ -38,7 +38,7 @@
             User Settings
         </button>
         <div class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="font-size:14px">
-            <router-link class="dropdown-item lo text-success" :to="{ name: 'EditAdminProfile'}"><i class="fas fa-user-edit "></i> Edit Admin Profile</router-link>
+            <router-link class="dropdown-item lo text-success" :to="{ name: 'EditUserProfile'}"><i class="fas fa-user-edit "></i> Edit User Profile</router-link>
             <div class="dropdown-divider"></div>
             <router-link class="dropdown-item lo text-success" :to="{ name: 'ChangeAdminPassword'}"><i class="fas fa-unlock-alt "></i> Change Admin Password</router-link>
         </div>

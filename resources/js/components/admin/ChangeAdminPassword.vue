@@ -145,45 +145,7 @@
 
         </div>
         <div class="col-sm-3"> <!-- Handles User Profile Details and current units -->
-            <div class="row align-bottom">
-                <div class="col-sm-12">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <br />
-                            <i class="fas fa-user-circle fa-5x justify-content-center" style="color: #DDDDDD"></i>
-                            <br />
-                            <br />
-                        </div>
-                        <div align="left" class="col-sm-9" style="border-left: 1px ridge #EEEEEE">
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4><b>Organization</b></h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h5 style="color: #778899"><b>{{this.$session.get('organization')}}</b></h5>
-                                </div>
-                            </div>
-                            <br />
-                            <div class="row">
-                                <div class="col-sm-12">
-                                    <h4><b>Current Unit Balance</b></h4>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-12" v-if="this.$session.get('clientType') == 'Government'">
-                                    <h3 class="text-danger"><b>&#8734;</b></h3>
-                                </div>
-                                <div class="col-sm-12" v-else>
-                                    <h5 class="text-danger"><b>&#8358; &nbsp; {{ Number(this.units).toLocaleString() }}</b></h5>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+
         </div>
     </div>
     <br />
@@ -200,13 +162,13 @@
 </template>
 
 <script>
-import NavBar from './navigations/UserSettingsNav.vue';
+import NavBar from './navigations/EditAdminNav.vue';
 import axios from 'axios';
 export default {
     data() {
         return {
 
-            header_1: "Change User Password",
+            header_1: "Change Admin Password",
             units: 0,
             freeze: false,
             rotor: '&nbsp;<i class="fas fa-save"></i>',
@@ -235,7 +197,7 @@ export default {
         this.$router.push('/');
         }
         else{
-            if(this.$session.get("role") != "Accessor"){
+            if(this.$session.get("role") != "Admin"){
                 alert("You do not have privilege to visit this page.");
                 this.$session.destroy();
                 this.$router.push('/');
@@ -331,8 +293,3 @@ export default {
     }
 }
 </script>
-<style scoped>
-    .pagination{
-        margin-bottom: 0;
-    }
-</style>
